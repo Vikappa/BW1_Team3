@@ -2,6 +2,9 @@
 // Sul sito https://opentdb.com possiamo iscriverci e creare la nostra richiesta al database sotto forma di url su cui fare fetch()
 
 const apiUrl = 'https://opentdb.com/api.php?amount=50&category=18';
+const body = document.getElementsByName("body")[0]
+let nDomandeFatte = 00
+const divTest = document.getElementById("testAppend")
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -22,17 +25,16 @@ const diffInSecondi = function (diffString) {
             break;
     }
 }
+
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function loadQuestion() {
-    const result = await fetch(`${apiUrl}`)
-    console.log("Eseguo domanda")
+    const result = await fetch(`${apiUrl}`);
     if (result.status === 429) {
-        console.log("Delay 3 sec")
-        await delay(3000);
-        return loadQuestion();
+        await delay(2500);
+        return await loadQuestion();
     }
     const data = await result.json();
     return data.results;
@@ -52,13 +54,50 @@ const generaArrayDomande = async function () {
             }
         });
     }
-    console.log(arrayFinale)
     return arrayFinale
 }
 
-const arrayDomande = generaArrayDomande()
+let arrayDomande = []
 
-for (let i = 0; i < arrayDomande.length; i++) {
-    console.log(arrayDomande[i])
+
+
+
+
+const divDinamicoQuestion = async function (obgDomanda, index) {
+    console.log("inizio procedura")
+
+    if (!obgDomanda) {
+        console.log("obg domanda non esistente")
+        await delay(1000)
+        return await divDinamicoQuestion(obgDomanda, index)
+    }
+
+    console.log("obg domanda esistente")
+    difficulty = obgDomanda.difficulty
+    index = index
+    let domanda = obgDomanda.question
+    let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)
+    const divDomanda = document.createElement("div")
+    const divRisposte = document.createElement("div")
+    const divRitorno = document.createElement("div")
+    const pDomanda = document.createElement("p")
+    pDomanda.innerText = obgDomanda.question
+    divRitorno.appendChild(pDomanda)
+    console.log("flag")
+    console.log(obgDomanda.question)
+    return divRitorno
 }
+
+const renderizzaDomande = async function () {
+    arrayDomande = await generaArrayDomande()
+    divTest.innerHTML = ``
+
+    const nuovaDomandaRenderizzata = await divDinamicoQuestion(arrayDomande[nDomandeFatte], nDomandeFatte)
+    await divTest.appendChild(nuovaDomandaRenderizzata)
+
+}
+
+renderizzaDomande()
+renderizzaDomande()
+renderizzaDomande()
 
