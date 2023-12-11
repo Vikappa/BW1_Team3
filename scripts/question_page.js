@@ -20,7 +20,7 @@ const timer = function (difficolta) {
 
   const intervallo = setInterval(aggiornaTimer, 1000);
 };
-timer("easy");
+timer("hard");
 
 //GRAFICO
 const graficoCiambella = function (sbagliate, giuste) {
@@ -36,13 +36,26 @@ const graficoCiambella = function (sbagliate, giuste) {
         borderWidth: 2, // Spessore del bordo
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"], // Etichette dei segmenti
+    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 30, // Percentuale di spazio vuoto nel centro (30% crea un anello più stretto)
-    responsive: false, // Rendi il grafico non reattivo per evitare ridimensionamenti automatici
+    cutoutPercentage: 30,
+    responsive: false,
+    plugins: {
+      datalabels: {
+        color: "white",
+        font: {
+          weight: "bold",
+        },
+        // Box shadow per etichette di dati
+        shadowColor: "rgba(0, 0, 0, 0.3)",
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 4,
+      },
+    },
   };
 
   // Crea il grafico a ciambella
