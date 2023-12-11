@@ -11,7 +11,7 @@ const apiUrl = 'https://opentdb.com/api.php?amount=50&category=18';
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
 const diffInSecondi = function (diffString) {
-    switch (key) {
+    switch (diffString) {
         case `easy`:
             return 30;
         case `medium`:
@@ -22,35 +22,43 @@ const diffInSecondi = function (diffString) {
             break;
     }
 }
-
-// Template da chatGPT modificato
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function loadQuestion() {
-    const result = await fetch(`${apiUrl}`);
-
+    const result = await fetch(`${apiUrl}`)
+    console.log("Eseguo domanda")
+    if (result.status === 429) {
+        console.log("Delay 3 sec")
+        await delay(3000);
+        return loadQuestion();
+    }
     const data = await result.json();
-
-    return data.result;
+    return data.results;
 }
-
 
 const generaArrayDomande = async function () {
-    const fullArray = await loadQuestion(); // Attendiamo che loadQuestion() completi prima di procedere
-    console.log(data);
-    let timeScore = 0 // somma del tempo richiesto da tutte le domande dell'array finale da sottoporre
+    const fullArray = await loadQuestion();
+    let timeScore = 0;
+    const arrayFinale = [];
+    const newArray = [...fullArray]
+
     while (timeScore < 1800) {
-
-        let temp = fullArray[Math.floor(Math.random * 50)]
-
-
-        if (diffInSecondi(temp.difficulty) + timeScore < 1800) {
-            timeScore += temp.difficulty
-
-        }
+        newArray.forEach(domanda => {
+            if (domanda && (timeScore + diffInSecondi(domanda.difficulty)) <= 1800) {
+                arrayFinale.push(domanda)
+                timeScore += diffInSecondi(domanda.difficulty)
+            }
+        });
     }
-    return temp;
+    console.log(arrayFinale)
+    return arrayFinale
 }
 
+const arrayDomande = generaArrayDomande()
 
+for (let i = 0; i < arrayDomande.length; i++) {
+    console.log(arrayDomande[i])
+}
 
-loadQuestion()
