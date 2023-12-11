@@ -1,4 +1,60 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
-button {
-  font-size: 500px;
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+body {
+  background-image: url(../assets/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+  margin-left: 4.5em;
+}
+header img {
+  width: 130px;
+  margin-bottom: 5em;
+  margin-top: 1.7em;
+}
+.title {
+  line-height: 0.7;
+}
+.title1,
+.title2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 60px;
+}
+.title2 {
+  font-weight: bold;
+}
+.title-instructions,
+.description,
+.elenco,
+span {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+.title-instructions {
+  color: #d20094;
+  font-weight: bold;
+
+  padding-top: 1.7em;
+}
+.description {
+  line-height: 1.1;
+  padding-top: 0.5em;
+}
+.elenco {
+  padding-top: 4em;
+  margin-left: 1.5em;
+  line-height: 1.4;
+}
+
+#check {
+  padding-top: 5em;
+}
+/* CONTROLLARE!!!!!! */
+#checkbox {
+}
+#button {
+  text-align: right;
+  width: ;
 }
