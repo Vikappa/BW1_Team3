@@ -14,6 +14,58 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
+//GRAFICO
+const graficoCiambella = async function (sbagliate, giuste) {
+  const canva = document.createElement("canvas")
+
+  const ctx = canva.getContext("2d");
+
+  //const ctx = document.getElementById("graficoCiambella").getContext("2d");
+
+  //Al posto di prendere un div con id "graficoCiambella" ne ho creato uno uguale e ho preso il contex da lui
+
+  // Dati del grafico
+  const dati = {
+    datasets: [
+      {
+        data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
+        backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
+        borderColor: "white", // Colore del bordo
+        borderWidth: 2, // Spessore del bordo
+      },
+    ],
+    labels: ["SBAGLIATE", "GIUSTE"]
+  }
+
+  // Configurazione del grafico
+  const options = {
+    cutoutPercentage: 30,
+    responsive: false,
+    plugins: {
+      datalabels: {
+        color: "white",
+        font: {
+          weight: "bold",
+        },
+        // Box shadow per etichette di dati
+        shadowColor: "rgba(0, 0, 0, 0.3)",
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 4,
+      },
+    },
+  };
+
+  // Crea il grafico a ciambella
+  const donutChart = new Chart(ctx, {
+    type: "doughnut",
+    data: dati,
+    options: options,
+  })
+
+  return donutChart
+}
+
 const diffInSecondi = function (diffString) {
   switch (diffString) {
     case `easy`:
@@ -58,6 +110,21 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
+const renderizza_risultato = async function () {
+  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`
+  await delay(500)
+  let totaleDomande = arrayRisposte.length
+  let giuste = 0
+  for (let g = 0; g < arrayRisposte.length; g++) {
+    if (arrayRisposte[g].answer === arrayRisposte[g].correctAnswer) {
+      giuste++
+    }
+  }
+
+  let sbagliate = totaleDomande - giuste
+  divTest.appendChild(graficoCiambella(sbagliate, giuste))
+}
+
 let arrayDomande = [];
 
 async function addRisposta(
@@ -66,18 +133,13 @@ async function addRisposta(
   domanda,
   correct_answer
 ) {
-  let risposta = {};
-  if (arrayRispostePresentate.length > 1) {
-    risposta = {
-      type: `multiple`,
-      question: domanda,
-      answer: arrayRispostePresentate[indice_risposta_selezionata],
-      all_answer: arrayRispostePresentate,
-      correctAnswer: correct_answer,
-    };
-  } else {
-  }
-  console.log(risposta);
+  let risposta = {
+    type: `multiple`,
+    question: domanda,
+    answer: arrayRispostePresentate[indice_risposta_selezionata],
+    all_answer: arrayRispostePresentate,
+    correctAnswer: correct_answer,
+  };
 
   arrayRisposte.push(risposta);
 
@@ -87,7 +149,6 @@ async function addRisposta(
     ' lunghezza array domande: ' +
     arrayDomande.length
   );
-  console.log('Array risposte: ' + arrayRisposte);
 
   renderizzaDomande();
 }
@@ -105,7 +166,6 @@ async function addRispostaBool(bool, domanda, correct_answer) {
     all_answer: [`true`, `false`],
     correctAnswer: correct_answer,
   };
-  console.log(risposta);
   arrayRisposte.push(risposta);
   console.log(
     'Lunghezza array risposte: ' +
@@ -113,22 +173,18 @@ async function addRispostaBool(bool, domanda, correct_answer) {
     ' lunghezza array domande: ' +
     arrayDomande.length
   );
-  console.log('Array risposte: ' + arrayRisposte);
   renderizzaDomande();
 }
 
-const divDinamicoQuestion = async function (obgDomanda, index) {
-  console.log('inizio procedura');
-
+const divDinamicoQuestion = async function (obgDomanda) {
   if (!obgDomanda) {
     console.log('obg domanda non esistente');
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
 
-  console.log('obg domanda esistente');
   difficulty = obgDomanda.difficulty;
-
+  const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
   const pDomanda = document.createElement('p');
   pDomanda.innerText = obgDomanda.question;
@@ -152,9 +208,9 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
       pRisposta.classList = "multTypeButton"
       pRisposta.id = `r` + risposte[iRisposte]
 
-      pRisposta.onclick = async function (obgDomanda) {
+      pRisposta.onclick = async function () {
 
-        await addRisposta(risposte, iRisposte, obgDomanda.question, obgDomanda.answer)
+        await addRisposta(risposte, iRisposte, pDomanda.innerText, rispostaCorretta)
       }
       if (risposteAppese > 1) {
         divRisposte2.appendChild(pRisposta)
@@ -177,14 +233,12 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
     const pFalso = document.createElement('p');
     pVero.classList = `booleanButton`;
     pVero.id = `pVero`;
-    pVero.onclick = async function (obgDomanda) {
-      console.log('click');
-      await addRispostaBool('true', obgDomanda.question, obgDomanda.answer);
+    pVero.onclick = async function () {
+      await addRispostaBool('true', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.classList = `booleanButton`;
-    pFalso.onclick = async function (obgDomanda) {
-      console.log('click');
-      await addRispostaBool('false', obgDomanda.question, obgDomanda.answer);
+    pFalso.onclick = async function () {
+      await addRispostaBool('false', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.id = `pFalso`;
     pVero.innerText = 'True';
@@ -203,6 +257,10 @@ const renderizzaDomande = async function () {
   if (arrayDomande.length === 0) {
     arrayDomande = await generaArrayDomande();
   }
+
+  console.log("Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto")
+  console.log(arrayRisposte);
+
   divTest.innerHTML = ``;
 
   if (arrayDomande.length === arrayRisposte.length) {
@@ -218,60 +276,3 @@ const renderizzaDomande = async function () {
 
 renderizzaDomande();
 
-////////////////////////////////////////////////////////////////////////////////////////////
-const pseudo_arrayRisposte = [
-  {
-    type: 'multiple',
-    question:
-      'Which programming language shares its name with an island in Indonesia?',
-    answer: 'Java',
-    all_answer: ['Java', 'Python', 'C', 'Jakarta'],
-    correctAnswer: 'Java',
-  },
-  {
-    type: 'multiple',
-    question:
-      'What is the code name for the mobile operating system Android 7.0?',
-    answer: 'Jelly Bean',
-    all_answer: [
-      'Jelly Bean',
-      'Ice Cream Sandwich',
-      'Jelly Bean',
-      'Marshmallow',
-    ],
-    correctAnswer: 'Nougat',
-  },
-  {
-    type: 'multiple',
-    question:
-      'In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?',
-    answer: 'Private',
-    all_answer: ['Static', 'Private', 'Public'],
-    correctAnswer: 'Final',
-  },
-  {
-    type: 'multiple',
-    question: 'On Twitter, what is the character limit for a Tweet?',
-    answer: '140',
-    all_answer: ['120', '160', '100'],
-    correctAnswer: '140',
-  },
-  {
-    type: 'boolean',
-    question: 'The logo for Snapchat is a Bell.',
-    answer: 'true',
-    all_answer: ['true', 'false'],
-    correctAnswer: 'False',
-  },
-  {
-    type: 'multiple',
-    question: 'What does CPU stand for?',
-    answer: 'true',
-    all_answer: [
-      'Central Process Unit',
-      'Computer Personal Unit',
-      'Central Processor Unit',
-    ],
-    correctAnswer: 'False',
-  },
-];

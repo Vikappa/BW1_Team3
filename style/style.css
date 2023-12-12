@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
 /* CSS COMUNE PER TUTTO IL PROGETTO */
-/* Alex */
+@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
@@ -11,82 +9,6 @@ body {
   color: white;
   margin-left: 4.5em;
 }
-#body-feedback {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 500px;
-}
-
-nav img {
-  width: 25%;
-  padding: 20px;
-}
-main {
-  margin-top: 100px;
-  text-align: left;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-  font-size: 16px;
-}
-
-h1 {
-  text-align: left;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-}
-
-.stars {
-  line-height: 0;
-}
-.stars img {
-  opacity: 0.1;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  transition: opacity 2s ease, transform 0.5s ease;
-}
-.stars:hover {
-  /* opacity: 1; */
-  cursor: pointer;
-}
-img.attivo {
-  opacity: 1;
-  transform: scale(1.5);
-  margin-right: 15px;
-}
-
-textarea {
-  position: fixed;
-  resize: none;
-  transform: translate(-50%, -50%);
-
-  width: 100%;
-  max-width: 500px;
-  /* left: 30%; */
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid /* #900080 */ #d20094;
-}
-form p {
-  padding-top: 40px;
-  padding-bottom: 20px;
-}
-
-.btn {
-  margin-top: 50px;
-  color: black;
-  width: 30%;
-  height: 50px;
-  background-color: #00ffff;
-  font-size: 16px;
-  font-family: 'Outfit', sans-serif;
-  font-weight: bold;
-  border: none;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 1);
-  cursor: pointer;
-}
-/* LUCA */
 header img {
   width: 130px;
   margin-bottom: 0.3em;
@@ -97,7 +19,7 @@ header img {
 }
 .title1,
 .title2 {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 60px;
 }
 .title2 {
@@ -107,7 +29,7 @@ header img {
 .description,
 .elenco,
 span {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
 }
 .title-instructions {
@@ -153,4 +75,87 @@ button:hover {
 }
 button {
   border: none;
+}
+
+/* CSS TIMER - FRANCESCO */
+#countdown {
+  position: relative;
+  margin: auto;
+  margin-top: 100px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+#countdown-number {
+  color: white;
+  display: inline-block;
+  line-height: 40px;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+#circleBackground {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #050505;
+  opacity: 0.2;
+  fill: none;
+}
+
+#circle30 {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 30s linear infinite forwards;
+}
+#circle60 {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 60s linear infinite forwards;
+}
+#circle120 {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 120s linear infinite forwards;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+
+#time {
+  font-family: "inter", sans-serif;
+}
+#time p {
+  margin: 0;
+}
+
+.tempoHtml {
+  font-size: 3em;
 }
