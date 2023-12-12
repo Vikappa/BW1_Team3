@@ -74,14 +74,6 @@ async function addRisposta(
     correctAnswer: correct_answer,
   };
 
-
-  for (let k = 0; k < arrayRisposte.length; k++) {
-    console.log(arrayRisposte[k].type)
-    console.log(arrayRisposte[k].question)
-    console.log(arrayRisposte[k].answer)
-    console.log(arrayRisposte[k].all_answer)
-    console.log(arrayRisposte[k].correctAnswer)
-  }
   arrayRisposte.push(risposta);
 
   console.log(
@@ -114,20 +106,16 @@ async function addRispostaBool(bool, domanda, correct_answer) {
     ' lunghezza array domande: ' +
     arrayDomande.length
   );
-  console.log(arrayRisposte);
   renderizzaDomande();
 }
 
 const divDinamicoQuestion = async function (obgDomanda) {
-  console.log('inizio procedura');
-
   if (!obgDomanda) {
     console.log('obg domanda non esistente');
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
 
-  console.log('obg domanda esistente');
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
@@ -179,12 +167,10 @@ const divDinamicoQuestion = async function (obgDomanda) {
     pVero.classList = `booleanButton`;
     pVero.id = `pVero`;
     pVero.onclick = async function () {
-      console.log('click');
       await addRispostaBool('true', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.classList = `booleanButton`;
     pFalso.onclick = async function () {
-      console.log('click');
       await addRispostaBool('false', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.id = `pFalso`;
@@ -204,6 +190,9 @@ const renderizzaDomande = async function () {
   if (arrayDomande.length === 0) {
     arrayDomande = await generaArrayDomande();
   }
+  console.log("Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto")
+  console.log(arrayRisposte);
+
   divTest.innerHTML = ``;
 
   if (arrayDomande.length === arrayRisposte.length) {
