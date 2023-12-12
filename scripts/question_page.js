@@ -12,6 +12,7 @@ const timer = function (difficolta) {
   function aggiornaTimer() {
     if (timer >= 0) {
       document.getElementById("timer").innerHTML = `<p>${timer}</p> `;
+      console.log(timer);
       timer--;
     } else {
       clearInterval(intervallo);
@@ -65,4 +66,4 @@ const graficoCiambella = function (sbagliate, giuste) {
     options: options,
   });
 };
-graficoCiambella(13, 6);
+graficoCiambella(1, 6);
