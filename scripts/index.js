@@ -6,7 +6,7 @@ const checkboxChange = function () {
 document.getElementById('checkbox').addEventListener('change', checkboxChange);
 
 const buttonClick = function () {
-  window.open('./');
+  window.open('../questions.html');
 };
 button = document.getElementById('button');
 button.addEventListener('click', buttonClick);
