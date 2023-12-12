@@ -14,30 +14,26 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-//GRAFICO
-const graficoCiambella = async function (sbagliate, giuste) {
-  const canva = document.createElement("canvas")
+///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
+const graficoCiambella = function (sbagliate, giuste) {
+  const canvas = document.createElement("canvas") // Crea un elemento canvas dinamicamente invece di gettarlo dalla pagina
+  canvas.id = "graficoCiambella";
+  const ctx = canvas.getContext("2d");
 
-  const ctx = canva.getContext("2d");
-
-  //const ctx = document.getElementById("graficoCiambella").getContext("2d");
-
-  //Al posto di prendere un div con id "graficoCiambella" ne ho creato uno uguale e ho preso il contex da lui
-
-  // Dati del grafico
+  // Dati del grafico usati nel metodo creatore del grafico
   const dati = {
     datasets: [
       {
-        data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
-        backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
-        borderColor: "white", // Colore del bordo
-        borderWidth: 2, // Spessore del bordo
+        data: [sbagliate, giuste],
+        backgroundColor: ["#D20094", "#00FFFF"],
+        borderColor: "white",
+        borderWidth: 2,
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"]
-  }
+    labels: ["SBAGLIATE", "GIUSTE"],
+  };
 
-  // Configurazione del grafico
+  // Configurazione del grafico usata nel metodo creatore del grafico
   const options = {
     cutoutPercentage: 30,
     responsive: false,
@@ -56,15 +52,16 @@ const graficoCiambella = async function (sbagliate, giuste) {
     },
   };
 
-  // Crea il grafico a ciambella
-  const donutChart = new Chart(ctx, {
-    type: "doughnut",
+  // Crea e ritorna il grafico a ciambella
+  return new Chart(ctx, {
+    type: "doughnut", // Parametro della libreria chart.js per fare i grafici a ciambella
     data: dati,
     options: options,
-  })
+  });
+};
 
-  return donutChart
-}
+// Utilizza la funzione per creare il grafico e aggiungerlo al corpo del documento
+
 
 const diffInSecondi = function (diffString) {
   switch (diffString) {
@@ -218,7 +215,6 @@ const divDinamicoQuestion = async function (obgDomanda) {
         risposteAppese++
         divRisposte1.appendChild(pRisposta)
       }
-
       divRitorno.appendChild(divRisposte1)
       divRitorno.appendChild(divRisposte2)
     }
