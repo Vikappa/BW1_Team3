@@ -11,8 +11,8 @@ const timer = function (difficolta) {
 
   //Cerchio intorno al timer
   function cerchio() {
-    const cerchioInHtml = document.getElementById("cerchio");
-    cerchioInHtml.style = "width: 500px; height: 500px; position:absolute";
+    const cerchioInHtml = document.createElement("div");
+
     switch (difficolta) {
       case "easy":
         cerchioInHtml.innerHTML = `    
@@ -36,8 +36,12 @@ const timer = function (difficolta) {
           </svg>`;
         break;
     }
+    return cerchioInHtml
   }
-  cerchio();
+
+  const targetCerchio = document.getElementById("cerchio")
+  targetCerchio.appendChild(cerchio())
+
 
   // Timer
 
