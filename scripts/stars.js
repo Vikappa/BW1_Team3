@@ -5,7 +5,7 @@ stars.forEach((star, starsSelezionate) => {
   star.addEventListener("click", () => {
     // console.log(starsSelezionate);
     stars.forEach((star, stars) => {
-      //   console.log(stars);
+      // console.log(stars);
       if (starsSelezionate >= stars) {
         star.classList.add("attivo");
       } else {
