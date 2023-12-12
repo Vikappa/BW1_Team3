@@ -1,4 +1,4 @@
-//TIMER
+//TIMER - FRANCESCO
 const timer = function (difficolta) {
   let timer;
   if (difficolta === "easy") {
@@ -9,21 +9,31 @@ const timer = function (difficolta) {
     timer = 120;
   }
 
-  function aggiornaTimer() {
+  function aggiornaTimer(timer1) {
     if (timer >= 0) {
-      document.getElementById("timer").innerHTML = `<p>${timer}</p> `;
+      document.getElementById("countdown").innerHTML = `
+      <p>Second</p>
+      <p>${timer}</p>
+      <p>Remaing</p> `;
       console.log(timer);
       timer--;
     } else {
       clearInterval(intervallo);
     }
   }
-
+  /*CLASSI CERCHIO */
   const intervallo = setInterval(aggiornaTimer, 1000);
 };
-timer("hard");
+timer("easy");
 
-//GRAFICO
+//
+//
+//
+//
+//
+//
+
+//GRAFICO A CIAMBELLA - FRANCESCO
 const graficoCiambella = function (sbagliate, giuste) {
   const ctx = document.getElementById("graficoCiambella").getContext("2d");
 
