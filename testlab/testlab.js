@@ -14,30 +14,30 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-//GRAFICO
-const graficoCiambella = async function (sbagliate, giuste) {
-  const canva = document.createElement("canvas")
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
-  const ctx = canva.getContext("2d");
 
-  //const ctx = document.getElementById("graficoCiambella").getContext("2d");
+//////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
+///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
+const graficoCiambella = function (sbagliate, giuste) {
+  const canvas = document.createElement("canvas") // Crea un elemento canvas dinamicamente invece di gettarlo dalla pagina
+  canvas.id = "graficoCiambella"
+  const ctx = canvas.getContext("2d")
 
-  //Al posto di prendere un div con id "graficoCiambella" ne ho creato uno uguale e ho preso il contex da lui
-
-  // Dati del grafico
+  // Dati del grafico usati nel metodo creatore del grafico
   const dati = {
     datasets: [
       {
-        data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
-        backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
-        borderColor: "white", // Colore del bordo
-        borderWidth: 2, // Spessore del bordo
+        data: [sbagliate, giuste],
+        backgroundColor: ["#D20094", "#00FFFF"],
+        borderColor: "white",
+        borderWidth: 2,
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"]
+    labels: ["SBAGLIATE", "GIUSTE"],
   }
 
-  // Configurazione del grafico
+  // Configurazione del grafico usata nel metodo creatore del grafico
   const options = {
     cutoutPercentage: 30,
     responsive: false,
@@ -56,54 +56,151 @@ const graficoCiambella = async function (sbagliate, giuste) {
     },
   };
 
-  // Crea il grafico a ciambella
-  const donutChart = new Chart(ctx, {
-    type: "doughnut",
+  // Crea e ritorna il grafico a ciambella
+  return new Chart(ctx, {
+    type: "doughnut", // Parametro della libreria chart.js per fare i grafici a ciambella
     data: dati,
     options: options,
   })
-
-  return donutChart
 }
+
+const main = document.getElementById("main")
+let tictoc
+let timeleft
+let diffValueCurrentQuestion
+//modificato per ritornare un valore che non sia fuori dal metodo
+const timer = function (difficoltaStringa) {
+  if (difficoltaStringa === "easy") {
+    return 30;
+  } else if (difficoltaStringa === "medium") {
+    return 60;
+  } else if (difficoltaStringa === "hard") {
+    return 120;
+  }
+  console.log("Errore numero inserito nel metodo timer")
+  return 0
+}
+
+async function aggiornaTimer() {
+  if (!timeleft) {
+    timeleft = timer(diffValueCurrentQuestion)
+  }
+  if (timeleft >= 0) {
+    const timerInHtml = document.getElementById("nSecondi");
+    timerInHtml.textContent =
+      console.log(timeleft);
+    timeleft--;
+  } else {
+    //rispostaVuota()
+    clearInterval(tictoc);
+  }
+}
+
+const avviaTicToc = function (diffValue) { //Ex aggiornatimer
+  if (tictoc === undefined) {
+    setInterval(aggiornaTimer, 1000);
+  }
+}
+
+
+// Ho accroccato cerchio e timer in un solo div così da avere una "cornice" da piazzare più volte
+const cerchioTimer = function (difficolta) {
+  const cerchioTimerHtml = document.createElement("div")
+  const divCerchio = document.createElement("div")
+  const divTime = document.createElement("div")
+  cerchioTimerHtml.id = "countdown"
+  divCerchio.id = "cerchio"
+  divTime.id = "time"
+
+  divCerchio.style = "position: absolute"
+
+  switch (difficolta) {
+    case "easy":
+      divCerchio.innerHTML = `    
+            <svg>
+              <circle class="svgCircle" id="circle30" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+            </svg>`;
+      break;
+    case "medium":
+      divCerchio.innerHTML = `    
+            <svg>
+              <circle class="svgCircle"  id="circle60" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+            </svg>`;
+      break;
+    case "hard":
+      divCerchio.innerHTML = `    
+            <svg>
+              <circle class="svgCircle"  id="circle120" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+            </svg>`
+      break
+  }
+
+  const pseconds = document.createElement("p")
+  const nSecondi = document.createElement("p")
+  const primanenti = document.createElement("p")
+
+  pseconds.textContent = "seconds"
+  nSecondi.textContent = timer(difficolta)
+  nSecondi.id = "nSecondi"
+  primanenti.textContent = "remeaning"
+
+
+  divTime.appendChild(pseconds)
+  divTime.appendChild(nSecondi)
+  divTime.appendChild(primanenti)
+
+  cerchioTimerHtml.style.width = "120px"
+  cerchioTimerHtml.style.height = "120px"
+
+  cerchioTimerHtml.appendChild(divCerchio)
+  cerchioTimerHtml.appendChild(divTime)
+
+  return cerchioTimerHtml
+}
+
+
 
 const diffInSecondi = function (diffString) {
   switch (diffString) {
     case `easy`:
-      return 30;
+      return 30
     case `medium`:
-      return 60;
+      return 60
     case `hard`:
-      return 120;
+      return 120
     default:
-      break;
+      break
   }
 };
 
 function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 async function loadQuestion() {
-  const result = await fetch(`${apiUrl}`);
+  const result = await fetch(`${apiUrl}`)
   if (result.status === 429) {
-    await delay(2500);
-    return await loadQuestion();
+    await delay(2500)
+    return await loadQuestion()
   }
-  const data = await result.json();
-  return data.results;
+  const data = await result.json()
+  return data.results
 }
 
 const generaArrayDomande = async function () {
-  const fullArray = await loadQuestion();
-  let timeScore = 0;
-  const arrayFinale = [];
-  const newArray = [...fullArray];
+  const fullArray = await loadQuestion()
+  let timeScore = 0
+  const arrayFinale = []
+  const newArray = [...fullArray]
 
   while (timeScore < 1800) {
     newArray.forEach((domanda) => {
       if (domanda && timeScore + diffInSecondi(domanda.difficulty) <= 1800) {
-        arrayFinale.push(domanda);
-        timeScore += diffInSecondi(domanda.difficulty);
+        arrayFinale.push(domanda)
+        timeScore += diffInSecondi(domanda.difficulty)
       }
     });
   }
@@ -182,7 +279,6 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
-
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
@@ -250,6 +346,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     divRitorno.appendChild(divRispostaBoolean);
   }
   divRitorno.id = 'genitore';
+  divRitorno.appendChild(cerchioTimer(difficulty))
   return divRitorno;
 };
 

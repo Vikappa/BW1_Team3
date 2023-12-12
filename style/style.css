@@ -1,6 +1,7 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
 @import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
@@ -9,22 +10,27 @@ body {
   color: white;
   margin-left: 4.5em;
 }
+
 header img {
   width: 130px;
   margin-bottom: 0.3em;
   margin-top: 1.7em;
 }
+
 .title {
   line-height: 0.7;
 }
+
 .title1,
 .title2 {
   font-family: 'Outfit', sans-serif;
   font-size: 60px;
 }
+
 .title2 {
   font-weight: bold;
 }
+
 .title-instructions,
 .description,
 .elenco,
@@ -32,16 +38,19 @@ span {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
 }
+
 .title-instructions {
   color: #d20094;
   font-weight: bold;
 
   padding-top: 1.7em;
 }
+
 .description {
   line-height: 1.1;
   padding-top: 0.5em;
 }
+
 .elenco {
   padding-top: 4em;
   margin-left: 1.5em;
@@ -51,9 +60,10 @@ span {
 #check {
   padding-top: 5em;
 }
+
 /* CONTROLLARE!!!!!! */
-#checkbox {
-}
+#checkbox {}
+
 div button {
   height: 58px;
   width: 220px;
@@ -61,11 +71,13 @@ div button {
   font-weight: bold;
   font-size: 16px;
 }
+
 #button {
   text-align: right;
   margin-right: 6em;
   margin-bottom: 4em;
 }
+
 button:hover {
   transition: 0.7s;
   box-shadow: 0px 0px 30px 7px #00ffff;
@@ -73,6 +85,7 @@ button:hover {
   border: none;
   border-style: 5px;
 }
+
 button {
   border: none;
 }
@@ -103,12 +116,12 @@ svg {
 }
 
 #circleBackground {
-  stroke-dasharray: 113px;
+  stroke-dasharray: 226px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
   stroke-width: 4px;
   stroke: #050505;
-  opacity: 0.2;
+  opacity: 0.1;
   fill: none;
 }
 
@@ -121,6 +134,7 @@ svg {
   fill: none;
   animation: countdown 30s linear infinite forwards;
 }
+
 #circle60 {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
@@ -130,6 +144,7 @@ svg {
   fill: none;
   animation: countdown 60s linear infinite forwards;
 }
+
 #circle120 {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
@@ -144,6 +159,7 @@ svg {
   from {
     stroke-dashoffset: 0px;
   }
+
   to {
     stroke-dashoffset: 113px;
   }
@@ -152,10 +168,28 @@ svg {
 #time {
   font-family: 'inter', sans-serif;
 }
+
 #time p {
   margin: 0;
 }
 
 .tempoHtml {
   font-size: 3em;
+}
+
+#loader_interpagina {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, #00FFFF 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, #00FFFF);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: s3 1s infinite linear;
+}
+
+@keyframes s3 {
+  100% {
+    transform: rotate(1turn)
+  }
 }
