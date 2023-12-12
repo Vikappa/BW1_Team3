@@ -73,6 +73,8 @@ async function addRisposta(arrayRispostePresentate, indice_risposta_selezionata,
     } else {
 
     }
+    console.log(risposta)
+
     arrayRisposte.push(risposta)
 
     console.log("Lunghezza array risposte: " + arrayRisposte.length + " lunghezza array domande: " + arrayDomande.length)
@@ -94,6 +96,7 @@ async function addRispostaBool(bool, domanda, correct_answer) {
         all_answer: [`true`, `false`],
         correctAnswer: correct_answer
     }
+    console.log(risposta)
     arrayRisposte.push(risposta)
     console.log("Lunghezza array risposte: " + arrayRisposte.length + " lunghezza array domande: " + arrayDomande.length)
     console.log("Array risposte: " + arrayRisposte)
@@ -110,12 +113,11 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
     if (!obgDomanda) {
         console.log("obg domanda non esistente")
         await delay(1000)
-        return await divDinamicoQuestion(obgDomanda, index)
+        return await divDinamicoQuestion(obgDomanda)
     }
 
     console.log("obg domanda esistente")
     difficulty = obgDomanda.difficulty
-    index = index
 
     const divRitorno = document.createElement("div")
     const pDomanda = document.createElement("p")
@@ -131,7 +133,7 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
             pRisposta.innerText = risposte[iRisposte]
             pRisposta.classList = "multTypeButton"
             pRisposta.id = `r` + risposte[iRisposte]
-            pRisposta.onclick = async function () {
+            pRisposta.onclick = async function (obgDomanda) {
                 console.log("click")
                 console.log(risposte)
                 console.log(iRisposte)
@@ -154,12 +156,12 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
         const pFalso = document.createElement("p")
         pVero.classList = `booleanButton`
         pVero.id = `pVero`
-        pVero.onclick = async function () {
+        pVero.onclick = async function (obgDomanda) {
             console.log("click")
             await addRispostaBool("true", obgDomanda.question, obgDomanda.answer)
         }
         pFalso.classList = `booleanButton`
-        pFalso.onclick = async function () {
+        pFalso.onclick = async function (obgDomanda) {
             console.log("click")
             await addRispostaBool("false", obgDomanda.question, obgDomanda.answer)
         }
@@ -179,7 +181,7 @@ const renderizzaDomande = async function () {
     arrayDomande = await generaArrayDomande()
     divTest.innerHTML = ``
 
-    const nuovaDomandaRenderizzata = await divDinamicoQuestion(arrayDomande[nDomandeFatte], nDomandeFatte)
+    const nuovaDomandaRenderizzata = await divDinamicoQuestion(arrayDomande[nDomandeFatte])
     await divTest.appendChild(nuovaDomandaRenderizzata)
 }
 
