@@ -83,6 +83,7 @@ async function addRisposta(
     console.log(arrayDomande[k].all_answer)
     console.log(arrayDomande[k].correct_answer)
   }
+  arrayRisposte.push(risposta);
 
   console.log(
     'Lunghezza array risposte: ' +
@@ -90,7 +91,6 @@ async function addRisposta(
     ' lunghezza array domande: ' +
     arrayDomande.length
   );
-  console.log('Array risposte: ' + arrayRisposte);
 
   renderizzaDomande();
 }
@@ -108,7 +108,6 @@ async function addRispostaBool(bool, domanda, correct_answer) {
     all_answer: [`true`, `false`],
     correctAnswer: correct_answer,
   };
-  console.log(risposta);
   arrayRisposte.push(risposta);
   console.log(
     'Lunghezza array risposte: ' +
@@ -221,60 +220,3 @@ const renderizzaDomande = async function () {
 
 renderizzaDomande();
 
-////////////////////////////////////////////////////////////////////////////////////////////
-const pseudo_arrayRisposte = [
-  {
-    type: 'multiple',
-    question:
-      'Which programming language shares its name with an island in Indonesia?',
-    answer: 'Java',
-    all_answer: ['Java', 'Python', 'C', 'Jakarta'],
-    correctAnswer: 'Java',
-  },
-  {
-    type: 'multiple',
-    question:
-      'What is the code name for the mobile operating system Android 7.0?',
-    answer: 'Jelly Bean',
-    all_answer: [
-      'Jelly Bean',
-      'Ice Cream Sandwich',
-      'Jelly Bean',
-      'Marshmallow',
-    ],
-    correctAnswer: 'Nougat',
-  },
-  {
-    type: 'multiple',
-    question:
-      'In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?',
-    answer: 'Private',
-    all_answer: ['Static', 'Private', 'Public'],
-    correctAnswer: 'Final',
-  },
-  {
-    type: 'multiple',
-    question: 'On Twitter, what is the character limit for a Tweet?',
-    answer: '140',
-    all_answer: ['120', '160', '100'],
-    correctAnswer: '140',
-  },
-  {
-    type: 'boolean',
-    question: 'The logo for Snapchat is a Bell.',
-    answer: 'true',
-    all_answer: ['true', 'false'],
-    correctAnswer: 'False',
-  },
-  {
-    type: 'multiple',
-    question: 'What does CPU stand for?',
-    answer: 'true',
-    all_answer: [
-      'Central Process Unit',
-      'Computer Personal Unit',
-      'Central Processor Unit',
-    ],
-    correctAnswer: 'False',
-  },
-];
