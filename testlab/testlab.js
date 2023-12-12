@@ -66,8 +66,7 @@ async function addRisposta(
   domanda,
   correct_answer
 ) {
-  let risposta = {};
-  risposta = {
+  let risposta = {
     type: `multiple`,
     question: domanda,
     answer: arrayRispostePresentate[indice_risposta_selezionata],
@@ -76,12 +75,12 @@ async function addRisposta(
   };
 
 
-  for (let k = 0; k < arrayDomande.length; k++) {
-    console.log(arrayDomande[k].type)
-    console.log(arrayDomande[k].question)
-    console.log(arrayDomande[k].answer)
-    console.log(arrayDomande[k].all_answer)
-    console.log(arrayDomande[k].correct_answer)
+  for (let k = 0; k < arrayRisposte.length; k++) {
+    console.log(arrayRisposte[k].type)
+    console.log(arrayRisposte[k].question)
+    console.log(arrayRisposte[k].answer)
+    console.log(arrayRisposte[k].all_answer)
+    console.log(arrayRisposte[k].correctAnswer)
   }
   arrayRisposte.push(risposta);
 
@@ -115,7 +114,7 @@ async function addRispostaBool(bool, domanda, correct_answer) {
     ' lunghezza array domande: ' +
     arrayDomande.length
   );
-  console.log('Array risposte: ' + arrayRisposte);
+  console.log(arrayRisposte);
   renderizzaDomande();
 }
 
