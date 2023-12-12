@@ -196,50 +196,51 @@ renderizzaDomande()
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// const pseudo_arrayRisposte = [
-//     {
-//         type: "multiple",
-//         question: "Which programming language shares its name with an island in Indonesia?",
-//         answer: "Java",
-//         all_answer: ["Java", "Python", "C", "Jakarta"],
-//         correctAnswer: "Java"
-//     },
-//     {
-//         type: "multiple",
-//         question: "What is the code name for the mobile operating system Android 7.0?",
-//         answer: "Jelly Bean",
-//         all_answer: ["Jelly Bean","Ice Cream Sandwich",
-//         "Jelly Bean",
-//         "Marshmallow"],
-//         correctAnswer: "Nougat"
-//     },
-//     {
-//         type: "boolean",
-//         question: "Linux was first created as an alternative to Windows XP",
-//         answer: "true",
-//         all_answer: ["true", "false"],
-//         correctAnswer: "False"
-//     },
-//     {
-//         type: "multiple",
-//         question: "What is the most preferred image format used for logos in the Wikimedia database?",
-//         answer: ".svg",
-//         all_answer: [".svg"],
-//         correctAnswer: ".png", ".jpeg", ".gif"
-//     },
-//     {
-//         type: "multiple",
-//         question: "",
-//         answer: "",
-//         all_answer: [],
-//         correctAnswer: ""
-//     },
-//     {
-//         type: "multiple",
-//         question: "",
-//         answer: "",
-//         all_answer: [],
-//         correctAnswer: ""
-//     }
-// ]
+const pseudo_arrayRisposte = [
+    {
+        type: "multiple",
+        question: "Which programming language shares its name with an island in Indonesia?",
+        answer: "Java",
+        all_answer: ["Java", "Python", "C", "Jakarta"],
+        correctAnswer: "Java"
+    },
+    {
+        type: "multiple",
+        question: "What is the code name for the mobile operating system Android 7.0?",
+        answer: "Jelly Bean",
+        all_answer: ["Jelly Bean", "Ice Cream Sandwich",
+            "Jelly Bean",
+            "Marshmallow"],
+        correctAnswer: "Nougat"
+    },
+    {
+        type: "multiple",
+        question: "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+        answer: "Private",
+        all_answer: ["Static", "Private", "Public"],
+        correctAnswer: "Final"
+    }, {
+        type: "multiple",
+        question: "On Twitter, what is the character limit for a Tweet?",
+        answer: "140",
+        all_answer: ["120", "160", "100"],
+        correctAnswer: "140"
+    }, {
+        type: "boolean",
+        question: "The logo for Snapchat is a Bell.",
+        answer: "true",
+        all_answer: ["true", "false"],
+        correctAnswer: "False"
+    }, {
+        type: "multiple",
+        question: "What does CPU stand for?",
+        answer: "true",
+        all_answer: [
+            "Central Process Unit",
+            "Computer Personal Unit",
+            "Central Processor Unit",
+        ],
+        correctAnswer: "False"
+    }
+]
 
