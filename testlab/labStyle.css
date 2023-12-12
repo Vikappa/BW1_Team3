@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+.multTypeButton:hover,
+.booleanButton:hover {
+  color: red;
+}
+body {
+  background-image: url(../assets/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+  margin-left: 4.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#testappend {
+  text-align: center;
+}
+#pVero,
+#pFalso,
+.multTypeButton {
+  border: 1px solid;
+  border-radius: 25px;
+  padding: 10px;
+  text-align: center;
+  width: 250px;
+  margin: 90px;
+}
+#pVero-pFalso {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.multTypeButton {
+}
+#genitore {
+}
