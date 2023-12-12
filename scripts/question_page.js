@@ -12,24 +12,27 @@ const timer = function (difficolta) {
   //Cerchio intorno al timer
   function cerchio() {
     const cerchioInHtml = document.getElementById("cerchio");
-
+    cerchioInHtml.style = "width: 500px; height: 500px; position:absolute";
     switch (difficolta) {
       case "easy":
         cerchioInHtml.innerHTML = `    
           <svg>
             <circle id="circle30" r="18" cx="20" cy="20"></circle>
+            <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
           </svg>`;
         break;
       case "medium":
         cerchioInHtml.innerHTML = `    
           <svg>
             <circle id="circle60" r="18" cx="20" cy="20"></circle>
+            <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
           </svg>`;
         break;
       case "hard":
         cerchioInHtml.innerHTML = `    
           <svg>
             <circle id="circle120" r="18" cx="20" cy="20"></circle>
+            <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
           </svg>`;
         break;
     }
@@ -43,7 +46,7 @@ const timer = function (difficolta) {
       const timerInHtml = document.getElementById("time");
       timerInHtml.innerHTML = `
       <p>Second</p>
-      <p>${timer}</p>
+      <p class="tempoHtml">${timer}</p>
       <p>Remaing</p> `;
       console.log(timer);
       timer--;
@@ -65,46 +68,46 @@ timer("easy");
 //
 
 //GRAFICO A CIAMBELLA - FRANCESCO
-const graficoCiambella = function (sbagliate, giuste) {
-  const ctx = document.getElementById("graficoCiambella").getContext("2d");
+// const graficoCiambella = function (sbagliate, giuste) {
+//   const ctx = document.getElementById("graficoCiambella").getContext("2d");
 
-  // Dati del grafico
-  const dati = {
-    datasets: [
-      {
-        data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
-        backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
-        borderColor: "white", // Colore del bordo
-        borderWidth: 2, // Spessore del bordo
-      },
-    ],
-    labels: ["SBAGLIATE", "GIUSTE"],
-  };
+//   // Dati del grafico
+//   const dati = {
+//     datasets: [
+//       {
+//         data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
+//         backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
+//         borderColor: "white", // Colore del bordo
+//         borderWidth: 2, // Spessore del bordo
+//       },
+//     ],
+//     labels: ["SBAGLIATE", "GIUSTE"],
+//   };
 
-  // Configurazione del grafico
-  const options = {
-    cutoutPercentage: 30,
-    responsive: false,
-    plugins: {
-      datalabels: {
-        color: "white",
-        font: {
-          weight: "bold",
-        },
-        // Box shadow per etichette di dati
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 4,
-      },
-    },
-  };
+//   // Configurazione del grafico
+//   const options = {
+//     cutoutPercentage: 30,
+//     responsive: false,
+//     plugins: {
+//       datalabels: {
+//         color: "white",
+//         font: {
+//           weight: "bold",
+//         },
+//         // Box shadow per etichette di dati
+//         shadowColor: "rgba(0, 0, 0, 0.3)",
+//         shadowBlur: 10,
+//         shadowOffsetX: 0,
+//         shadowOffsetY: 4,
+//       },
+//     },
+//   };
 
-  // Crea il grafico a ciambella
-  const donutChart = new Chart(ctx, {
-    type: "doughnut",
-    data: dati,
-    options: options,
-  });
-};
-graficoCiambella(1, 6);
+//   // Crea il grafico a ciambella
+//   const donutChart = new Chart(ctx, {
+//     type: "doughnut",
+//     data: dati,
+//     options: options,
+//   });
+// };
+// graficoCiambella(1, 6);

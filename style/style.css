@@ -97,37 +97,45 @@ svg {
   position: absolute;
   top: 0;
   right: 0;
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+#circleBackground {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #050505;
+  opacity: 0.2;
+  fill: none;
 }
 
 #circle30 {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 2px;
-  stroke: white;
+  stroke-width: 4px;
+  stroke: #00ffff;
   fill: none;
   animation: countdown 30s linear infinite forwards;
 }
-
 #circle60 {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 2px;
-  stroke: white;
+  stroke-width: 4px;
+  stroke: #00ffff;
   fill: none;
   animation: countdown 60s linear infinite forwards;
 }
-
 #circle120 {
   stroke-dasharray: 113px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 2px;
-  stroke: white;
+  stroke-width: 4px;
+  stroke: #00ffff;
   fill: none;
   animation: countdown 120s linear infinite forwards;
 }
@@ -139,4 +147,15 @@ svg {
   to {
     stroke-dashoffset: 113px;
   }
+}
+
+#time {
+  font-family: "inter", sans-serif;
+}
+#time p {
+  margin: 0;
+}
+
+.tempoHtml {
+  font-size: 3em;
 }
