@@ -28,8 +28,8 @@ const superatoOno = function (pass) {
     function Coriandolo() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.area = numeroRandom(10, 15);
-      this.dimension = numeroRandom(5, 20); // Nuovo campo per la dimensione
+      this.area = numeroRandom(12, 15);
+      this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
       this.tilt = numeroRandom(-4, 4);
       this.tiltAngle = 0;
       this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
@@ -79,8 +79,8 @@ const superatoOno = function (pass) {
           (Math.sin(coriandoliSetting.wave) +
             coriandoli[i].area +
             coriandoliSetting.gravity) *
-          0.45;
-        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.29;
+          0.38;
+        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.325;
 
         coriandoli[i].draw();
 
@@ -111,6 +111,13 @@ const superatoOno = function (pass) {
         creaCoriandoli();
         window.requestAnimationFrame(inizia);
       }, 600);
+
+      // Chiamata per avviare la riproduzione dell'audio
+      const audio = document.getElementById("audioPlayer");
+      function playAudio() {
+        audio.play();
+      }
+      playAudio();
     };
   } else {
     document.getElementById("messaggioErrore").style.display = "block";
