@@ -136,27 +136,38 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
 
   if (obgDomanda.type === `multiple`) {
     let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)
-    const divRisposte = document.createElement("div")
+    const divRisposte1 = document.createElement("div")
+
+    const divRisposte2 = document.createElement("div")
+
+    divRisposte1.id = `divRisposteRiga1`
+    divRisposte2.id = `divRisposteRiga2`
+
+    let risposteAppese = 0
+
     for (let iRisposte = 0; iRisposte < risposte.length; iRisposte++) {
-      const divRisposta = document.createElement("div")
       const pRisposta = document.createElement("p")
       pRisposta.innerText = risposte[iRisposte]
+
       pRisposta.classList = "multTypeButton"
       pRisposta.id = `r` + risposte[iRisposte]
+
       pRisposta.onclick = async function (obgDomanda) {
-        console.log("click")
-        console.log(risposte)
-        console.log(iRisposte)
-        console.log(obgDomanda.question)
-        console.log(obgDomanda.answer)
 
         await addRisposta(risposte, iRisposte, obgDomanda.question, obgDomanda.answer)
       }
-      divRisposta.appendChild(pRisposta)
-      divRisposte.appendChild(divRisposta)
+      if (risposteAppese > 1) {
+        divRisposte2.appendChild(pRisposta)
+      } else {
+        risposteAppese++
+        divRisposte1.appendChild(pRisposta)
+      }
+
+      divRitorno.appendChild(divRisposte1)
+      divRitorno.appendChild(divRisposte2)
     }
 
-    divRitorno.appendChild(divRisposte);
+
   } else {
     const divRispostaBoolean = document.createElement('div');
     divRispostaBoolean.id = 'pVero-pFalso';
