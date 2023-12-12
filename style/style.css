@@ -54,7 +54,25 @@ span {
 /* CONTROLLARE!!!!!! */
 #checkbox {
 }
+div button {
+  height: 58px;
+  width: 220px;
+  background-color: #00ffff;
+  font-weight: bold;
+  font-size: 16px;
+}
 #button {
   text-align: right;
-  width: ;
+  margin-right: 6em;
+  margin-bottom: 4em;
+}
+button:hover {
+  transition: 0.7s;
+  box-shadow: 0px 0px 30px 7px #00ffff;
+  cursor: pointer;
+  border: none;
+  border-style: 5px;
+}
+button {
+  border: none;
 }
