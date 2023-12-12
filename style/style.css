@@ -77,8 +77,7 @@ button {
   border: none;
 }
 
-/* 
-CSS TIMER - FRANCESCO 
+/* CSS TIMER - FRANCESCO */
 #countdown {
   position: relative;
   margin: auto;
@@ -110,7 +109,7 @@ svg {
   stroke-width: 2px;
   stroke: white;
   fill: none;
-  animation: countdown 10s linear infinite forwards;
+  animation: countdown 30s linear infinite forwards;
 }
 
 #circle60 {
@@ -130,7 +129,7 @@ svg {
   stroke-width: 2px;
   stroke: white;
   fill: none;
-  animation: countdown 10s linear infinite forwards;
+  animation: countdown 120s linear infinite forwards;
 }
 
 @keyframes countdown {
@@ -140,4 +139,4 @@ svg {
   to {
     stroke-dashoffset: 113px;
   }
-} */
+}

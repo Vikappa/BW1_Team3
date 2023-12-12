@@ -9,19 +9,50 @@ const timer = function (difficolta) {
     timer = 120;
   }
 
-  function aggiornaTimer(timer1) {
+  //Cerchio intorno al timer
+  function cerchio() {
+    const cerchioInHtml = document.getElementById("cerchio");
+
+    switch (difficolta) {
+      case "easy":
+        cerchioInHtml.innerHTML = `    
+          <svg>
+            <circle id="circle30" r="18" cx="20" cy="20"></circle>
+          </svg>`;
+        break;
+      case "medium":
+        cerchioInHtml.innerHTML = `    
+          <svg>
+            <circle id="circle60" r="18" cx="20" cy="20"></circle>
+          </svg>`;
+        break;
+      case "hard":
+        cerchioInHtml.innerHTML = `    
+          <svg>
+            <circle id="circle120" r="18" cx="20" cy="20"></circle>
+          </svg>`;
+        break;
+    }
+  }
+  cerchio();
+
+  // Timer
+
+  async function aggiornaTimer() {
     if (timer >= 0) {
-      document.getElementById("countdown").innerHTML = `
+      const timerInHtml = document.getElementById("time");
+      timerInHtml.innerHTML = `
       <p>Second</p>
       <p>${timer}</p>
       <p>Remaing</p> `;
       console.log(timer);
       timer--;
     } else {
+      //rispostaVuota()
       clearInterval(intervallo);
     }
   }
-  /*CLASSI CERCHIO */
+
   const intervallo = setInterval(aggiornaTimer, 1000);
 };
 timer("easy");
