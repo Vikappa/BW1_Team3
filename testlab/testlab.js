@@ -279,7 +279,6 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
-
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
@@ -347,6 +346,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     divRitorno.appendChild(divRispostaBoolean);
   }
   divRitorno.id = 'genitore';
+  divRitorno.appendChild(cerchioTimer(difficulty))
   return divRitorno;
 };
 
