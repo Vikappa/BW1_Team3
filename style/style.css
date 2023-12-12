@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 /* CSS COMUNE PER TUTTO IL PROGETTO */
+/* Alex */
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
@@ -85,7 +86,7 @@ form p {
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
   cursor: pointer;
 }
-
+/* LUCA */
 header img {
   width: 130px;
   margin-bottom: 5em;
