@@ -73,15 +73,15 @@ const superatoOno = function (pass) {
 
         contenuto.clearRect(0, 0, width, height);
 
-      for (let i = 0; i < coriandoli.length; i++) {
-        coriandoliSetting.wave += 0.4;
-        coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
-        coriandoli[i].y +=
-          (Math.sin(coriandoliSetting.wave) +
-            coriandoli[i].area +
-            coriandoliSetting.gravity) *
-          0.37;
-        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
+        for (let i = 0; i < coriandoli.length; i++) {
+          coriandoliSetting.wave += 0.4;
+          coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
+          coriandoli[i].y +=
+            (Math.sin(coriandoliSetting.wave) +
+              coriandoli[i].area +
+              coriandoliSetting.gravity) *
+            0.36;
+          coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
 
           coriandoli[i].draw();
 
@@ -113,17 +113,134 @@ const superatoOno = function (pass) {
           window.requestAnimationFrame(inizia);
         }, 600);
 
-      //per avviare la riproduzione dell'audio
-      // const audio = document.getElementById("audioPlayer");
-      // const audioMessage = document.querySelector("h1");
+        //per avviare la riproduzione dell'audio
+        // const audio = document.getElementById("audioPlayer");
+        // const audioMessage = document.querySelector("h1");
 
-      // // audioMessage.addEventListener("click", () => {
-      // //   audio.play();
-      // //   audioMessage.style.display = "none"; // Nascondi il messaggio dopo aver avviato l'audio
-      // // });
+        // // audioMessage.addEventListener("click", () => {
+        // //   audio.play();
+        // //   audioMessage.style.display = "none"; // Nascondi il messaggio dopo aver avviato l'audio
+        // // });
+      };
     };
+    animazioneCoriandoli();
   } else {
-    document.getElementById("messaggioErrore").style.display = "block";
+    const animazioneLacrime = function () {
+      let canvas = document.getElementById("canvas");
+      let contenuto = canvas.getContext("2d");
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let lacrime = [];
+      let lacrimeSetting = {
+        count: 400,
+        gravity: 0.4,
+        wave: 0,
+      };
+
+      window.requestAnimationFrame =
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+
+      const numeroRandom = function (min, max) {
+        return Math.random() * (max - min) + min;
+      };
+
+      function Lacrima() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.dimension = numeroRandom(8, 20);
+        this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
+        this.speed = numeroRandom(5, 20);
+        this.tilt = numeroRandom(-4, 4);
+        this.tiltAngle = 0;
+      }
+
+      Lacrima.prototype.draw = function () {
+        contenuto.beginPath();
+        contenuto.lineWidth = 5;
+        contenuto.strokeStyle = this.color;
+        contenuto.moveTo(this.x, this.y);
+        contenuto.quadraticCurveTo(
+          this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
+          this.y - this.dimension, // Inverti la posizione del punto di controllo
+          this.x,
+          this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
+        );
+        contenuto.quadraticCurveTo(
+          this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
+          this.y - this.dimension, // Inverti la posizione del punto di controllo
+          this.x,
+          this.y
+        );
+        contenuto.stroke();
+      };
+
+      const creaLacrime = function () {
+        while (lacrime.length < lacrimeSetting.count) {
+          let lacrima = new Lacrima();
+          lacrime.push(lacrima);
+        }
+      };
+
+      let startTime = null;
+      let duration = 3000; // Durata in millisecondi
+      let tempoCorrente = 0; // Tempo corrente di animazione
+
+      const iniziaLacrime = (timestamp) => {
+        const tempoTrascorso = timestamp - startTime;
+
+        if (!startTime) {
+          startTime = timestamp;
+        }
+
+        tempoCorrente = timestamp - startTime;
+
+        contenuto.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < lacrime.length; i++) {
+          lacrimeSetting.wave += 0.01;
+          lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
+          lacrime[i].y +=
+            (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
+            lacrime[i].speed;
+          lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.01;
+
+          lacrime[i].draw();
+
+          if (tempoCorrente < duration) {
+            tempoCorrente = timestamp - startTime;
+          } else {
+            lacrime[i].y += 10;
+          }
+          if (lacrime[i].y > height + lacrime[i].dimension) {
+            lacrime.splice(i, 1);
+            i--; // Decrementa l'indice dopo la rimozione dell'elemento
+          }
+        }
+
+        if (lacrime.length > 0 && tempoCorrente < duration) {
+          window.requestAnimationFrame(iniziaLacrime);
+        }
+      };
+
+      window.onload = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        setTimeout(() => {
+          document.getElementById("messaggioErrore").style.display = "block";
+          creaLacrime();
+          window.requestAnimationFrame(iniziaLacrime);
+        }, 600);
+      };
+    };
+    animazioneLacrime();
   }
 };
-superatoOno("superato");
+superatoOno("perato");
