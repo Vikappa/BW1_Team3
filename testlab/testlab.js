@@ -67,19 +67,22 @@ async function addRisposta(
   correct_answer
 ) {
   let risposta = {};
-  if (arrayRispostePresentate.length > 1) {
-    risposta = {
-      type: `multiple`,
-      question: domanda,
-      answer: arrayRispostePresentate[indice_risposta_selezionata],
-      all_answer: arrayRispostePresentate,
-      correctAnswer: correct_answer,
-    };
-  } else {
-  }
-  console.log(risposta);
+  risposta = {
+    type: `multiple`,
+    question: domanda,
+    answer: arrayRispostePresentate[indice_risposta_selezionata],
+    all_answer: arrayRispostePresentate,
+    correctAnswer: correct_answer,
+  };
 
-  arrayRisposte.push(risposta);
+
+  for (let k = 0; k < arrayDomande.length; k++) {
+    console.log(arrayDomande[k].type)
+    console.log(arrayDomande[k].question)
+    console.log(arrayDomande[k].answer)
+    console.log(arrayDomande[k].all_answer)
+    console.log(arrayDomande[k].correct_answer)
+  }
 
   console.log(
     'Lunghezza array risposte: ' +
@@ -117,7 +120,7 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   renderizzaDomande();
 }
 
-const divDinamicoQuestion = async function (obgDomanda, index) {
+const divDinamicoQuestion = async function (obgDomanda) {
   console.log('inizio procedura');
 
   if (!obgDomanda) {
@@ -128,7 +131,7 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
 
   console.log('obg domanda esistente');
   difficulty = obgDomanda.difficulty;
-
+  const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
   const pDomanda = document.createElement('p');
   pDomanda.innerText = obgDomanda.question;
@@ -152,9 +155,9 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
       pRisposta.classList = "multTypeButton"
       pRisposta.id = `r` + risposte[iRisposte]
 
-      pRisposta.onclick = async function (obgDomanda) {
+      pRisposta.onclick = async function () {
 
-        await addRisposta(risposte, iRisposte, obgDomanda.question, obgDomanda.answer)
+        await addRisposta(risposte, iRisposte, pDomanda.innerText, rispostaCorretta)
       }
       if (risposteAppese > 1) {
         divRisposte2.appendChild(pRisposta)
@@ -177,14 +180,14 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
     const pFalso = document.createElement('p');
     pVero.classList = `booleanButton`;
     pVero.id = `pVero`;
-    pVero.onclick = async function (obgDomanda) {
+    pVero.onclick = async function () {
       console.log('click');
-      await addRispostaBool('true', obgDomanda.question, obgDomanda.answer);
+      await addRispostaBool('true', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.classList = `booleanButton`;
-    pFalso.onclick = async function (obgDomanda) {
+    pFalso.onclick = async function () {
       console.log('click');
-      await addRispostaBool('false', obgDomanda.question, obgDomanda.answer);
+      await addRispostaBool('false', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.id = `pFalso`;
     pVero.innerText = 'True';
