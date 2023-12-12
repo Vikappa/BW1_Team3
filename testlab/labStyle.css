@@ -25,15 +25,14 @@ body {
   border-radius: 25px;
   padding: 10px;
   text-align: center;
-  width: 250px;
-  margin: 90px;
+  width: 220px;
+  margin: 55px 95px 35px 95px;
 }
 #pVero-pFalso {
   display: flex;
   flex-wrap: wrap;
 }
 
-.multTypeButton {
-}
 #genitore {
+  text-align: center;
 }
