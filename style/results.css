@@ -30,7 +30,7 @@ header > div > img {
 }
 #canvas {
   position: absolute;
-  top: 50%; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
+  top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
   left: 10px; /* Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
 }
 #messaggioErrore {

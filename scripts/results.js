@@ -204,12 +204,12 @@ const superatoOno = function (pass) {
         contenuto.clearRect(0, 0, width, height);
 
         for (let i = 0; i < lacrime.length; i++) {
-          lacrimeSetting.wave += 0.01;
+          lacrimeSetting.wave += 0.00001;
           lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
           lacrime[i].y +=
             (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
             lacrime[i].speed;
-          lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.01;
+          lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
 
           lacrime[i].draw();
 
@@ -243,4 +243,4 @@ const superatoOno = function (pass) {
     animazioneLacrime();
   }
 };
-superatoOno("perato");
+superatoOno("superato");
