@@ -16,3 +16,7 @@ Ho creato un metodo che renderizza dinamicamente un div con dentro domande e ris
 ciclano l'array di domande da proporre, puliscono il div contenitore e propongono un nuovo div con la domanda successiva. 
 Al termine dell'array di domande, viene lanciato il metodo che renderizza le risposte e la posizione nella leaderboard. Ho lasciato a Luca 
 l'onere di formattare e animare la pagina dinamica delle domande e a Francesco di realizzare un timer che conti i secondi rimasti per rispondere
+
+Giorno 1:
+Francesco:
+Le parti del progetto a cui sto lavorando sono il timer che scandisce il tempo disponibile in base alla difficoltà oggettiva di ogni domanda presente nel benchmark e il grafico a ciambella che si crea in maniera dinamica al termine del test. Come primo giorno ho creato lo scheletro delle due parti: la logica di funzionamento del timer e lo studio della libreria "chart.js" per la creazione del grafico.
