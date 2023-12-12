@@ -118,22 +118,22 @@ const cerchioTimer = function (difficolta) {
     case "easy":
       divCerchio.innerHTML = `    
             <svg>
-              <circle class="svgCircle" id="circle30" r="55" cx="60" cy="60"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "medium":
       divCerchio.innerHTML = `    
             <svg>
-              <circle class="svgCircle"  id="circle60" r="55" cx="60" cy="60"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "hard":
       divCerchio.innerHTML = `    
             <svg>
-              <circle class="svgCircle"  id="circle120" r="55" cx="60" cy="60"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="55" cx="60" cy="60"></circle>
+              <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
+              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`
       break
   }
@@ -152,8 +152,8 @@ const cerchioTimer = function (difficolta) {
   divTime.appendChild(nSecondi)
   divTime.appendChild(primanenti)
 
-  cerchioTimerHtml.style.width = "120px"
-  cerchioTimerHtml.style.height = "120px"
+  cerchioTimerHtml.style.width = "150px"
+  cerchioTimerHtml.style.height = "150px"
 
   cerchioTimerHtml.appendChild(divCerchio)
   cerchioTimerHtml.appendChild(divTime)
@@ -284,6 +284,8 @@ const divDinamicoQuestion = async function (obgDomanda) {
   const divRitorno = document.createElement('div');
   const pDomanda = document.createElement('p');
   pDomanda.innerText = obgDomanda.question;
+  pDomanda.id = "pDomanda"
+  pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%"
   divRitorno.appendChild(pDomanda);
 
   if (obgDomanda.type === `multiple`) {
