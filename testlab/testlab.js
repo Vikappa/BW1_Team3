@@ -68,14 +68,14 @@ async function addRisposta(arrayRispostePresentate, indice_risposta_selezionata,
             question: domanda,
             answer: arrayRispostePresentate[indice_risposta_selezionata],
             all_answer: arrayRispostePresentate,
-            correct_answer: correct_answer
+            correctAnswer: correct_answer
         }
     } else {
 
     }
     arrayRisposte.push(risposta)
 
-    console.log("Lunghezza array risposte: " + arrayRisposte.length)
+    console.log("Lunghezza array risposte: " + arrayRisposte.length + " lunghezza array domande: " + arrayDomande.length)
     console.log("Array risposte: " + arrayRisposte)
 
     renderizzaDomande()
@@ -92,10 +92,10 @@ async function addRispostaBool(bool, domanda, correct_answer) {
         question: domanda,
         answer: ans,
         all_answer: [`true`, `false`],
-        correct_answer: correct_answer
+        correctAnswer: correct_answer
     }
     arrayRisposte.push(risposta)
-    console.log("Lunghezza array risposte: " + arrayRisposte.length)
+    console.log("Lunghezza array risposte: " + arrayRisposte.length + " lunghezza array domande: " + arrayDomande.length)
     console.log("Array risposte: " + arrayRisposte)
     renderizzaDomande()
 }
@@ -133,13 +133,18 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
             pRisposta.id = `r` + risposte[iRisposte]
             pRisposta.onclick = async function () {
                 console.log("click")
+                console.log(risposte)
+                console.log(iRisposte)
+                console.log(obgDomanda.question)
+                console.log(obgDomanda.answer)
+
                 await addRisposta(risposte, iRisposte, obgDomanda.question, obgDomanda.answer)
             }
             divRisposta.appendChild(pRisposta)
             divRisposte.appendChild(divRisposta)
         }
-        divRitorno.appendChild(divRisposte)
 
+        divRitorno.appendChild(divRisposte)
     }
     else {
         const divRispostaBoolean = document.createElement("div")
