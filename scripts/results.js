@@ -243,4 +243,4 @@ const superatoOno = function (pass) {
     animazioneLacrime();
   }
 };
-superatoOno("superato");
+superatoOno("perato");
