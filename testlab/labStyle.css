@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 .multTypeButton:hover,
 .booleanButton:hover {
   color: red;
 }
+
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
@@ -15,9 +17,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 #testappend {
   text-align: center;
 }
+
 #pVero,
 #pFalso,
 .multTypeButton {
@@ -28,6 +32,7 @@ body {
   width: 220px;
   margin: 55px 95px 35px 95px;
 }
+
 #pVero-pFalso {
   display: flex;
   flex-wrap: wrap;
@@ -36,3 +41,93 @@ body {
 #genitore {
   text-align: center;
 }
+
+#loader_interpagina {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, #00FFFF 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, #00FFFF);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: s3 1s infinite linear;
+}
+
+@keyframes s3 {
+  100% {
+    transform: rotate(1turn)
+  }
+}
+
+#circleBackground {
+  stroke-dasharray: 343px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #050505;
+  opacity: 0.2;
+  fill: none;
+  z-index: -1;
+
+}
+
+#circle30 {
+  stroke-dasharray: 340px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 30s linear infinite forwards;
+  z-index: 1;
+}
+
+#circle60 {
+  stroke-dasharray: 340px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 60s linear infinite forwards;
+  z-index: 1;
+
+}
+
+#circle120 {
+  stroke-dasharray: 340px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 120s linear infinite forwards;
+  z-index: 1;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+
+  to {
+    stroke-dashoffset: 347px;
+  }
+}
+
+#time {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#time p {
+  margin: 3px
+}
+
+#time p:nth-child(2) {
+  font-size: 2em;
+}
+
+.svgCircle {}
