@@ -178,13 +178,68 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
 }
 
 const renderizzaDomande = async function () {
-    arrayDomande = await generaArrayDomande()
+    if (arrayDomande.length === 0) {
+        arrayDomande = await generaArrayDomande()
+    }
     divTest.innerHTML = ``
 
-    const nuovaDomandaRenderizzata = await divDinamicoQuestion(arrayDomande[nDomandeFatte])
-    await divTest.appendChild(nuovaDomandaRenderizzata)
+    if (arrayDomande.length === arrayRisposte.length) {
+        renderizza_risultato(arrayRisposte)
+    } else {
+        const nuovaDomandaRenderizzata = await divDinamicoQuestion(arrayDomande[nDomandeFatte])
+        nDomandeFatte++
+        await divTest.appendChild(nuovaDomandaRenderizzata)
+    }
 }
 
 renderizzaDomande()
 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// const pseudo_arrayRisposte = [
+//     {
+//         type: "multiple",
+//         question: "Which programming language shares its name with an island in Indonesia?",
+//         answer: "Java",
+//         all_answer: ["Java", "Python", "C", "Jakarta"],
+//         correctAnswer: "Java"
+//     },
+//     {
+//         type: "multiple",
+//         question: "What is the code name for the mobile operating system Android 7.0?",
+//         answer: "Jelly Bean",
+//         all_answer: ["Jelly Bean","Ice Cream Sandwich",
+//         "Jelly Bean",
+//         "Marshmallow"],
+//         correctAnswer: "Nougat"
+//     },
+//     {
+//         type: "boolean",
+//         question: "Linux was first created as an alternative to Windows XP",
+//         answer: "true",
+//         all_answer: ["true", "false"],
+//         correctAnswer: "False"
+//     },
+//     {
+//         type: "multiple",
+//         question: "What is the most preferred image format used for logos in the Wikimedia database?",
+//         answer: ".svg",
+//         all_answer: [".svg"],
+//         correctAnswer: ".png", ".jpeg", ".gif"
+//     },
+//     {
+//         type: "multiple",
+//         question: "",
+//         answer: "",
+//         all_answer: [],
+//         correctAnswer: ""
+//     },
+//     {
+//         type: "multiple",
+//         question: "",
+//         answer: "",
+//         all_answer: [],
+//         correctAnswer: ""
+//     }
+// ]
 
