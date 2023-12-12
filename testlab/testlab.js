@@ -285,9 +285,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   const divRitorno = document.createElement('div');
   const pDomanda = document.createElement('p');
   pDomanda.innerText = obgDomanda.question;
-
   divRitorno.appendChild(pDomanda);
-  divRitorno.appendChild(cerchioTimer(difficulty))
 
   if (obgDomanda.type === `multiple`) {
     let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)
@@ -320,8 +318,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
 
       divRitorno.appendChild(divRisposte1)
       divRitorno.appendChild(divRisposte2)
-
     }
+
+
   } else {
     const divRispostaBoolean = document.createElement('div');
     divRispostaBoolean.id = 'pVero-pFalso';
