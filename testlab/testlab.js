@@ -134,11 +134,6 @@ const divDinamicoQuestion = async function (obgDomanda, index) {
             pRisposta.classList = "multTypeButton"
             pRisposta.id = `r` + risposte[iRisposte]
             pRisposta.onclick = async function (obgDomanda) {
-                console.log("click")
-                console.log(risposte)
-                console.log(iRisposte)
-                console.log(obgDomanda.question)
-                console.log(obgDomanda.answer)
 
                 await addRisposta(risposte, iRisposte, obgDomanda.question, obgDomanda.answer)
             }
