@@ -20,3 +20,10 @@ l'onere di formattare e animare la pagina dinamica delle domande e a Francesco d
 Giorno 1:
 Francesco:
 Le parti del progetto a cui sto lavorando sono il timer che scandisce il tempo disponibile in base alla difficoltà oggettiva di ogni domanda presente nel benchmark e il grafico a ciambella che si crea in maniera dinamica al termine del test. Come primo giorno ho creato lo scheletro delle due parti: la logica di funzionamento del timer e lo studio della libreria "chart.js" per la creazione del grafico.
+
+Giorno 2:
+Francesco:
+Ho prestato attenzione al css del timer, creando la base del css e studiando i settaggi delle immagini svg e dei cerchi. 
+Ho creato una barra di caricamento tonda per Vincenzo da utilizzare all'occorrenza.
+Inoltre, interfacciandomi con vincenzo, abbiamo modificato alcuni elementi statici, rendendoli dinamici tramite JS.
+
