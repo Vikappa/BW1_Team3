@@ -1,0 +1,4 @@
+.multTypeButton:hover,
+.booleanButton:hover {
+    color: red;
+}
