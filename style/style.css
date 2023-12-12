@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 /* CSS COMUNE PER TUTTO IL PROGETTO */
 /* Alex */
@@ -23,16 +23,16 @@ nav img {
 }
 main {
   margin-top: 100px;
-  text-align: center;
+  text-align: left;
   color: #fff;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
 }
 
 h1 {
-  text-align: center;
+  text-align: left;
   color: #fff;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .stars {
@@ -80,7 +80,7 @@ form p {
   height: 50px;
   background-color: #00ffff;
   font-size: 16px;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
@@ -97,7 +97,7 @@ header img {
 }
 .title1,
 .title2 {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 60px;
 }
 .title2 {
@@ -107,7 +107,7 @@ header img {
 .description,
 .elenco,
 span {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
 }
 .title-instructions {
