@@ -14,6 +14,58 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
+//GRAFICO
+const graficoCiambella = async function (sbagliate, giuste) {
+  const canva = document.createElement("canvas")
+
+  const ctx = canva.getContext("2d");
+
+  //const ctx = document.getElementById("graficoCiambella").getContext("2d");
+
+  //Al posto di prendere un div con id "graficoCiambella" ne ho creato uno uguale e ho preso il contex da lui
+
+  // Dati del grafico
+  const dati = {
+    datasets: [
+      {
+        data: [sbagliate, giuste], // Valori percentuali per i segmenti del grafico
+        backgroundColor: ["#D20094", "#00FFFF"], // Colori dei segmenti
+        borderColor: "white", // Colore del bordo
+        borderWidth: 2, // Spessore del bordo
+      },
+    ],
+    labels: ["SBAGLIATE", "GIUSTE"]
+  }
+
+  // Configurazione del grafico
+  const options = {
+    cutoutPercentage: 30,
+    responsive: false,
+    plugins: {
+      datalabels: {
+        color: "white",
+        font: {
+          weight: "bold",
+        },
+        // Box shadow per etichette di dati
+        shadowColor: "rgba(0, 0, 0, 0.3)",
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 4,
+      },
+    },
+  };
+
+  // Crea il grafico a ciambella
+  const donutChart = new Chart(ctx, {
+    type: "doughnut",
+    data: dati,
+    options: options,
+  })
+
+  return donutChart
+}
+
 const diffInSecondi = function (diffString) {
   switch (diffString) {
     case `easy`:
@@ -57,6 +109,21 @@ const generaArrayDomande = async function () {
   }
   return arrayFinale;
 };
+
+const renderizza_risultato = async function () {
+  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`
+  await delay(500)
+  let totaleDomande = arrayRisposte.length
+  let giuste = 0
+  for (let g = 0; g < arrayRisposte.length; g++) {
+    if (arrayRisposte[g].answer === arrayRisposte[g].correctAnswer) {
+      giuste++
+    }
+  }
+
+  let sbagliate = totaleDomande - giuste
+  divTest.appendChild(graficoCiambella(sbagliate, giuste))
+}
 
 let arrayDomande = [];
 
@@ -190,6 +257,7 @@ const renderizzaDomande = async function () {
   if (arrayDomande.length === 0) {
     arrayDomande = await generaArrayDomande();
   }
+
   console.log("Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto")
   console.log(arrayRisposte);
 
