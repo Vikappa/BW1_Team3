@@ -201,6 +201,10 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
+  const quanteGiuste = document.createElement("div");
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${sbagliate}%</p>`;
+  divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
@@ -219,10 +223,6 @@ const renderizza_risultato = async function () {
   quanteSbagliate.innerHTML = `<p>Correct</p>
   <p>${giuste}%</p>`;
   divTest.appendChild(quanteSbagliate);
-  const quanteGiuste = document.createElement("div");
-  quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${sbagliate}%</p>`;
-  divTest.appendChild(quanteGiuste);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
   divTest.appendChild(grafic);
