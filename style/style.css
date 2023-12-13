@@ -405,7 +405,7 @@ form p {
 }
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
-  /* * {
+/* * {
     box-sizing: border-box;
   }
   body {
@@ -414,13 +414,12 @@ form p {
   #animazioniCoriandoliOgocce {
     position: absolute;
     top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
-    /* left: 10px; Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato)
+/* left: 10px; Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato)
   } */
-  /* #messaggioGocce {
+/* #messaggioGocce {
     display: none;
     text-align: center;
     color: #e9eaed;
     font-size: 370%;
     font-family: "Outfit", sans-serif;
-  } */ */
-  
+  } */
