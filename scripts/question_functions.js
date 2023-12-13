@@ -1,10 +1,10 @@
 // Il link magico altro non era che il link all'API di un progetto OpenSource di un Database di domande di vari argomenti
 // Sul sito https://opentdb.com possiamo iscriverci e creare la nostra richiesta al database sotto forma di url su cui fare fetch()
 
-const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
-const body = document.getElementsByName("body")[0];
+const apiUrl = 'https://opentdb.com/api.php?amount=50&category=18';
+const body = document.getElementsByName('body')[0];
 let nDomandeFatte = 0;
-const divTest = document.getElementById("testAppend");
+const divTest = document.getElementById('testAppend');
 const arrayRisposte = [];
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
@@ -18,22 +18,22 @@ const arrayRisposte = [];
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
-  canvas.id = "graficoCiambella";
+  const canvas = document.createElement('canvas'); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
+  canvas.id = 'graficoCiambella';
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
 
   // Dati del grafico
   const dati = {
     datasets: [
       {
         data: [sbagliate, giuste],
-        backgroundColor: ["#D20094", "#00FFFF"],
-        borderColor: "white",
+        backgroundColor: ['#D20094', '#00FFFF'],
+        borderColor: 'white',
         borderWidth: 2,
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"],
+    labels: ['SBAGLIATE', 'GIUSTE'],
   };
 
   // Configurazione del grafico
@@ -42,11 +42,11 @@ const graficoCiambella = function (sbagliate, giuste) {
     responsive: false,
     plugins: {
       datalabels: {
-        color: "white",
+        color: 'white',
         font: {
-          weight: "bold",
+          weight: 'bold',
         },
-        shadowColor: "rgba(0, 0, 0, 0.3)",
+        shadowColor: 'rgba(0, 0, 0, 0.3)',
         shadowBlur: 10,
         shadowOffsetX: 0,
         shadowOffsetY: 4,
@@ -56,30 +56,30 @@ const graficoCiambella = function (sbagliate, giuste) {
 
   // Crea e restituisci il grafico a ciambella
   return new Chart(ctx, {
-    type: "doughnut",
+    type: 'doughnut',
     data: dati,
     options: options,
   }).canvas;
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
-const main = document.getElementById("main");
+const main = document.getElementById('main');
 let tictoc;
 let timeleft;
 let diffValueCurrentQuestion;
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
-  if (difficoltaStringa === "easy") {
+  if (difficoltaStringa === 'easy') {
     return 30;
-  } else if (difficoltaStringa === "medium") {
+  } else if (difficoltaStringa === 'medium') {
     return 60;
-  } else if (difficoltaStringa === "hard") {
+  } else if (difficoltaStringa === 'hard') {
     return 120;
   } else {
-    console.log("Errore numero inserito nel metodo timer");
+    console.log('Errore numero inserito nel metodo timer');
     return 0;
   }
-  console.log("Errore numero inserito nel metodo timer");
+  console.log('Errore numero inserito nel metodo timer');
   return 0;
 };
 
@@ -88,7 +88,7 @@ async function aggiornaTimer() {
     timeleft = timer(diffValueCurrentQuestion);
   }
   if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
+    const timerInHtml = document.getElementById('nSecondi');
     timerInHtml.textContent = timeleft;
     timeleft--;
   } else {
@@ -106,31 +106,31 @@ const avviaTicToc = function (diffValue) {
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
-  const cerchioTimerHtml = document.createElement("div");
-  const divCerchio = document.createElement("div");
-  const divTime = document.createElement("div");
-  cerchioTimerHtml.id = "countdown";
-  divCerchio.id = "cerchio";
-  divTime.id = "time";
+  const cerchioTimerHtml = document.createElement('div');
+  const divCerchio = document.createElement('div');
+  const divTime = document.createElement('div');
+  cerchioTimerHtml.id = 'countdown';
+  divCerchio.id = 'cerchio';
+  divTime.id = 'time';
 
-  divCerchio.style = "position: absolute";
+  divCerchio.style = 'position: absolute';
 
   switch (difficolta) {
-    case "easy":
+    case 'easy':
       divCerchio.innerHTML = `    
             <svg id="svgGenerale">
               <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
-    case "medium":
+    case 'medium':
       divCerchio.innerHTML = `    
             <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
-    case "hard":
+    case 'hard':
       divCerchio.innerHTML = `    
             <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
@@ -139,21 +139,21 @@ const cerchioTimer = function (difficolta) {
       break;
   }
 
-  const pseconds = document.createElement("p");
-  const nSecondi = document.createElement("p");
-  const primanenti = document.createElement("p");
+  const pseconds = document.createElement('p');
+  const nSecondi = document.createElement('p');
+  const primanenti = document.createElement('p');
 
-  pseconds.textContent = "seconds";
+  pseconds.textContent = 'seconds';
   nSecondi.textContent = timer(difficolta);
-  nSecondi.id = "nSecondi";
-  primanenti.textContent = "remeaning";
+  nSecondi.id = 'nSecondi';
+  primanenti.textContent = 'remeaning';
 
   divTime.appendChild(pseconds);
   divTime.appendChild(nSecondi);
   divTime.appendChild(primanenti);
 
-  cerchioTimerHtml.style.width = "150px";
-  cerchioTimerHtml.style.height = "150px";
+  cerchioTimerHtml.style.width = '150px';
+  cerchioTimerHtml.style.height = '150px';
 
   cerchioTimerHtml.appendChild(divCerchio);
   cerchioTimerHtml.appendChild(divTime);
@@ -219,16 +219,16 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
-  console.log("Sbagliate " + sbagliate);
-  console.log("Giuste " + giuste);
+  console.log('Sbagliate ' + sbagliate);
+  console.log('Giuste ' + giuste);
   divTest.appendChild(grafic);
 
-  const divRisposteDate = document.createElement("div");
+  const divRisposteDate = document.createElement('div');
   for (let i = 0; i < arrayRisposte.length; i++) {
-    const divRisposta = document.createElement("div");
-    const pDomanda = document.createElement("p");
+    const divRisposta = document.createElement('div');
+    const pDomanda = document.createElement('p');
     pDomanda.textContent = arrayRisposte[i].question;
-    const pAnswer = document.createElement("p");
+    const pAnswer = document.createElement('p');
     pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer;
     divRisposta.appendChild(pDomanda);
     divRisposta.appendChild(pAnswer);
@@ -257,9 +257,9 @@ async function addRisposta(
   arrayRisposte.push(risposta);
 
   console.log(
-    "Lunghezza array risposte: " +
+    'Lunghezza array risposte: ' +
       arrayRisposte.length +
-      " lunghezza array domande: " +
+      ' lunghezza array domande: ' +
       arrayDomande.length
   );
 
@@ -267,10 +267,10 @@ async function addRisposta(
 }
 async function addRispostaBool(bool, domanda, correct_answer) {
   let ans;
-  if (bool === "true") {
-    ans = "true";
+  if (bool === 'true') {
+    ans = 'true';
   } else {
-    ans = "false";
+    ans = 'false';
   }
   risposta = {
     type: `boolean`,
@@ -281,9 +281,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   };
   arrayRisposte.push(risposta);
   console.log(
-    "Lunghezza array risposte: " +
+    'Lunghezza array risposte: ' +
       arrayRisposte.length +
-      " lunghezza array domande: " +
+      ' lunghezza array domande: ' +
       arrayDomande.length
   );
   renderizzaDomande();
@@ -291,27 +291,27 @@ async function addRispostaBool(bool, domanda, correct_answer) {
 
 const divDinamicoQuestion = async function (obgDomanda) {
   if (!obgDomanda) {
-    console.log("obg domanda non esistente");
+    console.log('obg domanda non esistente');
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
-  const divRitorno = document.createElement("div");
-  const pDomanda = document.createElement("p");
+  const divRitorno = document.createElement('div');
+  const pDomanda = document.createElement('p');
   pDomanda.innerText = obgDomanda.question;
-  pDomanda.id = "pDomanda";
-  pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%";
+  pDomanda.id = 'pDomanda';
+  pDomanda.style = 'font-size: 2em; margin: 0 25% 0 25%';
   divRitorno.appendChild(pDomanda);
 
   if (obgDomanda.type === `multiple`) {
     let risposte = [obgDomanda.correct_answer].concat(
       obgDomanda.incorrect_answers
     );
-    const divRisposte1 = document.createElement("div");
+    const divRisposte1 = document.createElement('div');
 
-    const divRisposte2 = document.createElement("div");
+    const divRisposte2 = document.createElement('div');
 
     divRisposte1.id = `divRisposteRiga1`;
     divRisposte2.id = `divRisposteRiga2`;
@@ -319,10 +319,10 @@ const divDinamicoQuestion = async function (obgDomanda) {
     let risposteAppese = 0;
 
     for (let iRisposte = 0; iRisposte < risposte.length; iRisposte++) {
-      const pRisposta = document.createElement("p");
+      const pRisposta = document.createElement('p');
       pRisposta.innerText = risposte[iRisposte];
 
-      pRisposta.classList = "multTypeButton";
+      pRisposta.classList = 'multTypeButton';
       pRisposta.id = `r` + risposte[iRisposte];
 
       pRisposta.onclick = async function () {
@@ -344,31 +344,31 @@ const divDinamicoQuestion = async function (obgDomanda) {
       divRitorno.appendChild(divRisposte2);
     }
   } else {
-    const divRispostaBoolean = document.createElement("div");
-    divRispostaBoolean.id = "pVero-pFalso";
-    const divVero = document.createElement("div");
-    const divFalso = document.createElement("div");
-    const pVero = document.createElement("p");
-    const pFalso = document.createElement("p");
+    const divRispostaBoolean = document.createElement('div');
+    divRispostaBoolean.id = 'pVero-pFalso';
+    const divVero = document.createElement('div');
+    const divFalso = document.createElement('div');
+    const pVero = document.createElement('p');
+    const pFalso = document.createElement('p');
     pVero.classList = `booleanButton`;
     pVero.id = `pVero`;
     pVero.onclick = async function () {
-      await addRispostaBool("true", pDomanda.innerText, rispostaCorretta);
+      await addRispostaBool('true', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.classList = `booleanButton`;
     pFalso.onclick = async function () {
-      await addRispostaBool("false", pDomanda.innerText, rispostaCorretta);
+      await addRispostaBool('false', pDomanda.innerText, rispostaCorretta);
     };
     pFalso.id = `pFalso`;
-    pVero.innerText = "True";
-    pFalso.innerText = "False";
+    pVero.innerText = 'True';
+    pFalso.innerText = 'False';
     divFalso.appendChild(pFalso);
     divVero.appendChild(pVero);
     divRispostaBoolean.appendChild(divVero);
     divRispostaBoolean.appendChild(divFalso);
     divRitorno.appendChild(divRispostaBoolean);
   }
-  divRitorno.id = "genitore";
+  divRitorno.id = 'genitore';
   divRitorno.appendChild(cerchioTimer(difficulty));
   return divRitorno;
 };
@@ -385,7 +385,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length + 20) {
+  if (arrayDomande.length === arrayRisposte.length) {
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
@@ -401,10 +401,10 @@ renderizzaDomande();
 
 ////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
 const superatoOno = function (pass) {
-  if (pass === "superato") {
+  if (pass === 'superato') {
     // inzio Animazione Coriandoli + audio:
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
+    let canvas = document.getElementById('animazioniCoriandoliOgocce');
+    let contenuto = canvas.getContext('2d');
     let width = window.innerWidth;
     let height = window.innerHeight;
     let coriandoli = [];
@@ -443,8 +443,8 @@ const superatoOno = function (pass) {
 
     Coriandolo.prototype.draw = function () {
       contenuto.beginPath();
-      contenuto.lineJoin = "round"; // Smusso degli angoli
-      contenuto.lineCap = "round"; // Smusso delle estremità
+      contenuto.lineJoin = 'round'; // Smusso degli angoli
+      contenuto.lineCap = 'round'; // Smusso delle estremità
       contenuto.lineWidth = this.dimension; // Utilizza la dimensione
       contenuto.strokeStyle = this.color;
       this.x = this.x + this.tilt;
@@ -514,14 +514,14 @@ const superatoOno = function (pass) {
         creaCoriandoli();
         window.requestAnimationFrame(inizia);
       }, 700);
-      const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+      const audioWinner = new Audio('./sounds/crowd-cheer-results.wav');
       audioWinner.play();
     };
     // // fine Animazione Coriandoli.
     // inzio Animazione Lacrime + audio:
   } else {
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
+    let canvas = document.getElementById('animazioniCoriandoliOgocce');
+    let contenuto = canvas.getContext('2d');
     let width = window.innerWidth;
     let height = window.innerHeight;
     let lacrime = [];
@@ -628,14 +628,14 @@ const superatoOno = function (pass) {
       canvas.height = window.innerHeight;
 
       setTimeout(() => {
-        document.getElementById("messaggioGocce").style.display = "block";
+        document.getElementById('messaggioGocce').style.display = 'block';
         creaLacrime();
         window.requestAnimationFrame(iniziaLacrime);
       }, 700);
-      const audioLooser = new Audio("./sounds/looser-results.wav");
+      const audioLooser = new Audio('./sounds/looser-results.wav');
       audioLooser.play();
     };
   }
   // fine Animazione Lacrime.
 };
-superatoOno("perato");
+superatoOno('perato');
