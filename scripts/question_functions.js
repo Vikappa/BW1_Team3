@@ -642,23 +642,45 @@ renderizzaDomande();
 // superatoOno("perato");
 
 ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
-// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
+// Funzione per nascondere l'animazione di caricamento
 function hideLoadingAnimation() {
   const loadingDiv = document.getElementById("loadingDiv");
   if (loadingDiv) {
     loadingDiv.style.display = "none";
+    console.log("nascondo animazione di caticamento", loadingDiv);
   }
 }
+// Verifica quando tutto il contenuto è stato caricato (include anche immagini, iframe, ecc.)
+window.addEventListener("load", () => {
+  hideLoadingAnimation(); // Nasconde l'animazione quando tutto il contenuto è stato caricato
+});
 
-// Verifica se il div genitore è stato creato:
+// Nascondi l'animazione dopo un secondo solo se il div genitore è stato creato
 const parentDiv = document.getElementById("genitore");
 
-// Se il div genitore non è ancora stato creato, mostra l'animazione:
-if (!parentDiv) {
+if (parentDiv) {
+  // Se il div genitore è presente, attendi un secondo prima di nascondere l'animazione
+  setTimeout(() => {
+    hideLoadingAnimation();
+  }, 1000);
+} else {
   const loadingDiv = document.createElement("div");
   loadingDiv.id = "loadingDiv";
   loadingDiv.textContent = "Caricamento in corso...";
   document.body.appendChild(loadingDiv);
-} else {
-  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato:
 }
+
+//   // Verifica quando tutto il contenuto è stato caricato (include anche immagini, iframe, ecc.)
+//   window.addEventListener("load", () => {
+//     hideLoadingAnimation(); // Nasconde l'animazione quando tutto il contenuto è stato caricato
+//   });
+
+//   // Controlla se il div genitore è stato creato
+//   const parentDiv = document.getElementById("genitore");
+//   if (parentDiv) {
+//     // Se il div genitore è presente, attendi un secondo prima di nascondere l'animazione
+//     setTimeout(() => {
+//       hideLoadingAnimation();
+//     }, 1000);
+//   }
+// });
