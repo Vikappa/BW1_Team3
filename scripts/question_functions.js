@@ -19,10 +19,8 @@ const arrayRisposte = [];
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  // Crea un elemento canvas dinamicamente
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement("canvas")  // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = "graficoCiambella";
-  document.body.appendChild(canvas); // Aggiunge il canvas al corpo del documento
 
   const ctx = canvas.getContext("2d");
 
