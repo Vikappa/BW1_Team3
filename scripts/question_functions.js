@@ -215,7 +215,7 @@ const renderizza_risultato = async function () {
   let giuste = 0
 
   for (let index = 0; index < arrayRisposte.length; index++) {
-    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer)
+    if (arrayRisposte[index].correctAnswer === arrayRisposte[index].answer)
       giuste++
   }
   let sbagliate = totaleDomande - giuste
