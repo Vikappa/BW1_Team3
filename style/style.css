@@ -9,7 +9,6 @@ body {
   background-attachment: fixed;
   color: white;
   margin: 5%;
-  overflow: hidden;
 }
 
 header img {
@@ -464,22 +463,15 @@ form p {
   width: 100%;
 }
 
-#resultleaderboard:nth-child(odd) {
-  background-color: #2a2b34;
-}
-
 #resultleaderboard caption {
   color: white;
   white-space: nowrap;
 }
 
-#resultleaderboard table {
+#resultleaderboard td {
   margin: 2% 1% 2% 1%;
 }
 
-#resultleaderboard table {
-  margin: 2% 1% 2% 1%;
-}
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
 /* * {

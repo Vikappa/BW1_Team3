@@ -273,17 +273,31 @@ const renderizza_risultato = async function () {
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
-    const divRisposta = document.createElement("div");
-    divRisposta.innerHTML = `<table>
+    if (arrayRisposte[i].type === `multiple`) {
+      const divRisposta = document.createElement("div");
+      divRisposta.innerHTML = `<table>
     <caption>${arrayRisposte[i].question}</caption>
+    <tBody>
     <tr>
-    <td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
     </tr>    
     <tr>
-    <td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td><td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[4]}</td>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[4]}</td>
     </tr>
+    </tbody>
     </table>`
-    divRisposteDate.appendChild(divRisposta);
+      divRisposteDate.appendChild(divRisposta);
+    } else {
+      const divRisposta = document.createElement("div");
+      divRisposta.innerHTML = `<table>
+      <caption>${arrayRisposte[i].question}</caption>
+      <tBody>
+      <tr>
+      <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
+      </tbody>
+      </table>`
+      divRisposteDate.appendChild(divRisposta);
+    }
   }
 
   divResultleaderboard.appendChild(divRisposteDate)
