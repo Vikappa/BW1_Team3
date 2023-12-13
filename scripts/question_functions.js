@@ -143,7 +143,7 @@ const cerchioTimer = function (difficolta) {
 
   pseconds.textContent = "seconds";
   nSecondi.id = "nSecondi";
-  nSecondi.textContent = timer("easy");
+  nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
@@ -293,7 +293,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     return await divDinamicoQuestion(obgDomanda);
   }
 
-  difficulty = obgDomanda.difficulty;
+  let difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
   const divRitorno = document.createElement("div");
   const pDomanda = document.createElement("p");
