@@ -452,6 +452,35 @@ form p {
   margin-top: 5%
 }
 
+#resultleaderboard {
+  margin-top: 5%;
+  visibility: hidden;
+  color: blueviolet;
+  font-size: 1.5em;
+  border-radius: 15px;
+  background-color: #17192b;
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+#resultleaderboard:nth-child(odd) {
+  background-color: #2a2b34;
+}
+
+#resultleaderboard caption {
+  color: white;
+  white-space: nowrap;
+}
+
+#resultleaderboard table {
+  margin: 2% 1% 2% 1%;
+}
+
+#resultleaderboard table {
+  margin: 2% 1% 2% 1%;
+}
+
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
 /* * {
     box-sizing: border-box;

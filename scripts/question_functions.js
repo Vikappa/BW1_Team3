@@ -5,12 +5,16 @@ const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
 const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
+const divResultleaderboard = document.getElementById("resultleaderboard");
+
 const arrayRisposte = [];
 let intervalloUnico
+
 const fermaTicToc = async function () {
   console.log("Fermato")
   clearInterval(intervalloUnico)
 }
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
 // For making a request and fetching a resource, use the fetch() method. It is a global method in both Window and Worker contexts.
@@ -209,8 +213,18 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
+const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
+  if (rispostaCasella === rispostaGiusta) {
+    return `V`
+  } else {
+    return `X`
+  }
+}
+
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
+  divResultleaderboard.style.visibility = "visible"
+
   await delay(500);
   divTest.innerHTML = ``;
 
@@ -260,15 +274,19 @@ const renderizza_risultato = async function () {
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
     const divRisposta = document.createElement("div");
-    const pDomanda = document.createElement("p");
-    pDomanda.textContent = arrayRisposte[i].question;
-    const pAnswer = document.createElement("p");
-    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer;
-    divRisposta.appendChild(pDomanda);
-    divRisposta.appendChild(pAnswer);
+    divRisposta.innerHTML = `<table>
+    <caption>${arrayRisposte[i].question}</caption>
+    <tr>
+    <td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
+    </tr>    
+    <tr>
+    <td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td><td>${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[4]}</td>
+    </tr>
+    </table>`
     divRisposteDate.appendChild(divRisposta);
   }
 
+  divResultleaderboard.appendChild(divRisposteDate)
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
