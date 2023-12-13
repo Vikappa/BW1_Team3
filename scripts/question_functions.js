@@ -206,11 +206,12 @@ const renderizza_risultato = async function () {
   await delay(500);
   divTest.innerHTML = ``;
 
-  let totaleDomande = arrayRisposte.length;
+  let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
   for (let index = 0; index < arrayRisposte.length; index++) {
-    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer) giuste++;
+    if (arrayRisposte[index].correctAnswer === arrayRisposte[index].answer)
+      giuste++;
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
