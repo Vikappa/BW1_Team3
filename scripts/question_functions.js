@@ -20,9 +20,11 @@ const fermaTicToc = async function () {
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
+  fermaTicToc()
   const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
-
+  canvas.width = 600;
+  canvas.height = 600;
   const ctx = canvas.getContext("2d");
 
   // Dati del grafico
@@ -39,7 +41,7 @@ const graficoCiambella = function (sbagliate, giuste) {
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 50, // Aumenta la percentuale di buco centrale
+    cutoutPercentage: 70,
     responsive: false,
     plugins: {
       datalabels: {
@@ -223,30 +225,37 @@ const renderizza_risultato = async function () {
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
   const quanteGiuste = document.createElement("div");
+  quanteGiuste.id = "divQuanteGiuste"
+  quanteGiuste.classList = "divSchermataCiambella"
   quanteGiuste.innerHTML = `<p>Wrong</p>
   <p>${sbagliate}%</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
+  fraseSuperamentoONo.classList = "divSchermataCiambella"
+  fraseSuperamentoONo.id = "divFraseSuperamentoONo"
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
     <p>Congratulations!/p>
     <p>You have passed the exam</p>
-   <p>You will receive your certificate by email shortly</p>`;
+   <p>You will receive your<br>certificate by email shortly</p>`;
     divTest.appendChild(fraseSuperamentoONo);
   } else {
     fraseSuperamentoONo.innerHTML = `
     <p>We are sorry</p>
     <p>You failed your test</p>
-   <p>It will be fine next time, commit!</p>`;
+   <p>It will be fine next<br>time, commit!</p>`;
+    fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   }
   const quanteSbagliate = document.createElement("div");
+  quanteSbagliate.id = "divQuanteSbagliate"
+  quanteSbagliate.classList = "divSchermataCiambella"
   quanteSbagliate.innerHTML = `<p>Correct</p>
   <p>${giuste}%</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
-  divTest.appendChild(grafic);
+
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
@@ -259,6 +268,7 @@ const renderizza_risultato = async function () {
     divRisposta.appendChild(pAnswer);
     divRisposteDate.appendChild(divRisposta);
   }
+
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
