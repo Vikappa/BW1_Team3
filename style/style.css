@@ -9,6 +9,7 @@ body {
   background-attachment: fixed;
   color: white;
   margin: 5%;
+  overflow: hidden;
 }
 
 header img {
@@ -268,7 +269,7 @@ body {
   top: 10%;
 }
 
-/* Alex CSS */
+/* /Alex CSS */
 .stars {
   line-height: 0;
 }
@@ -319,7 +320,6 @@ form p {
 }
 
 #body-feedback {
-  margin-top: 100px;
   text-align: center;
   color: #fff;
   font-family: "Outfit", sans-serif;
@@ -328,8 +328,8 @@ form p {
 @media only screen and (max-width: 932px) {
   body {
     margin-left: 2em;
-
     margin-right: 2em;
+    overflow: auto;
   }
   nav img {
     width: 45vh;
@@ -364,7 +364,9 @@ form p {
   body {
     margin-left: 2em;
     margin-right: 2em;
+    overflow: auto;
   }
+
   nav img {
     width: 15vh;
   }
