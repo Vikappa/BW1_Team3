@@ -80,26 +80,15 @@ const timer = function (difficoltaStringa) {
     console.log("Errore numero inserito nel metodo timer");
     tempo = 0;
   }
-};
-
-async function aggiornaTimer() {
-  if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion);
-  }
-  if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = timeleft;
-    timeleft--;
-  } else {
-    //rispostaVuota()
-    clearInterval(tictoc);
-  }
-}
-
-const avviaTicToc = function (diffValue) {
-  //Ex aggiornatimer
-  if (tictoc === undefined) {
-    setInterval(aggiornaTimer, 1000);
+  async function aggiornaTimer() {
+    if (tempo >= 0) {
+      const timerInHtml = document.getElementById("nSecondi");
+      timerInHtml.textContent = tempo;
+      tempo--;
+    } else {
+      //rispostaVuota()
+      clearInterval(intervallo);
+    }
   }
   const intervallo = setInterval(aggiornaTimer, 1000);
 };
@@ -144,8 +133,8 @@ const cerchioTimer = function (difficolta) {
   const primanenti = document.createElement("p");
 
   pseconds.textContent = "seconds";
-  nSecondi.textContent = timer(difficolta);
   nSecondi.id = "nSecondi";
+  nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
