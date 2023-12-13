@@ -215,9 +215,10 @@ const generaArrayDomande = async function () {
 
 const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
   if (rispostaCasella === rispostaGiusta) {
-    return `V`
-  } else {
-    return `X`
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+  }
+  if (rispostaCasella !== rispostaGiusta) {
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
   }
 }
 
@@ -225,7 +226,6 @@ const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
   divResultleaderboard.style.visibility = "visible"
 
-  await delay(500);
   divTest.innerHTML = ``;
 
   divTest.classList = "divCiambella";
@@ -279,10 +279,10 @@ const renderizza_risultato = async function () {
     <caption>${arrayRisposte[i].question}</caption>
     <tBody>
     <tr>
-    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
     </tr>    
     <tr>
-    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[4]}</td>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td>
     </tr>
     </tbody>
     </table>`
@@ -293,7 +293,7 @@ const renderizza_risultato = async function () {
       <caption>${arrayRisposte[i].question}</caption>
       <tBody>
       <tr>
-      <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[2]}</td>
+      <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
       </tbody>
       </table>`
       divRisposteDate.appendChild(divRisposta);
