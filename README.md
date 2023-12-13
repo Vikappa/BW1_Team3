@@ -17,12 +17,9 @@ ciclano l'array di domande da proporre, puliscono il div contenitore e propongon
 Al termine dell'array di domande, viene lanciato il metodo che renderizza le risposte e la posizione nella leaderboard. Ho lasciato a Luca 
 l'onere di formattare e animare la pagina dinamica delle domande e a Francesco di realizzare un timer che conti i secondi rimasti per rispondere
 
+Giorno 1:
 Francesco:
 Le parti del progetto a cui sto lavorando sono il timer che scandisce il tempo disponibile in base alla difficoltà oggettiva di ogni domanda presente nel benchmark e il grafico a ciambella che si crea in maniera dinamica al termine del test. Come primo giorno ho creato lo scheletro delle due parti: la logica di funzionamento del timer e lo studio della libreria "chart.js" per la creazione del grafico.
-
-Alessandro:
-Creata una funzione chiamata "superatoOno" che nella condizione IF (parametro) pass = "superato" fa partire dopo 0.7 secondi dal caricamento della pagina un animazione di coriandoli (di diverso colore e dimensioni) che (da sotto div dentro header-il primo) cadono in basso verso la fine della finestra. Bozza di css della sezione apposita.
-(Results Page)
 
 Giorno 2:
 Francesco:
@@ -30,10 +27,3 @@ Ho prestato attenzione al css del timer, creando la base del css e studiando i s
 Ho creato una barra di caricamento tonda per Vincenzo da utilizzare all'occorrenza.
 Inoltre, interfacciandomi con vincenzo, abbiamo modificato alcuni elementi statici, rendendoli dinamici tramite JS.
 
-Vincenzo: 
-Ho collaborato con Luca per modificare il metodo dinamico che genera i div delle domande per accomodare il suo style CSS. Ho collaborato
-con Francesco per adattare le sue animazioni ad un metodo dinamico di generazione. 
-
-Alessandro:
-Incrementata nella funzione "superatoOno" la condizione ELSE che fa apparire dopo 0.7 secondi dal caricamento della pagina una scritta e fa partire un animazione di lacrime/gocce (di diverso colore, dimensioni e peso) che (da sotto div dentro header-il primo) cadono in basso verso la fine della finestra. Aggiunto ad animazione coriandoli file audio di folla che gioisce e si congratula al caricamento della pagina, aggiunto ad animazione gocce file audio "looser".
-(Results Page)
