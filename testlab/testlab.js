@@ -19,12 +19,15 @@ const arrayRisposte = [];
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
-const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas") // Crea un elemento canvas dinamicamente invece di gettarlo dalla pagina
-  canvas.id = "graficoCiambella"
-  const ctx = canvas.getContext("2d")
+const GraficoCiambella = function (sbagliate, giuste) {
+  // Crea un elemento canvas dinamicamente
+  const canvas = document.createElement("canvas");
+  canvas.id = "graficoCiambella";
+  document.body.appendChild(canvas); // Aggiunge il canvas al corpo del documento
 
-  // Dati del grafico usati nel metodo creatore del grafico
+  const ctx = canvas.getContext("2d");
+
+  // Dati del grafico
   const dati = {
     datasets: [
       {
@@ -35,9 +38,9 @@ const graficoCiambella = function (sbagliate, giuste) {
       },
     ],
     labels: ["SBAGLIATE", "GIUSTE"],
-  }
+  };
 
-  // Configurazione del grafico usata nel metodo creatore del grafico
+  // Configurazione del grafico
   const options = {
     cutoutPercentage: 30,
     responsive: false,
@@ -47,7 +50,6 @@ const graficoCiambella = function (sbagliate, giuste) {
         font: {
           weight: "bold",
         },
-        // Box shadow per etichette di dati
         shadowColor: "rgba(0, 0, 0, 0.3)",
         shadowBlur: 10,
         shadowOffsetX: 0,
@@ -56,13 +58,18 @@ const graficoCiambella = function (sbagliate, giuste) {
     },
   };
 
-  // Crea e ritorna il grafico a ciambella
+  // Crea e restituisci il grafico a ciambella
   return new Chart(ctx, {
-    type: "doughnut", // Parametro della libreria chart.js per fare i grafici a ciambella
+    type: "doughnut",
     data: dati,
     options: options,
-  })
-}
+  });
+};
+
+// Utilizza la funzione per creare il grafico e aggiungerlo al corpo del documento
+const graficoCiambella = GraficoCiambella(1, 6);
+document.body.appendChild(graficoCiambella.canvas);
+
 
 const main = document.getElementById("main")
 let tictoc
@@ -287,6 +294,8 @@ const divDinamicoQuestion = async function (obgDomanda) {
   pDomanda.id = "pDomanda"
   pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%"
   divRitorno.appendChild(pDomanda);
+  divRitorno.appendChild(graficoCiambella(2, 25))
+
 
   if (obgDomanda.type === `multiple`) {
     let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)

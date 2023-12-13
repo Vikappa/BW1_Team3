@@ -19,11 +19,14 @@ const arrayRisposte = [];
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas") // Crea un elemento canvas dinamicamente invece di gettarlo dalla pagina
-  canvas.id = "graficoCiambella"
-  const ctx = canvas.getContext("2d")
+  // Crea un elemento canvas dinamicamente
+  const canvas = document.createElement("canvas");
+  canvas.id = "graficoCiambella";
+  document.body.appendChild(canvas); // Aggiunge il canvas al corpo del documento
 
-  // Dati del grafico usati nel metodo creatore del grafico
+  const ctx = canvas.getContext("2d");
+
+  // Dati del grafico
   const dati = {
     datasets: [
       {
@@ -34,9 +37,9 @@ const graficoCiambella = function (sbagliate, giuste) {
       },
     ],
     labels: ["SBAGLIATE", "GIUSTE"],
-  }
+  };
 
-  // Configurazione del grafico usata nel metodo creatore del grafico
+  // Configurazione del grafico
   const options = {
     cutoutPercentage: 30,
     responsive: false,
@@ -46,7 +49,6 @@ const graficoCiambella = function (sbagliate, giuste) {
         font: {
           weight: "bold",
         },
-        // Box shadow per etichette di dati
         shadowColor: "rgba(0, 0, 0, 0.3)",
         shadowBlur: 10,
         shadowOffsetX: 0,
@@ -55,13 +57,13 @@ const graficoCiambella = function (sbagliate, giuste) {
     },
   };
 
-  // Crea e ritorna il grafico a ciambella
+  // Crea e restituisci il grafico a ciambella
   return new Chart(ctx, {
-    type: "doughnut", // Parametro della libreria chart.js per fare i grafici a ciambella
+    type: "doughnut",
     data: dati,
     options: options,
-  })
-}
+  }).canvas
+};
 
 const main = document.getElementById("main")
 let tictoc
@@ -209,16 +211,35 @@ const generaArrayDomande = async function () {
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`
   await delay(500)
+  divTest.innerHTML = ``
+
   let totaleDomande = arrayRisposte.length
   let giuste = 0
-  for (let g = 0; g < arrayRisposte.length; g++) {
-    if (arrayRisposte[g].answer === arrayRisposte[g].correctAnswer) {
+
+  for (let index = 0; index < arrayRisposte.length; index++) {
+    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer)
       giuste++
-    }
+  }
+  let sbagliate = totaleDomande - giuste
+  const grafic = graficoCiambella(sbagliate, giuste)
+  console.log("Sbagliate " + sbagliate)
+  console.log("Giuste " + giuste)
+  divTest.appendChild(grafic)
+
+  const divRisposteDate = document.createElement("div")
+  for (let i = 0; i < arrayRisposte.length; i++) {
+    const divRisposta = document.createElement("div")
+    const pDomanda = document.createElement("p")
+    pDomanda.textContent = arrayRisposte[i].question
+    const pAnswer = document.createElement("p")
+    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer
+    divRisposta.appendChild(pDomanda)
+    divRisposta.appendChild(pAnswer)
+    divRisposteDate.appendChild(divRisposta)
   }
 
-  let sbagliate = totaleDomande - giuste
-  divTest.appendChild(graficoCiambella(sbagliate, giuste))
+
+  //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 }
 
 let arrayDomande = [];
@@ -278,6 +299,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
@@ -361,7 +383,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
+  if (arrayDomande.length === arrayRisposte.length + 20) {////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
