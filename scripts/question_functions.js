@@ -17,13 +17,10 @@ const arrayRisposte = [];
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 
-//////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
-const GraficoCiambella = function (sbagliate, giuste) {
-  // Crea un elemento canvas dinamicamente
-  const canvas = document.createElement("canvas");
+const graficoCiambella = function (sbagliate, giuste) {
+  const canvas = document.createElement("canvas")  // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = "graficoCiambella";
-  document.body.appendChild(canvas); // Aggiunge il canvas al corpo del documento
 
   const ctx = canvas.getContext("2d");
 
@@ -63,13 +60,8 @@ const GraficoCiambella = function (sbagliate, giuste) {
     type: "doughnut",
     data: dati,
     options: options,
-  });
+  }).canvas
 };
-
-// Utilizza la funzione per creare il grafico e aggiungerlo al corpo del documento
-const graficoCiambella = GraficoCiambella(1, 6);
-document.body.appendChild(graficoCiambella.canvas);
-
 
 const main = document.getElementById("main")
 let tictoc
@@ -110,7 +102,7 @@ const avviaTicToc = function (diffValue) { //Ex aggiornatimer
 }
 
 
-// Ho accroccato cerchio e timer in un solo div così da avere una "cornice" da piazzare più volte
+//////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
   const cerchioTimerHtml = document.createElement("div")
   const divCerchio = document.createElement("div")
@@ -217,16 +209,35 @@ const generaArrayDomande = async function () {
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`
   await delay(500)
+  divTest.innerHTML = ``
+
   let totaleDomande = arrayRisposte.length
   let giuste = 0
-  for (let g = 0; g < arrayRisposte.length; g++) {
-    if (arrayRisposte[g].answer === arrayRisposte[g].correctAnswer) {
+
+  for (let index = 0; index < arrayRisposte.length; index++) {
+    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer)
       giuste++
-    }
+  }
+  let sbagliate = totaleDomande - giuste
+  const grafic = graficoCiambella(sbagliate, giuste)
+  console.log("Sbagliate " + sbagliate)
+  console.log("Giuste " + giuste)
+  divTest.appendChild(grafic)
+
+  const divRisposteDate = document.createElement("div")
+  for (let i = 0; i < arrayRisposte.length; i++) {
+    const divRisposta = document.createElement("div")
+    const pDomanda = document.createElement("p")
+    pDomanda.textContent = arrayRisposte[i].question
+    const pAnswer = document.createElement("p")
+    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer
+    divRisposta.appendChild(pDomanda)
+    divRisposta.appendChild(pAnswer)
+    divRisposteDate.appendChild(divRisposta)
   }
 
-  let sbagliate = totaleDomande - giuste
-  divTest.appendChild(graficoCiambella(sbagliate, giuste))
+
+  //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 }
 
 let arrayDomande = [];
@@ -286,6 +297,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer
   const divRitorno = document.createElement('div');
@@ -294,8 +306,6 @@ const divDinamicoQuestion = async function (obgDomanda) {
   pDomanda.id = "pDomanda"
   pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%"
   divRitorno.appendChild(pDomanda);
-  divRitorno.appendChild(graficoCiambella(2, 25))
-
 
   if (obgDomanda.type === `multiple`) {
     let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)
@@ -371,7 +381,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
+  if (arrayDomande.length === arrayRisposte.length + 20) {////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
