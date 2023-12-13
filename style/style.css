@@ -1,20 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
+/* CSS COMUNE PER TUTTO IL PROGETTO */
+@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
-/* CSS COMUNE PER TUTTO IL PROGETTO */
-/* Alex */
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   color: white;
-  margin-left: 4.5em;
-}
-#body-feedback {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 500px;
+  margin: 5%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -123,37 +117,50 @@ form p {
 /* LUCA */
 header img {
   width: 130px;
-  margin-bottom: 5em;
-  margin-top: 1.7em;
 }
+
+main {
+  width: 100%;
+}
+
 .title {
-  line-height: 0.7;
+  line-height: 0.8;
 }
+
 .title1,
 .title2 {
   font-family: "Outfit", sans-serif;
   font-size: 60px;
+  justify-self: left;
 }
+
 .title2 {
   font-weight: bold;
+  justify-self: left;
 }
+
 .title-instructions,
 .description,
 .elenco,
 span {
   font-family: "Inter", sans-serif;
   font-size: 16px;
+  justify-self: left;
 }
+
 .title-instructions {
   color: #d20094;
   font-weight: bold;
+  justify-self: left;
 
   padding-top: 1.7em;
 }
+
 .description {
   line-height: 1.1;
   padding-top: 0.5em;
 }
+
 .elenco {
   padding-top: 4em;
   margin-left: 1.5em;
@@ -161,22 +168,28 @@ span {
 }
 
 #check {
+  display: flex;
+
   padding-top: 5em;
 }
-/* CONTROLLARE!!!!!! */
 
-div button {
+/* CONTROLLARE!!!!!! */
+<<<<<<< HEAD ======= #checkbox {
+}
+>>>>>>>main div button {
   height: 58px;
   width: 220px;
   background-color: #00ffff;
   font-weight: bold;
   font-size: 16px;
 }
+
 #button {
   text-align: right;
   margin-right: 6em;
   margin-bottom: 4em;
 }
+
 button:hover {
   transition: 0.7s;
   box-shadow: 0px 0px 30px 7px #00ffff;
@@ -184,6 +197,178 @@ button:hover {
   border: none;
   border-style: 5px;
 }
+
 button {
   border: none;
+}
+
+/* CSS TIMER - FRANCESCO */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+.multTypeButton:hover,
+.booleanButton:hover {
+  background: linear-gradient(177deg, #b9018b, #36042a);
+}
+
+header img {
+  width: 10%;
+  position: absolute;
+  position: fixed;
+  top: 25px;
+  left: 60px;
+}
+
+body {
+  background-image: url(../assets/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: white;
+  margin-left: 4.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 6%;
+}
+
+img {
+  width: 130px;
+  margin-bottom: 15em;
+  margin-left: 5px;
+}
+
+#pDomanda {
+  font-size: 3em;
+}
+
+#testappend {
+  text-align: center;
+}
+
+#pVero,
+#pFalso {
+  border-radius: 40px;
+  padding: 10px;
+  padding-top: 5%;
+  text-align: center;
+  width: 280px;
+  height: 40px;
+  line-height: 20px;
+  margin: 85px 95px 0px 95px;
+  border: 3px solid white;
+  background-color: rgba(116, 116, 116, 0.1);
+}
+
+.multTypeButton {
+  border-radius: 40px;
+  padding: 10px;
+  padding-top: 2.5%;
+  text-align: center;
+  width: 280px;
+  height: 40px;
+  line-height: 20px;
+  margin: 85px 95px 0px 95px;
+  border: 3px solid white;
+  background-color: rgba(116, 116, 116, 0.1);
+}
+
+#genitore {
+  text-align: center;
+}
+
+#divRisposteRiga1,
+#divRisposteRiga2,
+#pVero-pFalso {
+  display: inline-flex;
+}
+
+#genitore p {
+  text-align: center;
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+}
+
+@keyframes s3 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+#circleBackground {
+  stroke-dasharray: 437px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #050505;
+  opacity: 0.2;
+  fill: none;
+  z-index: -1;
+}
+
+#circle30 {
+  stroke-dasharray: 435px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 30s linear infinite forwards;
+  z-index: 1;
+}
+
+#circle60 {
+  stroke-dasharray: 435px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 60s linear infinite forwards;
+  z-index: 1;
+}
+
+#circle120 {
+  stroke-dasharray: 435px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 4px;
+  stroke: #00ffff;
+  fill: none;
+  animation: countdown 120s linear infinite forwards;
+  z-index: 1;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+
+  to {
+    stroke-dashoffset: 435px;
+  }
+}
+
+#time {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#time p {
+  margin: 3px;
+}
+
+#time p:nth-child(2) {
+  font-size: 2em;
+}
+
+.svgCircle {
+}
+
+#countdown {
+  position: fixed;
+  right: 5%;
+  top: 10%;
 }
