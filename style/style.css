@@ -17,9 +17,23 @@ body {
   max-width: 500px;
 }
 
+@media only screen and (max-width: 768px) {
+  body {
+    margin-left: 2em;
+  }
+  main {
+    margin-top: 50px;
+  }
+  textarea {
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+  }
+}
 nav img {
-  width: 25%;
-  padding: 20px;
+  width: 100%;
+  padding: 10px;
 }
 main {
   margin-top: 100px;
@@ -57,10 +71,9 @@ img.attivo {
 }
 
 textarea {
-  position: fixed;
   resize: none;
   transform: translate(-50%, -50%);
-
+  margin-left: 50%;
   width: 100%;
   max-width: 500px;
   /* left: 30%; */
@@ -85,6 +98,27 @@ form p {
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
   cursor: pointer;
+}
+@media only screen and (max-width: 480px) {
+  body {
+    margin-left: 1em;
+  }
+  main {
+    margin: 30px;
+    text-align: center;
+  }
+  .btn {
+    width: 100%;
+  }
+  .stars img {
+    width: 20px;
+    height: 20px;
+    /* margin-right: 3px; */
+    margin-right: 10px;
+  }
+  textarea {
+    margin-left: 50%;
+  }
 }
 /* LUCA */
 header img {
@@ -130,8 +164,7 @@ span {
   padding-top: 5em;
 }
 /* CONTROLLARE!!!!!! */
-#checkbox {
-}
+
 div button {
   height: 58px;
   width: 220px;
