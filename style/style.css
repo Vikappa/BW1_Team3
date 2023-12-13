@@ -1,6 +1,6 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
-@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 body {
   background-image: url(../assets/bg.jpg);
@@ -26,7 +26,7 @@ main {
 
 .title1,
 .title2 {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 60px;
   justify-self: left;
 }
@@ -40,7 +40,7 @@ main {
 .description,
 .elenco,
 span {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   justify-self: left;
 }
@@ -69,7 +69,9 @@ span {
 
   padding-top: 5em;
 }
-
+button a {
+  text-decoration: none;
+}
 /* CONTROLLARE!!!!!! */
 #checkbox {
 }
@@ -181,7 +183,7 @@ body {
 
 #genitore p {
   text-align: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
 }
 
@@ -319,7 +321,7 @@ form p {
   height: 50px;
   background-color: #00ffff;
   font-size: 16px;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
@@ -329,7 +331,7 @@ form p {
 #body-feedback {
   text-align: center;
   color: #fff;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
 }
 @media only screen and (max-width: 932px) {
