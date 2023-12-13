@@ -9,41 +9,6 @@
 //     timer = 120;
 //   }
 
-//   //Cerchio intorno al timer
-//   function cerchio() {
-//     const cerchioInHtml = document.createElement("div");
-//     cerchioInHtml.id("divCerchio");
-//     switch (difficolta) {
-//       case "easy":
-//         cerchioInHtml.innerHTML = `
-//           <svg>
-//             <circle id="circle30" r="18" cx="20" cy="20"></circle>
-//             <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
-//           </svg>`;
-//         break;
-//       case "medium":
-//         cerchioInHtml.innerHTML = `
-//           <svg>
-//             <circle id="circle60" r="18" cx="20" cy="20"></circle>
-//             <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
-//           </svg>`;
-//         break;
-//       case "hard":
-//         cerchioInHtml.innerHTML = `
-//           <svg>
-//             <circle id="circle120" r="18" cx="20" cy="20"></circle>
-//             <circle id="circleBackground" r="18" cx="20" cy="20"></circle>
-//           </svg>`;
-//         break;
-//     }
-//     return cerchioInHtml;
-//   }
-
-//   const targetCerchio = document.getElementById("cerchio");
-//   targetCerchio.appendChild(cerchio());
-
-//   // Timer
-
 //   async function aggiornaTimer() {
 //     if (timer >= 0) {
 //       const timerInHtml = document.getElementById("time");

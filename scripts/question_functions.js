@@ -1,10 +1,10 @@
 // Il link magico altro non era che il link all'API di un progetto OpenSource di un Database di domande di vari argomenti
 // Sul sito https://opentdb.com possiamo iscriverci e creare la nostra richiesta al database sotto forma di url su cui fare fetch()
 
-const apiUrl = 'https://opentdb.com/api.php?amount=50&category=18';
-const body = document.getElementsByName('body')[0];
+const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
+const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
-const divTest = document.getElementById('testAppend');
+const divTest = document.getElementById("testAppend");
 const arrayRisposte = [];
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
@@ -16,10 +16,9 @@ const arrayRisposte = [];
 
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
-
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas")  // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
+  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = "graficoCiambella";
 
   const ctx = canvas.getContext("2d");
@@ -60,13 +59,14 @@ const graficoCiambella = function (sbagliate, giuste) {
     type: "doughnut",
     data: dati,
     options: options,
-  }).canvas
+  }).canvas;
 };
+///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
-const main = document.getElementById("main")
-let tictoc
-let timeleft
-let diffValueCurrentQuestion
+const main = document.getElementById("main");
+let tictoc;
+let timeleft;
+let diffValueCurrentQuestion;
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
@@ -75,19 +75,19 @@ const timer = function (difficoltaStringa) {
     return 60;
   } else if (difficoltaStringa === "hard") {
     return 120;
+  } else {
+    console.log("Errore numero inserito nel metodo timer");
+    return 0;
   }
-  console.log("Errore numero inserito nel metodo timer")
-  return 0
-}
+};
 
 async function aggiornaTimer() {
   if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion)
+    timeleft = timer(diffValueCurrentQuestion);
   }
   if (timeleft >= 0) {
     const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent =
-      console.log(timeleft);
+    timerInHtml.textContent = timeleft;
     timeleft--;
   } else {
     //rispostaVuota()
@@ -95,111 +95,108 @@ async function aggiornaTimer() {
   }
 }
 
-const avviaTicToc = function (diffValue) { //Ex aggiornatimer
+const avviaTicToc = function (diffValue) {
+  //Ex aggiornatimer
   if (tictoc === undefined) {
     setInterval(aggiornaTimer, 1000);
   }
-}
-
+};
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
-  const cerchioTimerHtml = document.createElement("div")
-  const divCerchio = document.createElement("div")
-  const divTime = document.createElement("div")
-  cerchioTimerHtml.id = "countdown"
-  divCerchio.id = "cerchio"
-  divTime.id = "time"
+  const cerchioTimerHtml = document.createElement("div");
+  const divCerchio = document.createElement("div");
+  const divTime = document.createElement("div");
+  cerchioTimerHtml.id = "countdown";
+  divCerchio.id = "cerchio";
+  divTime.id = "time";
 
-  divCerchio.style = "position: absolute"
+  divCerchio.style = "position: absolute";
 
   switch (difficolta) {
     case "easy":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "medium":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "hard":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
-            </svg>`
-      break
+            </svg>`;
+      break;
   }
 
-  const pseconds = document.createElement("p")
-  const nSecondi = document.createElement("p")
-  const primanenti = document.createElement("p")
+  const pseconds = document.createElement("p");
+  const nSecondi = document.createElement("p");
+  const primanenti = document.createElement("p");
 
-  pseconds.textContent = "seconds"
-  nSecondi.textContent = timer(difficolta)
-  nSecondi.id = "nSecondi"
-  primanenti.textContent = "remeaning"
+  pseconds.textContent = "seconds";
+  nSecondi.id = "nSecondi";
+  nSecondi.textContent = timer("easy");
+  primanenti.textContent = "remeaning";
 
+  divTime.appendChild(pseconds);
+  divTime.appendChild(nSecondi);
+  divTime.appendChild(primanenti);
 
-  divTime.appendChild(pseconds)
-  divTime.appendChild(nSecondi)
-  divTime.appendChild(primanenti)
+  cerchioTimerHtml.style.width = "150px";
+  cerchioTimerHtml.style.height = "150px";
 
-  cerchioTimerHtml.style.width = "150px"
-  cerchioTimerHtml.style.height = "150px"
+  cerchioTimerHtml.appendChild(divCerchio);
+  cerchioTimerHtml.appendChild(divTime);
 
-  cerchioTimerHtml.appendChild(divCerchio)
-  cerchioTimerHtml.appendChild(divTime)
-
-  return cerchioTimerHtml
-}
-
-
+  return cerchioTimerHtml;
+};
 
 const diffInSecondi = function (diffString) {
   switch (diffString) {
     case `easy`:
-      return 30
+      return 30;
     case `medium`:
-      return 60
+      return 60;
     case `hard`:
-      return 120
+      return 120;
     default:
-      break
+      break;
   }
 };
 
 function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function loadQuestion() {
-  const result = await fetch(`${apiUrl}`)
+  const result = await fetch(`${apiUrl}`);
   if (result.status === 429) {
-    await delay(2500)
-    return await loadQuestion()
+    await delay(2500);
+    return await loadQuestion();
   }
-  const data = await result.json()
-  return data.results
+  const data = await result.json();
+  return data.results;
 }
 
 const generaArrayDomande = async function () {
-  const fullArray = await loadQuestion()
-  let timeScore = 0
-  const arrayFinale = []
-  const newArray = [...fullArray]
+  const fullArray = await loadQuestion();
+  let timeScore = 0;
+  const arrayFinale = [];
+  const newArray = [...fullArray];
 
   while (timeScore < 1800) {
     newArray.forEach((domanda) => {
       if (domanda && timeScore + diffInSecondi(domanda.difficulty) <= 1800) {
-        arrayFinale.push(domanda)
-        timeScore += diffInSecondi(domanda.difficulty)
+        arrayFinale.push(domanda);
+        timeScore += diffInSecondi(domanda.difficulty);
       }
     });
   }
@@ -207,38 +204,36 @@ const generaArrayDomande = async function () {
 };
 
 const renderizza_risultato = async function () {
-  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`
-  await delay(500)
-  divTest.innerHTML = ``
+  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
+  await delay(500);
+  divTest.innerHTML = ``;
 
-  let totaleDomande = arrayRisposte.length
-  let giuste = 0
+  let totaleDomande = arrayRisposte.length;
+  let giuste = 0;
 
   for (let index = 0; index < arrayRisposte.length; index++) {
-    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer)
-      giuste++
+    if (arrayRisposte[index].correctAnswer === arrayRisposte.answer) giuste++;
   }
-  let sbagliate = totaleDomande - giuste
-  const grafic = graficoCiambella(sbagliate, giuste)
-  console.log("Sbagliate " + sbagliate)
-  console.log("Giuste " + giuste)
-  divTest.appendChild(grafic)
+  let sbagliate = totaleDomande - giuste;
+  const grafic = graficoCiambella(sbagliate, giuste);
+  console.log("Sbagliate " + sbagliate);
+  console.log("Giuste " + giuste);
+  divTest.appendChild(grafic);
 
-  const divRisposteDate = document.createElement("div")
+  const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
-    const divRisposta = document.createElement("div")
-    const pDomanda = document.createElement("p")
-    pDomanda.textContent = arrayRisposte[i].question
-    const pAnswer = document.createElement("p")
-    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer
-    divRisposta.appendChild(pDomanda)
-    divRisposta.appendChild(pAnswer)
-    divRisposteDate.appendChild(divRisposta)
+    const divRisposta = document.createElement("div");
+    const pDomanda = document.createElement("p");
+    pDomanda.textContent = arrayRisposte[i].question;
+    const pAnswer = document.createElement("p");
+    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer;
+    divRisposta.appendChild(pDomanda);
+    divRisposta.appendChild(pAnswer);
+    divRisposteDate.appendChild(divRisposta);
   }
-
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
-}
+};
 
 let arrayDomande = [];
 
@@ -259,20 +254,20 @@ async function addRisposta(
   arrayRisposte.push(risposta);
 
   console.log(
-    'Lunghezza array risposte: ' +
-    arrayRisposte.length +
-    ' lunghezza array domande: ' +
-    arrayDomande.length
+    "Lunghezza array risposte: " +
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
 }
 async function addRispostaBool(bool, domanda, correct_answer) {
   let ans;
-  if (bool === 'true') {
-    ans = 'true';
+  if (bool === "true") {
+    ans = "true";
   } else {
-    ans = 'false';
+    ans = "false";
   }
   risposta = {
     type: `boolean`,
@@ -283,91 +278,95 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   };
   arrayRisposte.push(risposta);
   console.log(
-    'Lunghezza array risposte: ' +
-    arrayRisposte.length +
-    ' lunghezza array domande: ' +
-    arrayDomande.length
+    "Lunghezza array risposte: " +
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
   renderizzaDomande();
 }
 
 const divDinamicoQuestion = async function (obgDomanda) {
   if (!obgDomanda) {
-    console.log('obg domanda non esistente');
+    console.log("obg domanda non esistente");
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
 
   difficulty = obgDomanda.difficulty;
-  const rispostaCorretta = obgDomanda.correct_answer
-  const divRitorno = document.createElement('div');
-  const pDomanda = document.createElement('p');
+  const rispostaCorretta = obgDomanda.correct_answer;
+  const divRitorno = document.createElement("div");
+  const pDomanda = document.createElement("p");
   pDomanda.innerText = obgDomanda.question;
-  pDomanda.id = "pDomanda"
-  pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%"
+  pDomanda.id = "pDomanda";
+  pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%";
   divRitorno.appendChild(pDomanda);
 
   if (obgDomanda.type === `multiple`) {
-    let risposte = [obgDomanda.correct_answer].concat(obgDomanda.incorrect_answers)
-    const divRisposte1 = document.createElement("div")
+    let risposte = [obgDomanda.correct_answer].concat(
+      obgDomanda.incorrect_answers
+    );
+    const divRisposte1 = document.createElement("div");
 
-    const divRisposte2 = document.createElement("div")
+    const divRisposte2 = document.createElement("div");
 
-    divRisposte1.id = `divRisposteRiga1`
-    divRisposte2.id = `divRisposteRiga2`
+    divRisposte1.id = `divRisposteRiga1`;
+    divRisposte2.id = `divRisposteRiga2`;
 
-    let risposteAppese = 0
+    let risposteAppese = 0;
 
     for (let iRisposte = 0; iRisposte < risposte.length; iRisposte++) {
-      const pRisposta = document.createElement("p")
-      pRisposta.innerText = risposte[iRisposte]
+      const pRisposta = document.createElement("p");
+      pRisposta.innerText = risposte[iRisposte];
 
-      pRisposta.classList = "multTypeButton"
-      pRisposta.id = `r` + risposte[iRisposte]
+      pRisposta.classList = "multTypeButton";
+      pRisposta.id = `r` + risposte[iRisposte];
 
       pRisposta.onclick = async function () {
-
-        await addRisposta(risposte, iRisposte, pDomanda.innerText, rispostaCorretta)
-      }
+        await addRisposta(
+          risposte,
+          iRisposte,
+          pDomanda.innerText,
+          rispostaCorretta
+        );
+      };
       if (risposteAppese > 1) {
-        divRisposte2.appendChild(pRisposta)
+        divRisposte2.appendChild(pRisposta);
       } else {
-        risposteAppese++
-        divRisposte1.appendChild(pRisposta)
+        risposteAppese++;
+        divRisposte1.appendChild(pRisposta);
       }
 
-      divRitorno.appendChild(divRisposte1)
-      divRitorno.appendChild(divRisposte2)
+      divRitorno.appendChild(divRisposte1);
+      divRitorno.appendChild(divRisposte2);
     }
-
-
   } else {
-    const divRispostaBoolean = document.createElement('div');
-    divRispostaBoolean.id = 'pVero-pFalso';
-    const divVero = document.createElement('div');
-    const divFalso = document.createElement('div');
-    const pVero = document.createElement('p');
-    const pFalso = document.createElement('p');
+    const divRispostaBoolean = document.createElement("div");
+    divRispostaBoolean.id = "pVero-pFalso";
+    const divVero = document.createElement("div");
+    const divFalso = document.createElement("div");
+    const pVero = document.createElement("p");
+    const pFalso = document.createElement("p");
     pVero.classList = `booleanButton`;
     pVero.id = `pVero`;
     pVero.onclick = async function () {
-      await addRispostaBool('true', pDomanda.innerText, rispostaCorretta);
+      await addRispostaBool("true", pDomanda.innerText, rispostaCorretta);
     };
     pFalso.classList = `booleanButton`;
     pFalso.onclick = async function () {
-      await addRispostaBool('false', pDomanda.innerText, rispostaCorretta);
+      await addRispostaBool("false", pDomanda.innerText, rispostaCorretta);
     };
     pFalso.id = `pFalso`;
-    pVero.innerText = 'True';
-    pFalso.innerText = 'False';
+    pVero.innerText = "True";
+    pFalso.innerText = "False";
     divFalso.appendChild(pFalso);
     divVero.appendChild(pVero);
     divRispostaBoolean.appendChild(divVero);
     divRispostaBoolean.appendChild(divFalso);
     divRitorno.appendChild(divRispostaBoolean);
   }
-  divRitorno.id = 'genitore';
-  divRitorno.appendChild(cerchioTimer(difficulty))
+  divRitorno.id = "genitore";
+  divRitorno.appendChild(cerchioTimer(difficulty));
   return divRitorno;
 };
 
@@ -376,12 +375,15 @@ const renderizzaDomande = async function () {
     arrayDomande = await generaArrayDomande();
   }
 
-  console.log("Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto")
+  console.log(
+    "Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto"
+  );
   console.log(arrayRisposte);
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length + 20) {////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
+  if (arrayDomande.length === arrayRisposte.length + 20) {
+    ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
@@ -393,4 +395,3 @@ const renderizzaDomande = async function () {
 };
 
 renderizzaDomande();
-

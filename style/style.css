@@ -11,110 +11,6 @@ body {
   margin: 5%;
 }
 
-@media only screen and (max-width: 768px) {
-  body {
-    margin-left: 2em;
-  }
-  main {
-    margin-top: 50px;
-  }
-  textarea {
-    width: 100%;
-  }
-  .btn {
-    width: 100%;
-  }
-}
-nav img {
-  width: 100%;
-  padding: 10px;
-}
-main {
-  margin-top: 100px;
-  text-align: center;
-  color: #fff;
-  font-family: "Outfit", sans-serif;
-  font-size: 16px;
-}
-
-h1 {
-  text-align: center;
-  color: #fff;
-  font-family: "Outfit", sans-serif;
-}
-
-.stars {
-  line-height: 0;
-}
-.stars img {
-  opacity: 0.1;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  transition: opacity 2s ease, transform 0.5s ease;
-}
-.stars:hover {
-  /* opacity: 1; */
-  cursor: pointer;
-}
-img.attivo {
-  opacity: 1;
-  transform: scale(1.5);
-  margin-right: 15px;
-}
-
-textarea {
-  resize: none;
-  transform: translate(-50%, -50%);
-  margin-left: 50%;
-  width: 100%;
-  max-width: 500px;
-  /* left: 30%; */
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid /* #900080 */ #d20094;
-}
-form p {
-  padding-top: 40px;
-  padding-bottom: 20px;
-}
-
-.btn {
-  margin-top: 50px;
-  color: black;
-  width: 30%;
-  height: 50px;
-  background-color: #00ffff;
-  font-size: 16px;
-  font-family: "Outfit", sans-serif;
-  font-weight: bold;
-  border: none;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 1);
-  cursor: pointer;
-}
-@media only screen and (max-width: 480px) {
-  body {
-    margin-left: 1em;
-  }
-  main {
-    margin: 30px;
-    text-align: center;
-  }
-  .btn {
-    width: 100%;
-  }
-  .stars img {
-    width: 20px;
-    height: 20px;
-    /* margin-right: 3px; */
-    margin-right: 10px;
-  }
-  textarea {
-    margin-left: 50%;
-  }
-}
-/* LUCA */
 header img {
   width: 130px;
 }
@@ -174,10 +70,10 @@ span {
 }
 
 /* CONTROLLARE!!!!!! */
-/* <<<<<<< HEAD ======= #checkbox {
+#checkbox {
 }
->>>>>>>*/
-main div button {
+
+div button {
   height: 58px;
   width: 220px;
   background-color: #00ffff;
@@ -204,8 +100,6 @@ button {
 }
 
 /* CSS TIMER - FRANCESCO */
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 .multTypeButton:hover,
 .booleanButton:hover {
@@ -300,7 +194,7 @@ img {
   stroke-dasharray: 437px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #050505;
   opacity: 0.2;
   fill: none;
@@ -311,7 +205,7 @@ img {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 30s linear infinite forwards;
@@ -322,7 +216,7 @@ img {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 60s linear infinite forwards;
@@ -333,7 +227,7 @@ img {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 120s linear infinite forwards;
@@ -346,7 +240,7 @@ img {
   }
 
   to {
-    stroke-dashoffset: 435px;
+    stroke-dashoffset: -435px;
   }
 }
 
@@ -366,6 +260,13 @@ img {
 }
 
 .svgCircle {
+}
+
+#svgGenerale {
+  transform: rotate(271deg);
+  position: absolute;
+  top: -77px;
+  right: -225px;
 }
 
 #countdown {
