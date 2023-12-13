@@ -14,15 +14,12 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
+
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-<<<<<<< HEAD
   const canvas = document.createElement('canvas'); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = 'graficoCiambella';
-=======
-  const canvas = document.createElement("canvas");
-  canvas.id = "graficoCiambella";
->>>>>>> main
 
   const ctx = canvas.getContext('2d');
 
@@ -31,29 +28,20 @@ const graficoCiambella = function (sbagliate, giuste) {
     datasets: [
       {
         data: [sbagliate, giuste],
-<<<<<<< HEAD
         backgroundColor: ['#D20094', '#00FFFF'],
         borderColor: 'white',
         borderWidth: 2,
       },
     ],
     labels: ['SBAGLIATE', 'GIUSTE'],
-=======
-        backgroundColor: ["#D20094", "#00FFFF"],
-        borderColor: "white",
-        borderWidth: 0, // Riduci il bordo
-      },
-    ],
->>>>>>> main
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 50, // Aumenta la percentuale di buco centrale
+    cutoutPercentage: 30,
     responsive: false,
     plugins: {
       datalabels: {
-<<<<<<< HEAD
         color: 'white',
         font: {
           weight: 'bold',
@@ -62,9 +50,6 @@ const graficoCiambella = function (sbagliate, giuste) {
         shadowBlur: 10,
         shadowOffsetX: 0,
         shadowOffsetY: 4,
-=======
-        display: false, // Nascondi le etichette
->>>>>>> main
       },
     },
   };
@@ -78,18 +63,12 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
-<<<<<<< HEAD
 const main = document.getElementById('main');
-=======
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
-const main = document.getElementById("main");
->>>>>>> main
 let tictoc;
 let timeleft;
 let diffValueCurrentQuestion;
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
-<<<<<<< HEAD
   if (difficoltaStringa === 'easy') {
     return 30;
   } else if (difficoltaStringa === 'medium') {
@@ -122,32 +101,8 @@ const avviaTicToc = function (diffValue) {
   //Ex aggiornatimer
   if (tictoc === undefined) {
     setInterval(aggiornaTimer, 1000);
-=======
-  let tempo;
-  if (difficoltaStringa === "easy") {
-    tempo = 30;
-  } else if (difficoltaStringa === "medium") {
-    tempo = 60;
-  } else if (difficoltaStringa === "hard") {
-    tempo = 120;
-  } else {
-    console.log("Errore numero inserito nel metodo timer");
-    tempo = 0;
->>>>>>> main
   }
-  async function aggiornaTimer() {
-    if (tempo >= 0) {
-      const timerInHtml = document.getElementById("nSecondi");
-      timerInHtml.textContent = tempo;
-      tempo--;
-    } else {
-      //rispostaVuota()
-      clearInterval(intervallo);
-    }
-  }
-  const intervallo = setInterval(aggiornaTimer, 1000);
 };
-/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
@@ -188,17 +143,10 @@ const cerchioTimer = function (difficolta) {
   const nSecondi = document.createElement('p');
   const primanenti = document.createElement('p');
 
-<<<<<<< HEAD
   pseconds.textContent = 'seconds';
   nSecondi.textContent = timer(difficolta);
   nSecondi.id = 'nSecondi';
   primanenti.textContent = 'remeaning';
-=======
-  pseconds.textContent = "seconds";
-  nSecondi.id = "nSecondi";
-  nSecondi.textContent = timer(difficolta);
-  primanenti.textContent = "remeaning";
->>>>>>> main
 
   divTime.appendChild(pseconds);
   divTime.appendChild(nSecondi);
@@ -262,7 +210,6 @@ const renderizza_risultato = async function () {
   await delay(500);
   divTest.innerHTML = ``;
 
-  divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
@@ -272,35 +219,8 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
-<<<<<<< HEAD
   console.log('Sbagliate ' + sbagliate);
   console.log('Giuste ' + giuste);
-=======
-  const quanteGiuste = document.createElement("div");
-  quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${sbagliate}%</p>`;
-  divTest.appendChild(quanteGiuste);
-  const fraseSuperamentoONo = document.createElement("div");
-  if (giuste > sbagliate) {
-    fraseSuperamentoONo.innerHTML = `
-    <p>Congratulations!/p>
-    <p>You have passed the exam</p>
-   <p>You will receive your certificate by email shortly</p>`;
-    divTest.appendChild(fraseSuperamentoONo);
-  } else {
-    fraseSuperamentoONo.innerHTML = `
-    <p>We are sorry</p>
-    <p>You failed your test</p>
-   <p>It will be fine next time, commit!</p>`;
-    divTest.appendChild(fraseSuperamentoONo);
-  }
-  const quanteSbagliate = document.createElement("div");
-  quanteSbagliate.innerHTML = `<p>Correct</p>
-  <p>${giuste}%</p>`;
-  divTest.appendChild(quanteSbagliate);
-  console.log("Sbagliate " + sbagliate);
-  console.log("Giuste " + giuste);
->>>>>>> main
   divTest.appendChild(grafic);
 
   const divRisposteDate = document.createElement('div');
