@@ -6,7 +6,10 @@ const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
 const arrayRisposte = [];
-
+let intervalloUnico
+const fermaTicToc = async function () {
+  clearInterval(intervalloUnico)
+}
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
 // For making a request and fetching a resource, use the fetch() method. It is a global method in both Window and Worker contexts.
@@ -58,8 +61,20 @@ const main = document.getElementById("main");
 let tictoc;
 let timeleft;
 let diffValueCurrentQuestion;
+const convertiStringaInSecondiTimer = function (difficoltaStringa) {
+  if (difficoltaStringa === "easy") {
+    return 30
+  } else if (difficoltaStringa === "medium") {
+    return 60
+  } else if (difficoltaStringa === "hard") {
+    return 120
+  } else {
+    console.log("Errore numero inserito nel metodo convertiStringaInSecondiTimer")
+    return 0;
+  }
+}
 //modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
+const timer = async function (difficoltaStringa) {
   let tempo;
   if (difficoltaStringa === "easy") {
     tempo = 30;
@@ -68,20 +83,21 @@ const timer = function (difficoltaStringa) {
   } else if (difficoltaStringa === "hard") {
     tempo = 120;
   } else {
-    console.log("Errore numero inserito nel metodo timer");
+    console.log("Errore numero inserito nel metodo timer")
     tempo = 0;
   }
-  async function aggiornaTimer() {
+  function aggiornaTimer() {
     if (tempo >= 0) {
-      const timerInHtml = document.getElementById("nSecondi");
-      timerInHtml.textContent = tempo;
-      tempo--;
+      tempo--
     } else {
       //rispostaVuota()
-      clearInterval(intervallo);
+      fermaTicToc()
     }
   }
-  const intervallo = setInterval(aggiornaTimer, 1000);
+
+  aggiornaTimer()
+
+
 };
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
@@ -126,6 +142,8 @@ const cerchioTimer = function (difficolta) {
 
   pseconds.textContent = "seconds";
   nSecondi.id = "nSecondi";
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
+
   nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
 
@@ -262,9 +280,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -286,9 +304,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
   renderizzaDomande();
 }
@@ -299,6 +317,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
+  await fermaTicToc()
+
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
