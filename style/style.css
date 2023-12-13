@@ -435,6 +435,7 @@ form p {
   text-align: center;
   font-size: 2em;
   position: relative;
+  white-space: nowrap;
 }
 
 #graficoCiambella {
