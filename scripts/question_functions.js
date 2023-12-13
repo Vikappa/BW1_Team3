@@ -471,7 +471,11 @@ renderizzaDomande();
 ////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
 // const superatoOno = function (pass) {
 //   if (pass === "superato") {
+<<<<<<< HEAD
 //     // inzio Animazione Coriandoli + audio:
+=======
+//     // inzio creazione ed animazione Coriandoli + audio:
+>>>>>>> eab0fc9 (wip animazione che appare mentre la Questions Page viene carica, prima che appaiono le domande)
 //     let canvas = document.getElementById("animazioniCoriandoliOgocce");
 //     let contenuto = canvas.getContext("2d");
 //     let width = window.innerWidth;
@@ -586,8 +590,13 @@ renderizzaDomande();
 //       const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
 //       audioWinner.play();
 //     };
+<<<<<<< HEAD
 //     // // fine Animazione Coriandoli.
 //     // inzio Animazione Lacrime + audio:
+=======
+//     // // fine creazione ed animazione Coriandoli.
+//     // inzio creazione ed animazione Lacrime + audio:
+>>>>>>> eab0fc9 (wip animazione che appare mentre la Questions Page viene carica, prima che appaiono le domande)
 //   } else {
 //     let canvas = document.getElementById("animazioniCoriandoliOgocce");
 //     let contenuto = canvas.getContext("2d");
@@ -705,6 +714,35 @@ renderizzaDomande();
 //       audioLooser.play();
 //     };
 //   }
+<<<<<<< HEAD
 //   // fine Animazione Lacrime.
 // };
 // superatoOno("perato");
+=======
+//   // fine creazione ed animazione Lacrime.
+// };
+// // richiamo la funzione: "superato" = coriandoli, !== a superato = lacrime
+// superatoOno("perato");
+
+///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
+// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
+function hideLoadingAnimation() {
+  const loadingDiv = document.getElementById("loadingDiv");
+  if (loadingDiv) {
+    loadingDiv.style.display = "none";
+  }
+}
+
+// Verifica se il div genitore è stato creato:
+const parentDiv = document.getElementById("genitore");
+
+// Se il div genitore non è ancora stato creato, mostra l'animazione:
+if (!parentDiv) {
+  const loadingDiv = document.createElement("div");
+  loadingDiv.id = "loadingDiv";
+  loadingDiv.textContent = "Caricamento in corso...";
+  document.body.appendChild(loadingDiv);
+} else {
+  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato:
+}
+>>>>>>> eab0fc9 (wip animazione che appare mentre la Questions Page viene carica, prima che appaiono le domande)
