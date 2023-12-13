@@ -111,8 +111,8 @@ const superatoOno = function (pass) {
         creaCoriandoli();
         window.requestAnimationFrame(inizia);
       }, 700);
-      const audio = document.getElementById("audioWinner");
-      audio.play();
+      const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+      audioWinner.play();
     };
   } else {
     let canvas = document.getElementById("canvas");
@@ -227,9 +227,9 @@ const superatoOno = function (pass) {
         creaLacrime();
         window.requestAnimationFrame(iniziaLacrime);
       }, 700);
-      const audio = document.getElementById("audioLooser");
-      audio.play();
+      const audioLooser = new Audio("./sounds/looser-results.wav");
+      audioLooser.play();
     };
   }
 };
-superatoOno("superato");
+superatoOno("perato");
