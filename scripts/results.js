@@ -111,15 +111,8 @@ const superatoOno = function (pass) {
         creaCoriandoli();
         window.requestAnimationFrame(inizia);
       }, 700);
-
-      //per avviare la riproduzione dell'audio
-      // const audio = document.getElementById("audioPlayer");
-      // const audioMessage = document.querySelector("h1");
-
-      // // audioMessage.addEventListener("click", () => {
-      // //   audio.play();
-      // //   audioMessage.style.display = "none"; // Nascondi il messaggio dopo aver avviato l'audio
-      // // });
+      const audio = document.getElementById("audioWinner");
+      audio.play();
     };
   } else {
     let canvas = document.getElementById("canvas");
@@ -234,7 +227,9 @@ const superatoOno = function (pass) {
         creaLacrime();
         window.requestAnimationFrame(iniziaLacrime);
       }, 700);
+      const audio = document.getElementById("audioLooser");
+      audio.play();
     };
   }
 };
-superatoOno("perato");
+superatoOno("superato");
