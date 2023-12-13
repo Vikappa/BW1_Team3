@@ -69,37 +69,28 @@ let timeleft;
 let diffValueCurrentQuestion;
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
+  let tempo;
   if (difficoltaStringa === "easy") {
-    return 30;
+    tempo = 30;
   } else if (difficoltaStringa === "medium") {
-    return 60;
+    tempo = 60;
   } else if (difficoltaStringa === "hard") {
-    return 120;
+    tempo = 120;
   } else {
     console.log("Errore numero inserito nel metodo timer");
-    return 0;
+    tempo = 0;
   }
-};
-
-async function aggiornaTimer() {
-  if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion);
+  async function aggiornaTimer() {
+    if (tempo >= 0) {
+      const timerInHtml = document.getElementById("nSecondi");
+      timerInHtml.textContent = tempo;
+      tempo--;
+    } else {
+      //rispostaVuota()
+      clearInterval(intervallo);
+    }
   }
-  if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = timeleft;
-    timeleft--;
-  } else {
-    //rispostaVuota()
-    clearInterval(tictoc);
-  }
-}
-
-const avviaTicToc = function (diffValue) {
-  //Ex aggiornatimer
-  if (tictoc === undefined) {
-    setInterval(aggiornaTimer, 1000);
-  }
+  const intervallo = setInterval(aggiornaTimer, 1000);
 };
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
