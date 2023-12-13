@@ -8,27 +8,32 @@ body {
   background-size: cover;
   background-attachment: fixed;
   color: white;
-  margin-left: 4.5em;
+  margin: 5%;
 }
 
 header img {
   width: 130px;
-  margin-bottom: 0.3em;
-  margin-top: 1.7em;
+}
+
+main {
+  width: 100%;
 }
 
 .title {
-  line-height: 0.7;
+  line-height: 0.8;
 }
 
 .title1,
 .title2 {
   font-family: 'Outfit', sans-serif;
   font-size: 60px;
+  justify-self: left;
 }
 
 .title2 {
   font-weight: bold;
+  justify-self: left;
+
 }
 
 .title-instructions,
@@ -37,11 +42,14 @@ header img {
 span {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
+  justify-self: left;
+
 }
 
 .title-instructions {
   color: #d20094;
   font-weight: bold;
+  justify-self: left;
 
   padding-top: 1.7em;
 }
@@ -49,15 +57,19 @@ span {
 .description {
   line-height: 1.1;
   padding-top: 0.5em;
+
 }
 
 .elenco {
   padding-top: 4em;
   margin-left: 1.5em;
   line-height: 1.4;
+
 }
 
 #check {
+  display: flex;
+
   padding-top: 5em;
 }
 
