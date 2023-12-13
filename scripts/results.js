@@ -79,7 +79,7 @@ const superatoOno = function (pass) {
           (Math.sin(coriandoliSetting.wave) +
             coriandoli[i].area +
             coriandoliSetting.gravity) *
-          0.36;
+          0.34;
         coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
 
         coriandoli[i].draw();
@@ -112,14 +112,9 @@ const superatoOno = function (pass) {
         window.requestAnimationFrame(inizia);
       }, 700);
 
-      //per avviare la riproduzione dell'audio
-      // const audio = document.getElementById("audioPlayer");
-      // const audioMessage = document.querySelector("h1");
-
-      // // audioMessage.addEventListener("click", () => {
-      // //   audio.play();
-      // //   audioMessage.style.display = "none"; // Nascondi il messaggio dopo aver avviato l'audio
-      // // });
+      //per la riproduzione dell'audio
+      const audio = document.getElementById("audioWinner");
+      audio.play();
     };
   } else {
     let canvas = document.getElementById("canvas");
@@ -234,6 +229,9 @@ const superatoOno = function (pass) {
         creaLacrime();
         window.requestAnimationFrame(iniziaLacrime);
       }, 700);
+      //per la riproduzione dell'audio
+      const audio = document.getElementById("audioLooser");
+      audio.play();
     };
   }
 };
