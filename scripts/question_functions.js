@@ -61,6 +61,7 @@ const graficoCiambella = function (sbagliate, giuste) {
     options: options,
   }).canvas;
 };
+///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
 const main = document.getElementById("main");
 let tictoc;
@@ -74,6 +75,9 @@ const timer = function (difficoltaStringa) {
     return 60;
   } else if (difficoltaStringa === "hard") {
     return 120;
+  } else {
+    console.log("Errore numero inserito nel metodo timer");
+    return 0;
   }
   console.log("Errore numero inserito nel metodo timer");
   return 0;
@@ -85,7 +89,7 @@ async function aggiornaTimer() {
   }
   if (timeleft >= 0) {
     const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = console.log(timeleft);
+    timerInHtml.textContent = timeleft;
     timeleft--;
   } else {
     //rispostaVuota()
@@ -114,21 +118,21 @@ const cerchioTimer = function (difficolta) {
   switch (difficolta) {
     case "easy":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "medium":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "hard":
       divCerchio.innerHTML = `    
-            <svg>
+            <svg id="svgGenerale">
               <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;

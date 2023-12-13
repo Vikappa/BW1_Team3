@@ -195,7 +195,7 @@ body {
   stroke-dasharray: 437px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #050505;
   opacity: 0.2;
   fill: none;
@@ -206,7 +206,7 @@ body {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 30s linear infinite forwards;
@@ -217,7 +217,7 @@ body {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 60s linear infinite forwards;
@@ -228,7 +228,7 @@ body {
   stroke-dasharray: 435px;
   stroke-dashoffset: 0px;
   stroke-linecap: round;
-  stroke-width: 4px;
+  stroke-width: 10px;
   stroke: #00ffff;
   fill: none;
   animation: countdown 120s linear infinite forwards;
@@ -241,7 +241,7 @@ body {
   }
 
   to {
-    stroke-dashoffset: 435px;
+    stroke-dashoffset: -435px;
   }
 }
 
@@ -261,6 +261,13 @@ body {
 }
 
 .svgCircle {
+}
+
+#svgGenerale {
+  transform: rotate(271deg);
+  position: absolute;
+  top: -77px;
+  right: -225px;
 }
 
 #countdown {
