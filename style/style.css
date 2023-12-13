@@ -404,6 +404,14 @@ form p {
   }
 }
 
+.divCiambella {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
 /* * {
     box-sizing: border-box;

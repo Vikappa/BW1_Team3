@@ -14,11 +14,9 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
-
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
+  const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
 
   const ctx = canvas.getContext("2d");
@@ -30,26 +28,18 @@ const graficoCiambella = function (sbagliate, giuste) {
         data: [sbagliate, giuste],
         backgroundColor: ["#D20094", "#00FFFF"],
         borderColor: "white",
-        borderWidth: 2,
+        borderWidth: 0, // Riduci il bordo
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 30,
+    cutoutPercentage: 50, // Aumenta la percentuale di buco centrale
     responsive: false,
     plugins: {
       datalabels: {
-        color: "white",
-        font: {
-          weight: "bold",
-        },
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 4,
+        display: false, // Nascondi le etichette
       },
     },
   };
@@ -63,6 +53,7 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 let tictoc;
 let timeleft;
@@ -92,6 +83,7 @@ const timer = function (difficoltaStringa) {
   }
   const intervallo = setInterval(aggiornaTimer, 1000);
 };
+/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
@@ -199,6 +191,7 @@ const renderizza_risultato = async function () {
   await delay(500);
   divTest.innerHTML = ``;
 
+  divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
@@ -208,6 +201,28 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
+  const fraseSuperamentoONo = document.createElement("div");
+  if (giuste > sbagliate) {
+    fraseSuperamentoONo.innerHTML = `
+    <p>Congratulations!/p>
+    <p>You have passed the exam</p>
+   <p>You will receive your certificate by email shortly</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  } else {
+    fraseSuperamentoONo.innerHTML = `
+    <p>We are sorry</p>
+    <p>You failed your test</p>
+   <p>It will be fine next time, commit!</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  }
+  const quanteSbagliate = document.createElement("div");
+  quanteSbagliate.innerHTML = `<p>Correct</p>
+  <p>${giuste}%</p>`;
+  divTest.appendChild(quanteSbagliate);
+  const quanteGiuste = document.createElement("div");
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${sbagliate}%</p>`;
+  divTest.appendChild(quanteGiuste);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
   divTest.appendChild(grafic);
