@@ -9,6 +9,7 @@ body {
   background-attachment: fixed;
   color: white;
   margin: 5%;
+  overflow: hidden;
 }
 
 header img {
@@ -127,11 +128,11 @@ body {
   padding-top: 6%;
 }
 
-img {
+/* img {
   width: 130px;
   margin-bottom: 15em;
   margin-left: 5px;
-}
+} */
 
 #pDomanda {
   font-size: 3em;
@@ -273,4 +274,132 @@ img {
   position: fixed;
   right: 5%;
   top: 10%;
+}
+
+/* /Alex CSS */
+.stars {
+  line-height: 0;
+}
+.stars img {
+  opacity: 0.1;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  transition: opacity 2s ease, transform 0.5s ease;
+}
+.stars:hover {
+  /* opacity: 1; */
+  cursor: pointer;
+}
+img.attivo {
+  opacity: 1;
+  transform: scale(1.5);
+  margin-right: 15px;
+}
+textarea {
+  resize: none;
+  /* transform: translate(-50%, -50%); */
+
+  width: 100%;
+  max-width: 500px;
+
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid /* #900080 */ #d20094;
+}
+form p {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+#btn {
+  margin-top: 50px;
+  color: black;
+  width: 30%;
+  height: 50px;
+  background-color: #00ffff;
+  font-size: 16px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 1);
+  cursor: pointer;
+}
+
+#body-feedback {
+  text-align: center;
+  color: #fff;
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+}
+@media only screen and (max-width: 932px) {
+  body {
+    margin-left: 2em;
+    margin-right: 2em;
+    overflow: auto;
+  }
+  nav img {
+    width: 45vh;
+  }
+  header img {
+    width: 30%;
+    position: absolute;
+
+    top: 25px;
+    left: 60px;
+  }
+  main {
+    margin-top: 50px;
+  }
+  textarea {
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+  }
+  #buttonProceed {
+    margin-top: 40px;
+  }
+  .stars img {
+    width: 30px;
+    height: 30px;
+    /* margin-right: 3px; */
+    margin-right: 15px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  body {
+    margin-left: 2em;
+    margin-right: 2em;
+    overflow: auto;
+  }
+
+  nav img {
+    width: 15vh;
+  }
+  header img {
+    width: 30%;
+    position: absolute;
+
+    top: 25px;
+    left: 60px;
+  }
+  main {
+    margin-top: 50px;
+  }
+  textarea {
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+  }
+  #buttonProceed {
+    margin-top: 40px;
+  }
+  .stars img {
+    width: 20px;
+    height: 20px;
+    /* margin-right: 3px; */
+    margin-right: 10px;
+  }
 }
