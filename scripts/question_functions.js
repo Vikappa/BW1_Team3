@@ -17,7 +17,6 @@ const arrayRisposte = [];
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 
-//////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
   const canvas = document.createElement("canvas") // Crea un elemento canvas dinamicamente invece di gettarlo dalla pagina
@@ -103,7 +102,7 @@ const avviaTicToc = function (diffValue) { //Ex aggiornatimer
 }
 
 
-// Ho accroccato cerchio e timer in un solo div così da avere una "cornice" da piazzare più volte
+//////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
   const cerchioTimerHtml = document.createElement("div")
   const divCerchio = document.createElement("div")
