@@ -394,7 +394,7 @@ const renderizzaDomande = async function () {
 
 renderizzaDomande();
 
-// Creazione coriandoli O Lacrime + audio:
+////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
 const superatoOno = function (pass) {
   if (pass === "superato") {
     // inzio Animazione Coriandoli + audio:
