@@ -662,40 +662,25 @@ body {
 }
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
-/* * {
-    box-sizing: border-box;
-  }
-  body {
-    overflow: hidden;
-  }
-  #animazioniCoriandoliOgocce {
-    position: absolute;
-    top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
-/* left: 10px; Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato)
-  } */
-/* #messaggioGocce {
-    display: none;
-    text-align: center;
-    color: #e9eaed;
-    font-size: 370%;
-    font-family: "Outfit", sans-serif;
-  } */
 
-/* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
-/* @keyframes loading {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+body {
+  overflow: hidden;
+}
+#animazioniCoriandoliOgocce {
+  position: absolute;
+  top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
+  left: 10px; /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
+  box-sizing: border-box; /* controllare questa riga*/
+}
+#messaggioGocce {
+  display: none;
+  text-align: center;
+  color: #e9eaed;
+  font-size: 370%;
+  font-family: "Outfit", sans-serif;
 }
 
-/* Stile per nascondere il div di caricamento una volta terminata l'animazione */
-/* #loadingDiv {
-  animation: loading 6s forwards;
-}  */
-
+/* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
 @keyframes clessidra {
   0% {
     transform: rotate(0);
@@ -717,6 +702,7 @@ body {
   border-radius: 50%;
   background-color: (#00ffff);
   animation: clessidra 1s infinite;
+  margin-top: 10%;
   /* transform: translate(-50%, -50%);
   z-index: 100; */
 }
