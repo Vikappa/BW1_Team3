@@ -5,18 +5,7 @@ const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
 const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
-const divResultleaderboard = document.getElementById("resultleaderboard");
-
 const arrayRisposte = [];
-let intervalloUnico;
-let currentQuestion;
-
-let resOrLead;
-
-const fermaTicToc = async function () {
-  console.log("Fermato");
-  clearInterval(intervalloUnico);
-};
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -25,19 +14,14 @@ const fermaTicToc = async function () {
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
+
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  fermaTicToc();
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = "graficoCiambella";
-  canvas.width = 300;
-  canvas.height = 300;
-  const ctx = canvas.getContext("2d");
 
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Colore dell'ombra
-  ctx.shadowBlur = 50; // Intensità dell'ombra
-  ctx.shadowOffsetX = 10; // Spostamento orizzontale dell'ombra
-  ctx.shadowOffsetY = 5; // Spostamento verticale dell'ombra
+  const ctx = canvas.getContext("2d");
 
   // Dati del grafico
   const dati = {
@@ -46,18 +30,26 @@ const graficoCiambella = function (sbagliate, giuste) {
         data: [sbagliate, giuste],
         backgroundColor: ["#D20094", "#00FFFF"],
         borderColor: "white",
-        borderWidth: 0, // Riduci il bordo
+        borderWidth: 2,
       },
     ],
+    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 70,
+    cutoutPercentage: 30,
     responsive: false,
     plugins: {
       datalabels: {
-        display: false, // Nascondi le etichette
+        color: "white",
+        font: {
+          weight: "bold",
+        },
+        shadowColor: "rgba(0, 0, 0, 0.3)",
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 4,
       },
     },
   };
@@ -69,58 +61,44 @@ const graficoCiambella = function (sbagliate, giuste) {
     options: options,
   }).canvas;
 };
-///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
-
-const convertiStringaInSecondiTimer = function (difficoltaStringa) {
+let tictoc;
+let timeleft;
+let diffValueCurrentQuestion;
+//modificato per ritornare un valore che non sia fuori dal metodo
+const timer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
     return 30;
   } else if (difficoltaStringa === "medium") {
     return 60;
   } else if (difficoltaStringa === "hard") {
     return 120;
-  } else {
-    console.log(
-      "Errore numero inserito nel metodo convertiStringaInSecondiTimer"
-    );
-    return 0;
   }
+  console.log("Errore numero inserito nel metodo timer");
+  return 0;
 };
 
-//modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
-  let tempo;
-  if (difficoltaStringa === "easy") {
-    tempo = 30;
-  } else if (difficoltaStringa === "medium") {
-    tempo = 60;
-  } else if (difficoltaStringa === "hard") {
-    tempo = 120;
+async function aggiornaTimer() {
+  const timerInHtml = document.getElementById("nSecondi");
+  if (!timeleft) {
+    timeleft = timer(diffValueCurrentQuestion);
+  }
+  if (timeleft >= 0) {
+    timeleft--;
   } else {
-    console.log("Errore numero inserito nel metodo timer");
-    tempo = 0;
+    //rispostaVuota()
+    clearInterval(tictoc);
   }
-  function aggiornaTimer() {
-    if (tempo >= 1) {
-      tempo--;
-      console.log("Aggiorno tempo");
-      document.getElementById("nSecondi").textContent = tempo;
-    } else {
-      rispostaVuota();
-      fermaTicToc();
-    }
-  }
-
-  intervalloUnico = setInterval(aggiornaTimer, 1000);
-
-  return tempo;
-};
-/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
+}
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
+  const timerPrecedente = document.getElementById("countdown");
+  if (timerPrecedente) {
+    clearInterval(tictoc);
+    timerPrecedente.remove();
+  }
   const cerchioTimerHtml = document.createElement("div");
   const divCerchio = document.createElement("div");
   const divTime = document.createElement("div");
@@ -130,24 +108,35 @@ const cerchioTimer = function (difficolta) {
 
   divCerchio.style = "position: absolute";
 
+  let tempoRimanente = timer(difficolta); // Ottieni il tempo iniziale
+  const incremento = 1000; // Incremento in millisecondi per l'aggiornamento del timer
+  const intervalloTimer = setInterval(() => {
+    if (tempoRimanente <= 0) {
+      clearInterval(intervalloTimer);
+    } else {
+      tempoRimanente -= 1;
+      aggiornaTimer(tempoRimanente);
+    }
+  }, incremento);
+
   switch (difficolta) {
     case "easy":
       divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
+            <svg>
               <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "medium":
       divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
+            <svg>
               <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
       break;
     case "hard":
       divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
+            <svg>
               <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
               <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
             </svg>`;
@@ -159,10 +148,8 @@ const cerchioTimer = function (difficolta) {
   const primanenti = document.createElement("p");
 
   pseconds.textContent = "seconds";
-  nSecondi.id = "nSecondi";
-  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta);
-
   nSecondi.textContent = timer(difficolta);
+  nSecondi.id = "nSecondi";
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
@@ -178,6 +165,11 @@ const cerchioTimer = function (difficolta) {
   return cerchioTimerHtml;
 };
 
+async function aggiornaTimer(tempoRimanente) {
+  const timerInHtml = document.getElementById("nSecondi");
+  timerInHtml.textContent = tempoRimanente;
+}
+
 const diffInSecondi = function (diffString) {
   switch (diffString) {
     case `easy`:
@@ -191,75 +183,6 @@ const diffInSecondi = function (diffString) {
   }
 };
 
-///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
-const loadingDiv = document.createElement("div");
-loadingDiv.id = "loadingDiv";
-loadingDiv.classList.add("clessidra");
-divTest.appendChild(loadingDiv);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
-const generateRandomName = () => {
-  const names = [
-    "Ali",
-    "Eric",
-    "Gabriel",
-    "Beatriz",
-    "Hanna",
-    "Diya",
-    "Fatima",
-  ];
-  return names[Math.floor(Math.random() * names.length)];
-};
-
-const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
-
-const generateRandomImages = () => {
-  const images = [
-    "https://placedog.net/100/100",
-    "https://placekitten.com/100",
-  ];
-  return images[Math.floor(Math.random() * images.length)];
-};
-
-const populateLeaderboard = () => {
-  const leaderboardItems = [];
-  const leaderboardContainer = document.getElementById("leaderboard");
-  for (let i = 1; i <= 10; i++) {
-    const randomName = generateRandomName();
-    const randomPoints = generateRandomPoints();
-    const randomImages = generateRandomImages();
-
-    const leaderboardItem = document.createElement("div");
-    leaderboardItem.classList.add("lboard_memory");
-
-    leaderboardItem.innerHTML = `
-    <div class="img">
-        <img class="leaderboardImg" src="${randomImages}" alt="random-image" />
-    </div>
-    <div class="name_barra">
-        <p><span>${i}.</span>${randomName}</p>
-        <div class="bar_wrap">
-            <div class="inner_bar" style="width: ${randomPoints}%"></div>
-        </div>
-    </div>
-    <div class="points">${randomPoints} points</div>
-`;
-
-    leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
-  }
-
-  leaderboardItems.sort((a, b) => b.points - a.points);
-
-  leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${index + 1
-      }.`;
-
-    leaderboardContainer.appendChild(item.element);
-  });
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -291,254 +214,40 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
-const checkRispostaVX = function (
-  rispostaData,
-  rispostaGiusta,
-  rispostaCasella
-) {
-  if (rispostaData === rispostaCasella) {
-    if (rispostaCasella === rispostaGiusta) {
-      return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
-    }
-    if (rispostaCasella !== rispostaGiusta) {
-      return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
-    }
-  }
-};
-
-const renderizzaLeaderBoard = function () {
-  divTest.innerHTML = `<div class="podium">
-  <div class="podium-item gold" id="gold">
-    <img src="" alt="Gold Medal" />
-    <p>1st Place</p>
-    <span>1º</span>
-  </div>
-  <div class="podium-item silver" id="silver">
-    <img src="" alt="Silver Medal" />
-    <p>2nd Place</p>
-    <span>2º</span>
-  </div>
-  <div class="podium-item bronze" id="bronze">
-    <img src="" alt="Bronze Medal" />
-    <p>3rd Place</p>
-    <span>3º</span>
-  </div>
-</div>`;
-
-  fermaTicToc();
-
-  divResultleaderboard.style.visibility = "visible";
-  divResultleaderboard.innerHTML = `<div class="lboard_section">
-      <div class="lboard_item Leaderboard" id="leaderboard">
-      </div>
-</div>`;
-
-  const divPulsanteLeaderBoard = document.createElement("div");
-  const pPulsanteLeaderBoard = document.createElement("p");
-  const divPulsanteResultBoard = document.createElement("div");
-  const pPulsanteResultBoard = document.createElement("p");
-  const divPulsantiSwitchTab = document.createElement("div");
-  divPulsantiSwitchTab.id = "divPulsantiSwitchTab";
-
-  pPulsanteLeaderBoard.id = "Leaderboard";
-  pPulsanteResultBoard.id = "Risultati";
-
-  pPulsanteLeaderBoard.addEventListener("click", function () {
-    renderizzaLeaderBoard();
-  });
-
-  pPulsanteResultBoard.addEventListener("click", function () {
-    renderizza_risultato();
-  });
-
-  pPulsanteLeaderBoard.classList = "switchTab";
-  pPulsanteResultBoard.classList = "switchTab";
-  pPulsanteLeaderBoard.textContent = "Leaderboard";
-  pPulsanteResultBoard.textContent = "Risultati";
-
-  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard);
-  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard);
-
-  divPulsantiSwitchTab.append(divPulsanteResultBoard);
-  divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
-
-  divResultleaderboard.appendChild(divPulsantiSwitchTab);
-
-  populateLeaderboard();
-};
-
 const renderizza_risultato = async function () {
-  divResultleaderboard.innerHTML = ``;
-  divResultleaderboard.style.visibility = "visible";
+  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
+  await delay(500);
   divTest.innerHTML = ``;
 
-  const divPulsanteLeaderBoard = document.createElement("div");
-  const pPulsanteLeaderBoard = document.createElement("p");
-  const divPulsanteResultBoard = document.createElement("div");
-  const pPulsanteResultBoard = document.createElement("p");
-  const divPulsantiSwitchTab = document.createElement("div");
-  divPulsantiSwitchTab.id = "divPulsantiSwitchTab";
-
-  pPulsanteLeaderBoard.id = "Leaderboard";
-  pPulsanteResultBoard.id = "Risultati";
-
-  pPulsanteLeaderBoard.addEventListener("click", function () {
-    renderizzaLeaderBoard();
-  });
-
-  pPulsanteResultBoard.addEventListener("click", function () {
-    renderizza_risultato();
-  });
-
-  pPulsanteLeaderBoard.classList = "switchTab";
-  pPulsanteResultBoard.classList = "switchTab";
-  pPulsanteLeaderBoard.textContent = "Leaderboard";
-  pPulsanteResultBoard.textContent = "Risultati";
-
-  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard);
-  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard);
-
-  divPulsantiSwitchTab.append(divPulsanteResultBoard);
-  divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
-
-  divResultleaderboard.appendChild(divPulsantiSwitchTab);
-
-  divTest.classList = "divCiambella";
-  let totaleDomande = arrayDomande.length;
+  let totaleDomande = arrayRisposte.length;
   let giuste = 0;
-
+  // !CHATGPT
   for (let index = 0; index < arrayRisposte.length; index++) {
     if (arrayRisposte[index].correctAnswer === arrayRisposte[index].answer)
       giuste++;
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
-  const quanteGiuste = document.createElement("div");
-  quanteGiuste.id = "divQuanteGiuste";
-  quanteGiuste.classList = "divSchermataCiambella";
-  quanteGiuste.innerHTML = `<p class="txtCiambella">Wrong</p>
-  <p class="percentualeCiambella">${Math.floor(
-    (sbagliate / totaleDomande) * 100
-  )}%</p>
-  <p class="quanteCiambella">${sbagliate}/${totaleDomande} questions</p>`;
-  divTest.appendChild(quanteGiuste);
-  const fraseSuperamentoONo = document.createElement("div");
-  fraseSuperamentoONo.classList = "divSchermataCiambella";
-  fraseSuperamentoONo.id = "divFraseSuperamentoONo";
-  if (giuste > sbagliate) {
-    fraseSuperamentoONo.innerHTML = `
-    <p class="primaFraseResultCorrect">Congratulations!</p>
-    <p class="secondaFraseResultCorrect">You have passed the exam</p>
-   <p class="terzaFraseResultCorrect">We'll send you the certificate in few minutes</p>
-   <p class="terzaFraseResultCorrect">in few minutes</p>
-   <p class="terzaFraseResultCorrect">Check your email(including</p>
-   <p class="terzaFraseResultCorrect">promotions / spam folder)</p>`;
-    fraseSuperamentoONo.appendChild(grafic);
-    divTest.appendChild(fraseSuperamentoONo);
-  } else {
-    fraseSuperamentoONo.innerHTML = `
-    <p class="primaFraseResultSbagliato ">Dammit!</p>
-    <p class="secondaFraseResultSbagliato ">You failed the exam</p>
-   <p class="terzaFraseResultSbagliato ">You can always make it up if you want.</p>
-   <p class="terzaFraseResultSbagliato "> Ask your teacher</p>
-   `;
-    fraseSuperamentoONo.appendChild(grafic);
-    divTest.appendChild(fraseSuperamentoONo);
-  }
-  const quanteSbagliate = document.createElement("div");
-  quanteSbagliate.id = "divQuanteSbagliate";
-  quanteSbagliate.classList = "divSchermataCiambella";
-  quanteSbagliate.innerHTML = `<p class="txtCiambella">Correct</p>
-  <p class="percentualeCiambella">${Math.floor(
-    (giuste / totaleDomande) * 100
-  )}%</p>
-  <p  class="quanteCiambella">${giuste}/${totaleDomande} questions</p>`;
-  divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
+  divTest.appendChild(grafic);
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
-    if (arrayRisposte[i].type === `multiple`) {
-      const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta";
-      divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
-    <h1 class="h1Question">${arrayRisposte[i].question}</h1>
-    <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[0]
-      )}  ${arrayRisposte[i].all_answer[0]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[1]
-        )} ${arrayRisposte[i].all_answer[1]}</p>
-    </div>    
-    <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[2]
-        )}  ${arrayRisposte[i].all_answer[2]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[3]
-        )} ${arrayRisposte[i].all_answer[3]}</p>
-    </div>
-    </div>`;
-
-      divRisposteDate.appendChild(divRisposta);
-    } else {
-      const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta";
-      divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
-      <h1 class="h1Question">${arrayRisposte[i].question}</h1>
-      <div class=rigaRisposte>
-      <p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[0]
-      )}  ${arrayRisposte[i].all_answer[0]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[1]
-        )} ${arrayRisposte[i].all_answer[1]}</p>
-      </div></div>`;
-      divRisposteDate.appendChild(divRisposta);
-    }
+    const divRisposta = document.createElement("div");
+    const pDomanda = document.createElement("p");
+    pDomanda.textContent = arrayRisposte[i].question;
+    const pAnswer = document.createElement("p");
+    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer;
+    divRisposta.appendChild(pDomanda);
+    divRisposta.appendChild(pAnswer);
+    divRisposteDate.appendChild(divRisposta);
   }
-
-  divResultleaderboard.appendChild(divRisposteDate);
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
 
 let arrayDomande = [];
-
-const rispostaVuota = async function () {
-  let risposta = {
-    type: currentQuestion.type,
-    question: currentQuestion.question,
-    answer: "Non ho risposto",
-    all_answer: currentQuestion.arrayRispostePresentate,
-    correctAnswer: currentQuestion.correct_answer,
-  };
-
-  arrayRisposte.push(risposta);
-
-  console.log(
-    "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
-  );
-
-  renderizzaDomande();
-};
 
 async function addRisposta(
   arrayRispostePresentate,
@@ -558,9 +267,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
@@ -582,9 +291,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
   renderizzaDomande();
 }
@@ -595,9 +304,6 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
-  currentQuestion = obgDomanda;
-
-  await fermaTicToc();
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
@@ -688,9 +394,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
-    divTest.innerHTML = ``;
-    superatoOno("perato");
+  if (arrayDomande.length === arrayRisposte.length + 20) {
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
@@ -698,264 +402,9 @@ const renderizzaDomande = async function () {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
       arrayDomande[nDomandeFatte]
     );
-
     nDomandeFatte++;
     await divTest.appendChild(nuovaDomandaRenderizzata);
   }
 };
 
 renderizzaDomande();
-
-//////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
-const superatoOno = function (pass) {
-  if (pass === "superato") {
-    // inzio Animazione Coriandoli + audio:
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let coriandoli = [];
-    let coriandoliSetting = {
-      count: 500,
-      gravity: 0.05,
-      wave: 0,
-    };
-
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
-
-    function Coriandolo() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.area = numeroRandom(12, 15);
-      this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-      this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
-        0,
-        255
-      )}, ${numeroRandom(0, 255)})`;
-    }
-
-    Coriandolo.prototype.draw = function () {
-      contenuto.beginPath();
-      contenuto.lineJoin = "round"; // Smusso degli angoli
-      contenuto.lineCap = "round"; // Smusso delle estremità
-      contenuto.lineWidth = this.dimension; // Utilizza la dimensione
-      contenuto.strokeStyle = this.color;
-      this.x = this.x + this.tilt;
-      contenuto.moveTo(this.x + this.dimension / 5, this.y);
-      contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
-      contenuto.stroke();
-    };
-
-    const creaCoriandoli = function () {
-      while (coriandoli.length < coriandoliSetting.count) {
-        let coriandolo = new Coriandolo();
-        coriandoli.push(coriandolo);
-      }
-    };
-
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
-
-    const inizia = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
-
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-
-      contenuto.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < coriandoli.length; i++) {
-        coriandoliSetting.wave += 0.4;
-        coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
-        coriandoli[i].y +=
-          (Math.sin(coriandoliSetting.wave) +
-            coriandoli[i].area +
-            coriandoliSetting.gravity) *
-          0.36;
-        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
-
-        coriandoli[i].draw();
-
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-        } else {
-          // Animazione terminata, i coriandoli possono scendere fuori dal canvas
-          coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
-        }
-
-        if (coriandoli[i].y > height) {
-          coriandoli.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
-
-      if (coriandoli.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(inizia);
-      }
-    };
-
-    window.onload = () => {
-      canvas.width = width;
-      canvas.height = height;
-
-      // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
-      setTimeout(() => {
-        creaCoriandoli();
-        window.requestAnimationFrame(inizia);
-      }, 700);
-      const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-      audioWinner.play();
-    };
-    // // fine Animazione Coriandoli.
-    // inzio Animazione Lacrime + audio:
-  } else {
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let lacrime = [];
-    let lacrimeSetting = {
-      count: 400,
-      gravity: 0.4,
-      wave: 0,
-    };
-
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
-
-    function Lacrima() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.dimension = numeroRandom(8, 20);
-      this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
-      this.speed = numeroRandom(5, 15);
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-    }
-
-    Lacrima.prototype.draw = function () {
-      contenuto.beginPath();
-      contenuto.lineWidth = 5;
-      contenuto.strokeStyle = this.color;
-      contenuto.moveTo(this.x, this.y);
-      contenuto.quadraticCurveTo(
-        this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
-      );
-      contenuto.quadraticCurveTo(
-        this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y
-      );
-      contenuto.stroke();
-    };
-
-    const creaLacrime = function () {
-      while (lacrime.length < lacrimeSetting.count) {
-        let lacrima = new Lacrima();
-        lacrime.push(lacrima);
-      }
-    };
-
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
-
-    const iniziaLacrime = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
-
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      tempoCorrente = timestamp - startTime;
-
-      contenuto.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < lacrime.length; i++) {
-        lacrimeSetting.wave += 0.00001;
-        lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
-        lacrime[i].y +=
-          (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
-          lacrime[i].speed;
-        lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
-
-        lacrime[i].draw();
-
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime;
-        } else {
-          lacrime[i].y += 10;
-        }
-        if (lacrime[i].y > height + lacrime[i].dimension) {
-          lacrime.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
-
-      if (lacrime.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(iniziaLacrime);
-      }
-    };
-
-    window.onload = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      setTimeout(() => {
-        document.getElementById("messaggioGocce").style.display = "block";
-        creaLacrime();
-        window.requestAnimationFrame(iniziaLacrime);
-      }, 700);
-      const audioLooser = new Audio("./sounds/looser-results.wav");
-      audioLooser.play();
-    };
-  }
-  // fine Animazione Lacrime.
-};
-
-// FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
-// const avvioAnimazioniResults = function () {
-//   for (let i = arrayDomande.length - 1; i >= 0; i--) {
-//     if (arrayDomande[i].correctAnswer === arrayDomande[i].answer) {
-//       const ultimaRisposta = document.getElementById(arrayDomande[i].question);
-//       ultimaRisposta.addEventListener("click", () => {
-//         superatoOno("superato");
-//       });
-//     } else {
-//       superatoOno("nonSuperato");
-//     }
-//   }
-// };

@@ -1,22 +1,12 @@
-const buttonClick = function () {
-  window.open("../questions.html");
+const checkboxChange = function () {
+  let checkbox = document.getElementById('checkbox');
+  let button = document.getElementById('button');
+  button.disabled === !checkbox.checked;
 };
-button = document.getElementById("button");
-button.addEventListener("click", buttonClick);
+document.getElementById('checkbox').addEventListener('change', checkboxChange);
 
-// const miaCheckbox = document.getElementById('checkbox');
-// const button = document.getElementById('button');
-
-checkbox.addEventListener("click", function () {
-  if (checkbox.checked) {
-    console.log("true");
-    button.innerHTML = `<button onclick="button" id="buttonProceed">
-    PROCEED
-  </button>`;
-  } else {
-    button.innerHTML = `<button onclick="button" id="buttonProceed" disabled>
-    PROCEED
-  </button>`;
-    console.log("false");
-  }
-});
+const buttonClick = function () {
+  window.open('../questions.html');
+};
+button = document.getElementById('button');
+button.addEventListener('click', buttonClick);

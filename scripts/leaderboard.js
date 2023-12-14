@@ -51,17 +51,13 @@ const populateLeaderboard = () => {
   leaderboardItems.sort((a, b) => b.points - a.points);
 
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${index + 1
-      }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${
+      index + 1
+    }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
 };
-
-populateLeaderboard();
-
-
-populatePodium();
 const populatePodium = () => {
   const goldElement = document.getElementById("gold");
   const silverElement = document.getElementById("silver");
@@ -91,3 +87,6 @@ const populatePodium = () => {
     ).textContent = `${participant.name} - ${participant.points} points`;
   }
 };
+
+populatePodium();
+populateLeaderboard();
