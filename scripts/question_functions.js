@@ -694,7 +694,7 @@ const renderizzaDomande = async function () {
 
   if (arrayDomande.length === arrayRisposte.length) {
     divTest.innerHTML = ``;
-    superatoOno("perato");
+
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
@@ -949,6 +949,7 @@ const superatoOno = function (pass) {
   // fine Animazione Lacrime.
   console.log("avviata funzione supreatoOno");
 };
+superatoOno("superato");
 
 // FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
 // const avvioAnimazioniResults = function () {
