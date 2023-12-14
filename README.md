@@ -14,4 +14,6 @@ Giorno 2: Francesco: Ho prestato attenzione al css del timer, creando la base de
 
 Vincenzo: Ho collaborato con Luca per modificare il metodo dinamico che genera i div delle domande per accomodare il suo style CSS. Ho collaborato con Francesco per adattare le sue animazioni ad un metodo dinamico di generazione.
 
-Alessandro: Incrementata nella funzione "superatoOno" la condizione ELSE che fa apparire dopo 0.7 secondi dal caricamento della pagina una scritta e fa partire un animazione di lacrime/gocce (di diverso colore, dimensioni e peso) che (da sotto div dentro header-il primo) cadono in basso verso la fine della finestra. Aggiunto ad animazione coriandoli file audio di folla che gioisce e si congratula al caricamento della pagina, aggiunto ad animazione gocce file audio "looser". 
+Alessandro: Incrementata nella funzione "superatoOno" la condizione ELSE che fa apparire dopo 0.7 secondi dal caricamento della pagina una scritta e fa partire un animazione di lacrime/gocce (di diverso colore, dimensioni e peso) che (da sotto div dentro header-il primo) cadono in basso verso la fine della finestra. Aggiunto ad animazione coriandoli file audio di folla che gioisce e si congratula al caricamento della pagina, aggiunto ad animazione gocce file audio "looser".
+
+Giorno 3: Vincenzo: Ho fixato il timer delle domande usando una variabile comunea a tutti i div question dinamici. Corretto il posizionamento degli elementi nella schermata del grafico a ciambella. Aggiunta renderizzazione risposte date con icona presa da fontawesome

@@ -16,17 +16,21 @@ body {
   background-attachment: fixed;
   color: #ffff;
 }
+
 .tabs {
   width: 500px;
 }
+
 ul {
   width: 500px;
 }
+
 li {
   font-size: 100px;
   text-align: center;
   margin-left: auto;
 }
+
 img {
   border-radius: 50%;
 }
@@ -71,11 +75,13 @@ img {
   width: 95%;
   animation: progress 2s ease-in-out forwards;
 }
+
 @keyframes progress {
   0% {
     width: 0;
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -116,17 +122,21 @@ img {
 .podium-item:hover {
   background-color: #1e2135;
 }
+
 .gold img {
   width: 100px;
 }
+
 .gold {
   color: gold;
   order: 2;
 }
+
 .gold span {
   font-size: 18px;
   font-weight: bold;
 }
+
 .silver {
   color: silver;
   order: 1;
