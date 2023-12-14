@@ -287,7 +287,9 @@ textarea {
 
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid /* #900080 */ #d20094;
+  border-bottom: 1px solid
+    /* #900080 */
+    #d20094;
 }
 
 form p {
@@ -663,15 +665,16 @@ body {
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
 
-body {
-  overflow: hidden;
-}
 #animazioniCoriandoliOgocce {
   position: absolute;
-  top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
-  left: 10px; /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
-  box-sizing: border-box; /* controllare questa riga*/
+  top: 50px;
+  /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
+  left: 10px;
+  /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
+  box-sizing: border-box;
+  /* controllare questa riga*/
 }
+
 #messaggioGocce {
   display: none;
   text-align: center;
@@ -685,6 +688,7 @@ body {
   0% {
     transform: rotate(0);
   }
+
   100% {
     transform: rotate(360deg);
   }
