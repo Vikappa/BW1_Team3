@@ -8,12 +8,15 @@ const divTest = document.getElementById("testAppend");
 const divResultleaderboard = document.getElementById("resultleaderboard");
 
 const arrayRisposte = [];
-let intervalloUnico
+let intervalloUnico;
+let currentQuestion
+
+let resOrLead
 
 const fermaTicToc = async function () {
-  console.log("Fermato")
-  clearInterval(intervalloUnico)
-}
+  console.log("Fermato");
+  clearInterval(intervalloUnico);
+};
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -24,7 +27,7 @@ const fermaTicToc = async function () {
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  fermaTicToc()
+  fermaTicToc();
   const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
   canvas.width = 600;
@@ -68,16 +71,18 @@ const main = document.getElementById("main");
 
 const convertiStringaInSecondiTimer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
-    return 30
+    return 30;
   } else if (difficoltaStringa === "medium") {
-    return 60
+    return 60;
   } else if (difficoltaStringa === "hard") {
-    return 120
+    return 120;
   } else {
-    console.log("Errore numero inserito nel metodo convertiStringaInSecondiTimer")
+    console.log(
+      "Errore numero inserito nel metodo convertiStringaInSecondiTimer"
+    );
     return 0;
   }
-}
+};
 
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
@@ -89,25 +94,25 @@ const timer = function (difficoltaStringa) {
   } else if (difficoltaStringa === "hard") {
     tempo = 120;
   } else {
-    console.log("Errore numero inserito nel metodo timer")
+    console.log("Errore numero inserito nel metodo timer");
     tempo = 0;
   }
   function aggiornaTimer() {
-    if (tempo >= 0) {
+
+    if (tempo >= 1) {
+      tempo--
       console.log("Aggiorno tempo")
       document.getElementById("nSecondi").textContent = tempo
-      tempo--
     } else {
-      //rispostaVuota()
+      rispostaVuota()
       fermaTicToc()
     }
   }
 
   intervalloUnico = setInterval(aggiornaTimer, 1000);
 
-  return tempo
-
-}
+  return tempo;
+};
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
@@ -151,7 +156,7 @@ const cerchioTimer = function (difficolta) {
 
   pseconds.textContent = "seconds";
   nSecondi.id = "nSecondi";
-  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta);
 
   nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
@@ -181,7 +186,69 @@ const diffInSecondi = function (diffString) {
       break;
   }
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
+const generateRandomName = () => {
+  const names = [
+    "Ali",
+    "Eric",
+    "Gabriel",
+    "Beatriz",
+    "Hanna",
+    "Diya",
+    "Fatima",
+  ];
+  return names[Math.floor(Math.random() * names.length)];
+};
 
+const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
+
+const generateRandomImages = () => {
+  const images = [
+    "https://placedog.net/100/100",
+    "https://placekitten.com/100",
+  ];
+  return images[Math.floor(Math.random() * images.length)];
+};
+
+const populateLeaderboard = () => {
+  const leaderboardItems = [];
+  const leaderboardContainer = document.getElementById("leaderboard");
+  for (let i = 1; i <= 10; i++) {
+    const randomName = generateRandomName();
+    const randomPoints = generateRandomPoints();
+    const randomImages = generateRandomImages();
+
+    const leaderboardItem = document.createElement("div");
+    leaderboardItem.classList.add("lboard_memory");
+
+    leaderboardItem.innerHTML = `
+    <div class="img">
+        <img class="leaderboardImg" src="${randomImages}" alt="random-image" />
+    </div>
+    <div class="name_barra">
+        <p><span>${i}.</span>${randomName}</p>
+        <div class="bar_wrap">
+            <div class="inner_bar" style="width: ${randomPoints}%"></div>
+        </div>
+    </div>
+    <div class="points">${randomPoints} points</div>
+`
+
+    leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+  }
+
+  leaderboardItems.sort((a, b) => b.points - a.points);
+
+  leaderboardItems.forEach((item, index) => {
+    item.element.querySelector(".name_barra p span").textContent = `${index + 1
+      }.`;
+
+    leaderboardContainer.appendChild(item.element);
+  });
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -213,20 +280,115 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
-const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
-  if (rispostaCasella === rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+const checkRispostaVX = function (rispostaData, rispostaGiusta, rispostaCasella) {
+  if (rispostaData === rispostaCasella) {
+    if (rispostaCasella === rispostaGiusta) {
+      return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
+    }
+    if (rispostaCasella !== rispostaGiusta) {
+      return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
+    }
   }
-  if (rispostaCasella !== rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
-  }
+};
+
+const renderizzaLeaderBoard = function () {
+  divTest.innerHTML = `<div class="podium">
+  <div class="podium-item gold" id="gold">
+    <img src="" alt="Gold Medal" />
+    <p>1st Place</p>
+    <span>1º</span>
+  </div>
+  <div class="podium-item silver" id="silver">
+    <img src="" alt="Silver Medal" />
+    <p>2nd Place</p>
+    <span>2º</span>
+  </div>
+  <div class="podium-item bronze" id="bronze">
+    <img src="" alt="Bronze Medal" />
+    <p>3rd Place</p>
+    <span>3º</span>
+  </div>
+</div>`
+
+  fermaTicToc()
+
+  divResultleaderboard.style.visibility = "visible";
+  divResultleaderboard.innerHTML = `<div class="lboard_section">
+      <div class="lboard_item Leaderboard" id="leaderboard">
+      </div>
+</div>`;
+
+  const divPulsanteLeaderBoard = document.createElement("div")
+  const pPulsanteLeaderBoard = document.createElement("p")
+  const divPulsanteResultBoard = document.createElement("div")
+  const pPulsanteResultBoard = document.createElement("p")
+  const divPulsantiSwitchTab = document.createElement("div")
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
+
+  pPulsanteLeaderBoard.id = "Leaderboard"
+  pPulsanteResultBoard.id = "Risultati"
+
+  pPulsanteLeaderBoard.addEventListener("click", function () {
+    renderizzaLeaderBoard()
+  });
+
+  pPulsanteResultBoard.addEventListener("click", function () {
+    renderizza_risultato()
+  });
+
+  pPulsanteLeaderBoard.classList = "switchTab"
+  pPulsanteResultBoard.classList = "switchTab"
+  pPulsanteLeaderBoard.textContent = "Leaderboard"
+  pPulsanteResultBoard.textContent = "Risultati"
+
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+
+  divPulsantiSwitchTab.append(divPulsanteResultBoard)
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+
+  divResultleaderboard.appendChild(divPulsantiSwitchTab)
+
+  populateLeaderboard();
+
 }
 
 const renderizza_risultato = async function () {
-  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
-  divResultleaderboard.style.visibility = "visible"
-
+  divResultleaderboard.innerHTML = ``
+  divResultleaderboard.style.visibility = "visible";
   divTest.innerHTML = ``;
+
+
+  const divPulsanteLeaderBoard = document.createElement("div")
+  const pPulsanteLeaderBoard = document.createElement("p")
+  const divPulsanteResultBoard = document.createElement("div")
+  const pPulsanteResultBoard = document.createElement("p")
+  const divPulsantiSwitchTab = document.createElement("div")
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
+
+  pPulsanteLeaderBoard.id = "Leaderboard"
+  pPulsanteResultBoard.id = "Risultati"
+
+  pPulsanteLeaderBoard.addEventListener("click", function () {
+    renderizzaLeaderBoard()
+  });
+
+  pPulsanteResultBoard.addEventListener("click", function () {
+    renderizza_risultato()
+  });
+
+  pPulsanteLeaderBoard.classList = "switchTab"
+  pPulsanteResultBoard.classList = "switchTab"
+  pPulsanteLeaderBoard.textContent = "Leaderboard"
+  pPulsanteResultBoard.textContent = "Risultati"
+
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+
+  divPulsantiSwitchTab.append(divPulsanteResultBoard)
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+
+  divResultleaderboard.appendChild(divPulsantiSwitchTab)
 
   divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
@@ -239,14 +401,15 @@ const renderizza_risultato = async function () {
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
   const quanteGiuste = document.createElement("div");
-  quanteGiuste.id = "divQuanteGiuste"
-  quanteGiuste.classList = "divSchermataCiambella"
+  quanteGiuste.id = "divQuanteGiuste";
+  quanteGiuste.classList = "divSchermataCiambella";
   quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${sbagliate}%</p>`;
+  <p>${(sbagliate / totaleDomande) * 100}%</p>
+  <p>${sbagliate}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
-  fraseSuperamentoONo.classList = "divSchermataCiambella"
-  fraseSuperamentoONo.id = "divFraseSuperamentoONo"
+  fraseSuperamentoONo.classList = "divSchermataCiambella";
+  fraseSuperamentoONo.id = "divFraseSuperamentoONo";
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
     <p>Congratulations!/p>
@@ -257,54 +420,77 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.innerHTML = `
     <p>We are sorry</p>
     <p>You failed your test</p>
-   <p>It will be fine next<br>time, commit!</p>`;
+   <p>It will be fine next<br>time, commit!</p>
+   `;
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   }
   const quanteSbagliate = document.createElement("div");
-  quanteSbagliate.id = "divQuanteSbagliate"
-  quanteSbagliate.classList = "divSchermataCiambella"
+  quanteSbagliate.id = "divQuanteSbagliate";
+  quanteSbagliate.classList = "divSchermataCiambella";
   quanteSbagliate.innerHTML = `<p>Correct</p>
-  <p>${giuste}%</p>`;
+  <p>${(giuste / totaleDomande) * 100}%</p>
+  <p>${giuste}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
-
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
     if (arrayRisposte[i].type === `multiple`) {
       const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta"
+      divRisposta.id = "divRisposta";
       divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[2])}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[3])} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
-    </div>`
+    </div>`;
 
       divRisposteDate.appendChild(divRisposta);
     } else {
       const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta"
+      divRisposta.id = "divRisposta";
       divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
       <h1 class="h1Question">${arrayRisposte[i].question}</h1>
       <div class=rigaRisposte>
-      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`
       divRisposteDate.appendChild(divRisposta);
     }
   }
 
-  divResultleaderboard.appendChild(divRisposteDate)
+  divResultleaderboard.appendChild(divRisposteDate);
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
 
 let arrayDomande = [];
+
+const rispostaVuota = async function () {
+
+  let risposta = {
+    type: currentQuestion.type,
+    question: currentQuestion.question,
+    answer: "Non ho risposto",
+    all_answer: currentQuestion.arrayRispostePresentate,
+    correctAnswer: currentQuestion.correct_answer,
+  };
+
+  arrayRisposte.push(risposta);
+
+  console.log(
+    "Lunghezza array risposte: " +
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
+  );
+
+  renderizzaDomande();
+}
 
 async function addRisposta(
   arrayRispostePresentate,
@@ -361,9 +547,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+  currentQuestion = obgDomanda
 
-  await fermaTicToc()
-
+  await fermaTicToc();
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
@@ -439,7 +625,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   }
   divRitorno.id = "genitore";
   divRitorno.appendChild(cerchioTimer(difficulty));
-  return divRitorno
+  return divRitorno;
 };
 
 const renderizzaDomande = async function () {
@@ -454,13 +640,16 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
+  if (arrayDomande.length === arrayRisposte.length + 20) {
+    divTest.innerHTML = ``;
+
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
       arrayDomande[nDomandeFatte]
     );
+
     nDomandeFatte++;
     await divTest.appendChild(nuovaDomandaRenderizzata);
   }
