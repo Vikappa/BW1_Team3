@@ -13,8 +13,21 @@
       <div class="lboard_tabs">
         <div class="tabs">
           <ul>
-            <li data-li="Risposte">Risposte</li>
-            <li class="active" data-li="Leaderboard">Leaderboard</li>
+            <li
+              id="risposteTab"
+              onclick="changeTab('Risposte')"
+              data-li="Risposte"
+            >
+              Risposte
+            </li>
+            <li
+              id="leaderboardTab"
+              class="active"
+              onclick="changeTab('Leaderboard')"
+              data-li="Leaderboard"
+            >
+              Leaderboard
+            </li>
           </ul>
         </div>
       </div>
