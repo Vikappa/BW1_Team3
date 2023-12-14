@@ -351,6 +351,7 @@ const renderizzaLeaderBoard = function () {
 }
 
 const renderizza_risultato = async function () {
+  divResultleaderboard.innerHTML = ``;
   divResultleaderboard.style.visibility = "visible";
   divTest.innerHTML = ``;
 
