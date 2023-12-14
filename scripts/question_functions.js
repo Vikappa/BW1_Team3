@@ -698,242 +698,287 @@ const renderizzaDomande = async function () {
 renderizzaDomande();
 
 ////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
-// const superatoOno = function (pass) {
-//   if (pass === "superato") {
-//     // inzio Animazione Coriandoli + audio:
-//     let canvas = document.getElementById("animazioniCoriandoliOgocce");
-//     let contenuto = canvas.getContext("2d");
-//     let width = window.innerWidth;
-//     let height = window.innerHeight;
-//     let coriandoli = [];
-//     let coriandoliSetting = {
-//       count: 500,
-//       gravity: 0.05,
-//       wave: 0,
-//     };
 
-//     window.requestAnimationFrame =
-//       window.requestAnimationFrame ||
-//       window.webkitRequestAnimationFrame ||
-//       window.mozRequestAnimationFrame ||
-//       window.oRequestAnimationFrame ||
-//       window.msRequestAnimationFrame ||
-//       function (callback) {
-//         window.setTimeout(callback, 1000 / 60);
-//       };
+const superatoOno = function (pass) {
+  if (pass === "superato") {
+    // inzio Animazione Coriandoli + audio:
+    let canvas = document.getElementById("animazioniCoriandoliOgocce");
+    let contenuto = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let coriandoli = [];
+    let coriandoliSetting = {
+      count: 500,
+      gravity: 0.05,
+      wave: 0,
+    };
 
-//     const numeroRandom = function (min, max) {
-//       return Math.random() * (max - min) + min;
-//     };
+    window.requestAnimationFrame =
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 1000 / 60);
+      };
 
-//     function Coriandolo() {
-//       this.x = Math.random() * width;
-//       this.y = Math.random() * height;
-//       this.area = numeroRandom(12, 15);
-//       this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
-//       this.tilt = numeroRandom(-4, 4);
-//       this.tiltAngle = 0;
-//       this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
-//         0,
-//         255
-//       )}, ${numeroRandom(0, 255)})`;
-//     }
+    const numeroRandom = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
 
-//     Coriandolo.prototype.draw = function () {
-//       contenuto.beginPath();
-//       contenuto.lineJoin = "round"; // Smusso degli angoli
-//       contenuto.lineCap = "round"; // Smusso delle estremità
-//       contenuto.lineWidth = this.dimension; // Utilizza la dimensione
-//       contenuto.strokeStyle = this.color;
-//       this.x = this.x + this.tilt;
-//       contenuto.moveTo(this.x + this.dimension / 5, this.y);
-//       contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
-//       contenuto.stroke();
-//     };
+    function Coriandolo() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.area = numeroRandom(12, 15);
+      this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
+      this.tilt = numeroRandom(-4, 4);
+      this.tiltAngle = 0;
+      this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
+        0,
+        255
+      )}, ${numeroRandom(0, 255)})`;
+    }
 
-//     const creaCoriandoli = function () {
-//       while (coriandoli.length < coriandoliSetting.count) {
-//         let coriandolo = new Coriandolo();
-//         coriandoli.push(coriandolo);
-//       }
-//     };
+    Coriandolo.prototype.draw = function () {
+      contenuto.beginPath();
+      contenuto.lineJoin = "round"; // Smusso degli angoli
+      contenuto.lineCap = "round"; // Smusso delle estremità
+      contenuto.lineWidth = this.dimension; // Utilizza la dimensione
+      contenuto.strokeStyle = this.color;
+      this.x = this.x + this.tilt;
+      contenuto.moveTo(this.x + this.dimension / 5, this.y);
+      contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
+      contenuto.stroke();
+    };
 
-//     let startTime = null;
-//     let duration = 3000; // Durata in millisecondi
-//     let tempoCorrente = 0; // Tempo corrente di animazione
+    const creaCoriandoli = function () {
+      while (coriandoli.length < coriandoliSetting.count) {
+        let coriandolo = new Coriandolo();
+        coriandoli.push(coriandolo);
+      }
+    };
 
-//     const inizia = (timestamp) => {
-//       const tempoTrascorso = timestamp - startTime;
+    let startTime = null;
+    let duration = 3000; // Durata in millisecondi
+    let tempoCorrente = 0; // Tempo corrente di animazione
 
-//       if (!startTime) {
-//         startTime = timestamp;
-//       }
+    const inizia = (timestamp) => {
+      const tempoTrascorso = timestamp - startTime;
 
-//       tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
+      if (!startTime) {
+        startTime = timestamp;
+      }
 
-//       contenuto.clearRect(0, 0, width, height);
+      tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
 
-//       for (let i = 0; i < coriandoli.length; i++) {
-//         coriandoliSetting.wave += 0.4;
-//         coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
-//         coriandoli[i].y +=
-//           (Math.sin(coriandoliSetting.wave) +
-//             coriandoli[i].area +
-//             coriandoliSetting.gravity) *
-//           0.36;
-//         coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
+      contenuto.clearRect(0, 0, width, height);
 
-//         coriandoli[i].draw();
+      for (let i = 0; i < coriandoli.length; i++) {
+        coriandoliSetting.wave += 0.4;
+        coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
+        coriandoli[i].y +=
+          (Math.sin(coriandoliSetting.wave) +
+            coriandoli[i].area +
+            coriandoliSetting.gravity) *
+          0.36;
+        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
 
-//         if (tempoCorrente < duration) {
-//           tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-//         } else {
-//           // Animazione terminata, i coriandoli possono scendere fuori dal canvas
-//           coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
-//         }
+        coriandoli[i].draw();
 
-//         if (coriandoli[i].y > height) {
-//           coriandoli.splice(i, 1);
-//           i--; // Decrementa l'indice dopo la rimozione dell'elemento
-//         }
-//       }
+        if (tempoCorrente < duration) {
+          tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
+        } else {
+          // Animazione terminata, i coriandoli possono scendere fuori dal canvas
+          coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
+        }
 
-//       if (coriandoli.length > 0 && tempoCorrente < duration) {
-//         window.requestAnimationFrame(inizia);
-//       }
-//     };
+        if (coriandoli[i].y > height) {
+          coriandoli.splice(i, 1);
+          i--; // Decrementa l'indice dopo la rimozione dell'elemento
+        }
+      }
 
-//     window.onload = () => {
-//       canvas.width = width;
-//       canvas.height = height;
+      if (coriandoli.length > 0 && tempoCorrente < duration) {
+        window.requestAnimationFrame(inizia);
+      }
+    };
 
-//       // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
-//       setTimeout(() => {
-//         creaCoriandoli();
-//         window.requestAnimationFrame(inizia);
-//       }, 700);
-//       const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-//       audioWinner.play();
-//     };
-//     // // fine Animazione Coriandoli.
-//     // inzio Animazione Lacrime + audio:
-//   } else {
-//     let canvas = document.getElementById("animazioniCoriandoliOgocce");
-//     let contenuto = canvas.getContext("2d");
-//     let width = window.innerWidth;
-//     let height = window.innerHeight;
-//     let lacrime = [];
-//     let lacrimeSetting = {
-//       count: 400,
-//       gravity: 0.4,
-//       wave: 0,
-//     };
+    window.onload = () => {
+      canvas.width = width;
+      canvas.height = height;
 
-//     window.requestAnimationFrame =
-//       window.requestAnimationFrame ||
-//       window.webkitRequestAnimationFrame ||
-//       window.mozRequestAnimationFrame ||
-//       window.oRequestAnimationFrame ||
-//       window.msRequestAnimationFrame ||
-//       function (callback) {
-//         window.setTimeout(callback, 1000 / 60);
-//       };
+      // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
+      setTimeout(() => {
+        creaCoriandoli();
+        window.requestAnimationFrame(inizia);
+      }, 700);
+      const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+      audioWinner.play();
+    };
+    // // fine Animazione Coriandoli.
+    // inzio Animazione Lacrime + audio:
+  } else {
+    let canvas = document.getElementById("animazioniCoriandoliOgocce");
+    let contenuto = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let lacrime = [];
+    let lacrimeSetting = {
+      count: 400,
+      gravity: 0.4,
+      wave: 0,
+    };
 
-//     const numeroRandom = function (min, max) {
-//       return Math.random() * (max - min) + min;
-//     };
+    window.requestAnimationFrame =
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 1000 / 60);
+      };
 
-//     function Lacrima() {
-//       this.x = Math.random() * width;
-//       this.y = Math.random() * height;
-//       this.dimension = numeroRandom(8, 20);
-//       this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
-//       this.speed = numeroRandom(5, 15);
-//       this.tilt = numeroRandom(-4, 4);
-//       this.tiltAngle = 0;
-//     }
+    const numeroRandom = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
 
-//     Lacrima.prototype.draw = function () {
-//       contenuto.beginPath();
-//       contenuto.lineWidth = 5;
-//       contenuto.strokeStyle = this.color;
-//       contenuto.moveTo(this.x, this.y);
-//       contenuto.quadraticCurveTo(
-//         this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
-//         this.y - this.dimension, // Inverti la posizione del punto di controllo
-//         this.x,
-//         this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
-//       );
-//       contenuto.quadraticCurveTo(
-//         this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
-//         this.y - this.dimension, // Inverti la posizione del punto di controllo
-//         this.x,
-//         this.y
-//       );
-//       contenuto.stroke();
-//     };
+    function Lacrima() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.dimension = numeroRandom(8, 20);
+      this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
+      this.speed = numeroRandom(5, 15);
+      this.tilt = numeroRandom(-4, 4);
+      this.tiltAngle = 0;
+    }
 
-//     const creaLacrime = function () {
-//       while (lacrime.length < lacrimeSetting.count) {
-//         let lacrima = new Lacrima();
-//         lacrime.push(lacrima);
-//       }
-//     };
+    Lacrima.prototype.draw = function () {
+      contenuto.beginPath();
+      contenuto.lineWidth = 5;
+      contenuto.strokeStyle = this.color;
+      contenuto.moveTo(this.x, this.y);
+      contenuto.quadraticCurveTo(
+        this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
+        this.y - this.dimension, // Inverti la posizione del punto di controllo
+        this.x,
+        this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
+      );
+      contenuto.quadraticCurveTo(
+        this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
+        this.y - this.dimension, // Inverti la posizione del punto di controllo
+        this.x,
+        this.y
+      );
+      contenuto.stroke();
+    };
 
-//     let startTime = null;
-//     let duration = 3000; // Durata in millisecondi
-//     let tempoCorrente = 0; // Tempo corrente di animazione
+    const creaLacrime = function () {
+      while (lacrime.length < lacrimeSetting.count) {
+        let lacrima = new Lacrima();
+        lacrime.push(lacrima);
+      }
+    };
 
-//     const iniziaLacrime = (timestamp) => {
-//       const tempoTrascorso = timestamp - startTime;
+    let startTime = null;
+    let duration = 3000; // Durata in millisecondi
+    let tempoCorrente = 0; // Tempo corrente di animazione
 
-//       if (!startTime) {
-//         startTime = timestamp;
-//       }
+    const iniziaLacrime = (timestamp) => {
+      const tempoTrascorso = timestamp - startTime;
 
-//       tempoCorrente = timestamp - startTime;
+      if (!startTime) {
+        startTime = timestamp;
+      }
 
-//       contenuto.clearRect(0, 0, width, height);
+      tempoCorrente = timestamp - startTime;
 
-//       for (let i = 0; i < lacrime.length; i++) {
-//         lacrimeSetting.wave += 0.00001;
-//         lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
-//         lacrime[i].y +=
-//           (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
-//           lacrime[i].speed;
-//         lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
+      contenuto.clearRect(0, 0, width, height);
 
-//         lacrime[i].draw();
+      for (let i = 0; i < lacrime.length; i++) {
+        lacrimeSetting.wave += 0.00001;
+        lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
+        lacrime[i].y +=
+          (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
+          lacrime[i].speed;
+        lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
 
-//         if (tempoCorrente < duration) {
-//           tempoCorrente = timestamp - startTime;
-//         } else {
-//           lacrime[i].y += 10;
-//         }
-//         if (lacrime[i].y > height + lacrime[i].dimension) {
-//           lacrime.splice(i, 1);
-//           i--; // Decrementa l'indice dopo la rimozione dell'elemento
-//         }
-//       }
+        lacrime[i].draw();
 
-//       if (lacrime.length > 0 && tempoCorrente < duration) {
-//         window.requestAnimationFrame(iniziaLacrime);
-//       }
-//     };
+        if (tempoCorrente < duration) {
+          tempoCorrente = timestamp - startTime;
+        } else {
+          lacrime[i].y += 10;
+        }
+        if (lacrime[i].y > height + lacrime[i].dimension) {
+          lacrime.splice(i, 1);
+          i--; // Decrementa l'indice dopo la rimozione dell'elemento
+        }
+      }
 
-//     window.onload = () => {
-//       canvas.width = window.innerWidth;
-//       canvas.height = window.innerHeight;
+      if (lacrime.length > 0 && tempoCorrente < duration) {
+        window.requestAnimationFrame(iniziaLacrime);
+      }
+    };
 
-//       setTimeout(() => {
-//         document.getElementById("messaggioGocce").style.display = "block";
-//         creaLacrime();
-//         window.requestAnimationFrame(iniziaLacrime);
-//       }, 700);
-//       const audioLooser = new Audio("./sounds/looser-results.wav");
-//       audioLooser.play();
-//     };
-//   }
-//   // fine Animazione Lacrime.
-// };
-// superatoOno("perato");
+    window.onload = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      setTimeout(() => {
+        document.getElementById("messaggioGocce").style.display = "block";
+        creaLacrime();
+        window.requestAnimationFrame(iniziaLacrime);
+      }, 700);
+      const audioLooser = new Audio("./sounds/looser-results.wav");
+      audioLooser.play();
+    };
+  }
+  // fine Animazione Lacrime.
+};
+
+// FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
+const avvioAnimazioniResults = function () {
+  for (let i = arrayDomande.length - 1; i >= 0; i--) {
+    if (arrayDomande[i].correctAnswer === arrayDomande[i].answer) {
+      const ultimaRisposta = document.getElementById(arrayDomande[i].question);
+      ultimaRisposta.addEventListener("click", () => {
+        superatoOno("superato");
+      });
+    } else {
+      superatoOno("nonSuperato");
+    }
+  }
+};
+// window.onload = avvioAnimazioniResults; FORSE QUESTO ATTRIBUTO FA CONFLITTO CON IL PLAY DELL'AUDIO?
+
+///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
+// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
+function hideLoadingAnimation() {
+  const loadingDiv = document.getElementById("loadingDiv");
+  if (loadingDiv) {
+    loadingDiv.style.display = "none";
+  }
+}
+
+// Verifica se il div genitore è stato creato
+const parentDiv = document.getElementById("genitore");
+
+// Se il div genitore non è ancora stato creato, creo loading div e mostro l'animazione
+if (!parentDiv) {
+  const loadingDiv = document.createElement("div");
+  loadingDiv.id = "loadingDiv";
+  loadingDiv.classList.add("clessidra");
+  loadingDiv.style.width = "100px";
+  loadingDiv.style.height = "100px";
+  document.body.appendChild(loadingDiv);
+} else {
+  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato
+  const loadingDiv = document.getElementById("loadingDiv");
+  // Aggiungi un listener per l'evento "animationend" all'elemento di caricamento
+  loadingDiv.addEventListener("animationend", () => {
+    // Una volta completata l'animazione di opacità, nascondi il div di caricamento
+    loadingDiv.style.display = "none";
+  });
+}
