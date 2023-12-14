@@ -4,8 +4,20 @@
 const apiUrl = 'https://opentdb.com/api.php?amount=50&category=18';
 const body = document.getElementsByName('body')[0];
 let nDomandeFatte = 0;
+<<<<<<< HEAD
 const divTest = document.getElementById('testAppend');
+=======
+const divTest = document.getElementById("testAppend");
+const divResultleaderboard = document.getElementById("resultleaderboard");
+
+>>>>>>> main
 const arrayRisposte = [];
+let intervalloUnico
+
+const fermaTicToc = async function () {
+  console.log("Fermato")
+  clearInterval(intervalloUnico)
+}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -18,10 +30,19 @@ const arrayRisposte = [];
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
+<<<<<<< HEAD
   const canvas = document.createElement('canvas'); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
   canvas.id = 'graficoCiambella';
 
   const ctx = canvas.getContext('2d');
+=======
+  fermaTicToc()
+  const canvas = document.createElement("canvas");
+  canvas.id = "graficoCiambella";
+  canvas.width = 600;
+  canvas.height = 600;
+  const ctx = canvas.getContext("2d");
+>>>>>>> main
 
   // Dati del grafico
   const dati = {
@@ -38,7 +59,11 @@ const graficoCiambella = function (sbagliate, giuste) {
 
   // Configurazione del grafico
   const options = {
+<<<<<<< HEAD
     cutoutPercentage: 30,
+=======
+    cutoutPercentage: 70,
+>>>>>>> main
     responsive: false,
     plugins: {
       datalabels: {
@@ -63,10 +88,29 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
+<<<<<<< HEAD
 const main = document.getElementById('main');
 let tictoc;
 let timeleft;
 let diffValueCurrentQuestion;
+=======
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
+const main = document.getElementById("main");
+
+const convertiStringaInSecondiTimer = function (difficoltaStringa) {
+  if (difficoltaStringa === "easy") {
+    return 30
+  } else if (difficoltaStringa === "medium") {
+    return 60
+  } else if (difficoltaStringa === "hard") {
+    return 120
+  } else {
+    console.log("Errore numero inserito nel metodo convertiStringaInSecondiTimer")
+    return 0;
+  }
+}
+
+>>>>>>> main
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
   if (difficoltaStringa === 'easy') {
@@ -76,6 +120,7 @@ const timer = function (difficoltaStringa) {
   } else if (difficoltaStringa === 'hard') {
     return 120;
   } else {
+<<<<<<< HEAD
     console.log('Errore numero inserito nel metodo timer');
     return 0;
   }
@@ -103,6 +148,28 @@ const avviaTicToc = function (diffValue) {
     setInterval(aggiornaTimer, 1000);
   }
 };
+=======
+    console.log("Errore numero inserito nel metodo timer")
+    tempo = 0;
+  }
+  function aggiornaTimer() {
+    if (tempo >= 0) {
+      console.log("Aggiorno tempo")
+      document.getElementById("nSecondi").textContent = tempo
+      tempo--
+    } else {
+      //rispostaVuota()
+      fermaTicToc()
+    }
+  }
+
+  intervalloUnico = setInterval(aggiornaTimer, 1000);
+
+  return tempo
+
+}
+/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
+>>>>>>> main
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
@@ -143,7 +210,14 @@ const cerchioTimer = function (difficolta) {
   const nSecondi = document.createElement('p');
   const primanenti = document.createElement('p');
 
+<<<<<<< HEAD
   pseconds.textContent = 'seconds';
+=======
+  pseconds.textContent = "seconds";
+  nSecondi.id = "nSecondi";
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
+
+>>>>>>> main
   nSecondi.textContent = timer(difficolta);
   nSecondi.id = 'nSecondi';
   primanenti.textContent = 'remeaning';
@@ -205,9 +279,19 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
+const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
+  if (rispostaCasella === rispostaGiusta) {
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+  }
+  if (rispostaCasella !== rispostaGiusta) {
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+  }
+}
+
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
-  await delay(500);
+  divResultleaderboard.style.visibility = "visible"
+
   divTest.innerHTML = ``;
 
   let totaleDomande = arrayDomande.length;
@@ -219,12 +303,48 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
+<<<<<<< HEAD
   console.log('Sbagliate ' + sbagliate);
   console.log('Giuste ' + giuste);
   divTest.appendChild(grafic);
+=======
+  const quanteGiuste = document.createElement("div");
+  quanteGiuste.id = "divQuanteGiuste"
+  quanteGiuste.classList = "divSchermataCiambella"
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${sbagliate}%</p>`;
+  divTest.appendChild(quanteGiuste);
+  const fraseSuperamentoONo = document.createElement("div");
+  fraseSuperamentoONo.classList = "divSchermataCiambella"
+  fraseSuperamentoONo.id = "divFraseSuperamentoONo"
+  if (giuste > sbagliate) {
+    fraseSuperamentoONo.innerHTML = `
+    <p>Congratulations!/p>
+    <p>You have passed the exam</p>
+   <p>You will receive your<br>certificate by email shortly</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  } else {
+    fraseSuperamentoONo.innerHTML = `
+    <p>We are sorry</p>
+    <p>You failed your test</p>
+   <p>It will be fine next<br>time, commit!</p>`;
+    fraseSuperamentoONo.appendChild(grafic);
+    divTest.appendChild(fraseSuperamentoONo);
+  }
+  const quanteSbagliate = document.createElement("div");
+  quanteSbagliate.id = "divQuanteSbagliate"
+  quanteSbagliate.classList = "divSchermataCiambella"
+  quanteSbagliate.innerHTML = `<p>Correct</p>
+  <p>${giuste}%</p>`;
+  divTest.appendChild(quanteSbagliate);
+  console.log("Sbagliate " + sbagliate);
+  console.log("Giuste " + giuste);
+
+>>>>>>> main
 
   const divRisposteDate = document.createElement('div');
   for (let i = 0; i < arrayRisposte.length; i++) {
+<<<<<<< HEAD
     const divRisposta = document.createElement('div');
     const pDomanda = document.createElement('p');
     pDomanda.textContent = arrayRisposte[i].question;
@@ -233,7 +353,35 @@ const renderizza_risultato = async function () {
     divRisposta.appendChild(pDomanda);
     divRisposta.appendChild(pAnswer);
     divRisposteDate.appendChild(divRisposta);
+=======
+    if (arrayRisposte[i].type === `multiple`) {
+      const divRisposta = document.createElement("div");
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
+    <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+    </div>    
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
+    </div>
+    </div>`
+
+      divRisposteDate.appendChild(divRisposta);
+    } else {
+      const divRisposta = document.createElement("div");
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
+      <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+      <div class=rigaRisposte>
+      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+      </div></div>`
+      divRisposteDate.appendChild(divRisposta);
+    }
+>>>>>>> main
   }
+
+  divResultleaderboard.appendChild(divRisposteDate)
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
@@ -257,10 +405,17 @@ async function addRisposta(
   arrayRisposte.push(risposta);
 
   console.log(
+<<<<<<< HEAD
     'Lunghezza array risposte: ' +
       arrayRisposte.length +
       ' lunghezza array domande: ' +
       arrayDomande.length
+=======
+    "Lunghezza array risposte: " +
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
+>>>>>>> main
   );
 
   renderizzaDomande();
@@ -281,10 +436,17 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   };
   arrayRisposte.push(risposta);
   console.log(
+<<<<<<< HEAD
     'Lunghezza array risposte: ' +
       arrayRisposte.length +
       ' lunghezza array domande: ' +
       arrayDomande.length
+=======
+    "Lunghezza array risposte: " +
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
+>>>>>>> main
   );
   renderizzaDomande();
 }
@@ -295,6 +457,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
+  await fermaTicToc()
+
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
@@ -370,7 +535,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   }
   divRitorno.id = 'genitore';
   divRitorno.appendChild(cerchioTimer(difficulty));
-  return divRitorno;
+  return divRitorno
 };
 
 const renderizzaDomande = async function () {
@@ -400,6 +565,7 @@ const renderizzaDomande = async function () {
 renderizzaDomande();
 
 ////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
+<<<<<<< HEAD
 const superatoOno = function (pass) {
   if (pass === 'superato') {
     // inzio Animazione Coriandoli + audio:
@@ -413,34 +579,50 @@ const superatoOno = function (pass) {
       gravity: 0.05,
       wave: 0,
     };
+=======
+// const superatoOno = function (pass) {
+//   if (pass === "superato") {
+//     // inzio Animazione Coriandoli + audio:
+//     let canvas = document.getElementById("animazioniCoriandoliOgocce");
+//     let contenuto = canvas.getContext("2d");
+//     let width = window.innerWidth;
+//     let height = window.innerHeight;
+//     let coriandoli = [];
+//     let coriandoliSetting = {
+//       count: 500,
+//       gravity: 0.05,
+//       wave: 0,
+//     };
+>>>>>>> main
 
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
+//     window.requestAnimationFrame =
+//       window.requestAnimationFrame ||
+//       window.webkitRequestAnimationFrame ||
+//       window.mozRequestAnimationFrame ||
+//       window.oRequestAnimationFrame ||
+//       window.msRequestAnimationFrame ||
+//       function (callback) {
+//         window.setTimeout(callback, 1000 / 60);
+//       };
 
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
+//     const numeroRandom = function (min, max) {
+//       return Math.random() * (max - min) + min;
+//     };
 
-    function Coriandolo() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.area = numeroRandom(12, 15);
-      this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-      this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
-        0,
-        255
-      )}, ${numeroRandom(0, 255)})`;
-    }
+//     function Coriandolo() {
+//       this.x = Math.random() * width;
+//       this.y = Math.random() * height;
+//       this.area = numeroRandom(12, 15);
+//       this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
+//       this.tilt = numeroRandom(-4, 4);
+//       this.tiltAngle = 0;
+//       this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
+//         0,
+//         255
+//       )}, ${numeroRandom(0, 255)})`;
+//     }
 
+<<<<<<< HEAD
     Coriandolo.prototype.draw = function () {
       contenuto.beginPath();
       contenuto.lineJoin = 'round'; // Smusso degli angoli
@@ -452,63 +634,77 @@ const superatoOno = function (pass) {
       contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
       contenuto.stroke();
     };
+=======
+//     Coriandolo.prototype.draw = function () {
+//       contenuto.beginPath();
+//       contenuto.lineJoin = "round"; // Smusso degli angoli
+//       contenuto.lineCap = "round"; // Smusso delle estremità
+//       contenuto.lineWidth = this.dimension; // Utilizza la dimensione
+//       contenuto.strokeStyle = this.color;
+//       this.x = this.x + this.tilt;
+//       contenuto.moveTo(this.x + this.dimension / 5, this.y);
+//       contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
+//       contenuto.stroke();
+//     };
+>>>>>>> main
 
-    const creaCoriandoli = function () {
-      while (coriandoli.length < coriandoliSetting.count) {
-        let coriandolo = new Coriandolo();
-        coriandoli.push(coriandolo);
-      }
-    };
+//     const creaCoriandoli = function () {
+//       while (coriandoli.length < coriandoliSetting.count) {
+//         let coriandolo = new Coriandolo();
+//         coriandoli.push(coriandolo);
+//       }
+//     };
 
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
+//     let startTime = null;
+//     let duration = 3000; // Durata in millisecondi
+//     let tempoCorrente = 0; // Tempo corrente di animazione
 
-    const inizia = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
+//     const inizia = (timestamp) => {
+//       const tempoTrascorso = timestamp - startTime;
 
-      if (!startTime) {
-        startTime = timestamp;
-      }
+//       if (!startTime) {
+//         startTime = timestamp;
+//       }
 
-      tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
+//       tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
 
-      contenuto.clearRect(0, 0, width, height);
+//       contenuto.clearRect(0, 0, width, height);
 
-      for (let i = 0; i < coriandoli.length; i++) {
-        coriandoliSetting.wave += 0.4;
-        coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
-        coriandoli[i].y +=
-          (Math.sin(coriandoliSetting.wave) +
-            coriandoli[i].area +
-            coriandoliSetting.gravity) *
-          0.36;
-        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
+//       for (let i = 0; i < coriandoli.length; i++) {
+//         coriandoliSetting.wave += 0.4;
+//         coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
+//         coriandoli[i].y +=
+//           (Math.sin(coriandoliSetting.wave) +
+//             coriandoli[i].area +
+//             coriandoliSetting.gravity) *
+//           0.36;
+//         coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
 
-        coriandoli[i].draw();
+//         coriandoli[i].draw();
 
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-        } else {
-          // Animazione terminata, i coriandoli possono scendere fuori dal canvas
-          coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
-        }
+//         if (tempoCorrente < duration) {
+//           tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
+//         } else {
+//           // Animazione terminata, i coriandoli possono scendere fuori dal canvas
+//           coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
+//         }
 
-        if (coriandoli[i].y > height) {
-          coriandoli.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
+//         if (coriandoli[i].y > height) {
+//           coriandoli.splice(i, 1);
+//           i--; // Decrementa l'indice dopo la rimozione dell'elemento
+//         }
+//       }
 
-      if (coriandoli.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(inizia);
-      }
-    };
+//       if (coriandoli.length > 0 && tempoCorrente < duration) {
+//         window.requestAnimationFrame(inizia);
+//       }
+//     };
 
-    window.onload = () => {
-      canvas.width = width;
-      canvas.height = height;
+//     window.onload = () => {
+//       canvas.width = width;
+//       canvas.height = height;
 
+<<<<<<< HEAD
       // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
       setTimeout(() => {
         creaCoriandoli();
@@ -530,103 +726,127 @@ const superatoOno = function (pass) {
       gravity: 0.4,
       wave: 0,
     };
+=======
+//       // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
+//       setTimeout(() => {
+//         creaCoriandoli();
+//         window.requestAnimationFrame(inizia);
+//       }, 700);
+//       const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+//       audioWinner.play();
+//     };
+//     // // fine Animazione Coriandoli.
+//     // inzio Animazione Lacrime + audio:
+//   } else {
+//     let canvas = document.getElementById("animazioniCoriandoliOgocce");
+//     let contenuto = canvas.getContext("2d");
+//     let width = window.innerWidth;
+//     let height = window.innerHeight;
+//     let lacrime = [];
+//     let lacrimeSetting = {
+//       count: 400,
+//       gravity: 0.4,
+//       wave: 0,
+//     };
+>>>>>>> main
 
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
+//     window.requestAnimationFrame =
+//       window.requestAnimationFrame ||
+//       window.webkitRequestAnimationFrame ||
+//       window.mozRequestAnimationFrame ||
+//       window.oRequestAnimationFrame ||
+//       window.msRequestAnimationFrame ||
+//       function (callback) {
+//         window.setTimeout(callback, 1000 / 60);
+//       };
 
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
+//     const numeroRandom = function (min, max) {
+//       return Math.random() * (max - min) + min;
+//     };
 
-    function Lacrima() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.dimension = numeroRandom(8, 20);
-      this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
-      this.speed = numeroRandom(5, 15);
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-    }
+//     function Lacrima() {
+//       this.x = Math.random() * width;
+//       this.y = Math.random() * height;
+//       this.dimension = numeroRandom(8, 20);
+//       this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
+//       this.speed = numeroRandom(5, 15);
+//       this.tilt = numeroRandom(-4, 4);
+//       this.tiltAngle = 0;
+//     }
 
-    Lacrima.prototype.draw = function () {
-      contenuto.beginPath();
-      contenuto.lineWidth = 5;
-      contenuto.strokeStyle = this.color;
-      contenuto.moveTo(this.x, this.y);
-      contenuto.quadraticCurveTo(
-        this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
-      );
-      contenuto.quadraticCurveTo(
-        this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y
-      );
-      contenuto.stroke();
-    };
+//     Lacrima.prototype.draw = function () {
+//       contenuto.beginPath();
+//       contenuto.lineWidth = 5;
+//       contenuto.strokeStyle = this.color;
+//       contenuto.moveTo(this.x, this.y);
+//       contenuto.quadraticCurveTo(
+//         this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
+//         this.y - this.dimension, // Inverti la posizione del punto di controllo
+//         this.x,
+//         this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
+//       );
+//       contenuto.quadraticCurveTo(
+//         this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
+//         this.y - this.dimension, // Inverti la posizione del punto di controllo
+//         this.x,
+//         this.y
+//       );
+//       contenuto.stroke();
+//     };
 
-    const creaLacrime = function () {
-      while (lacrime.length < lacrimeSetting.count) {
-        let lacrima = new Lacrima();
-        lacrime.push(lacrima);
-      }
-    };
+//     const creaLacrime = function () {
+//       while (lacrime.length < lacrimeSetting.count) {
+//         let lacrima = new Lacrima();
+//         lacrime.push(lacrima);
+//       }
+//     };
 
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
+//     let startTime = null;
+//     let duration = 3000; // Durata in millisecondi
+//     let tempoCorrente = 0; // Tempo corrente di animazione
 
-    const iniziaLacrime = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
+//     const iniziaLacrime = (timestamp) => {
+//       const tempoTrascorso = timestamp - startTime;
 
-      if (!startTime) {
-        startTime = timestamp;
-      }
+//       if (!startTime) {
+//         startTime = timestamp;
+//       }
 
-      tempoCorrente = timestamp - startTime;
+//       tempoCorrente = timestamp - startTime;
 
-      contenuto.clearRect(0, 0, width, height);
+//       contenuto.clearRect(0, 0, width, height);
 
-      for (let i = 0; i < lacrime.length; i++) {
-        lacrimeSetting.wave += 0.00001;
-        lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
-        lacrime[i].y +=
-          (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
-          lacrime[i].speed;
-        lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
+//       for (let i = 0; i < lacrime.length; i++) {
+//         lacrimeSetting.wave += 0.00001;
+//         lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
+//         lacrime[i].y +=
+//           (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
+//           lacrime[i].speed;
+//         lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
 
-        lacrime[i].draw();
+//         lacrime[i].draw();
 
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime;
-        } else {
-          lacrime[i].y += 10;
-        }
-        if (lacrime[i].y > height + lacrime[i].dimension) {
-          lacrime.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
+//         if (tempoCorrente < duration) {
+//           tempoCorrente = timestamp - startTime;
+//         } else {
+//           lacrime[i].y += 10;
+//         }
+//         if (lacrime[i].y > height + lacrime[i].dimension) {
+//           lacrime.splice(i, 1);
+//           i--; // Decrementa l'indice dopo la rimozione dell'elemento
+//         }
+//       }
 
-      if (lacrime.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(iniziaLacrime);
-      }
-    };
+//       if (lacrime.length > 0 && tempoCorrente < duration) {
+//         window.requestAnimationFrame(iniziaLacrime);
+//       }
+//     };
 
-    window.onload = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+//     window.onload = () => {
+//       canvas.width = window.innerWidth;
+//       canvas.height = window.innerHeight;
 
+<<<<<<< HEAD
       setTimeout(() => {
         document.getElementById('messaggioGocce').style.display = 'block';
         creaLacrime();
@@ -639,3 +859,17 @@ const superatoOno = function (pass) {
   // fine Animazione Lacrime.
 };
 superatoOno('perato');
+=======
+//       setTimeout(() => {
+//         document.getElementById("messaggioGocce").style.display = "block";
+//         creaLacrime();
+//         window.requestAnimationFrame(iniziaLacrime);
+//       }, 700);
+//       const audioLooser = new Audio("./sounds/looser-results.wav");
+//       audioLooser.play();
+//     };
+//   }
+//   // fine Animazione Lacrime.
+// };
+// superatoOno("perato");
+>>>>>>> main
