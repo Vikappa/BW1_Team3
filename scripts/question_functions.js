@@ -767,33 +767,6 @@ if (!parentDiv) {
   });
 }
 
-// Aggiungi stili CSS per l'animazione della clessidra con gradiente di colore
-const css = `
-  @keyframes hourglass {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .hourglass::before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-width: 300px;
-    border-style: solid;
-    border-color: #00FFFF transparent transparent transparent;
-    border-radius: 50%;
-    background-color: (#00FFFF);
-    animation: hourglass 1s infinite;
-  }
-`;
-
 // Crea un elemento style per aggiungere gli stili al documento
 const style = document.createElement("style");
 style.appendChild(document.createTextNode(css));
