@@ -9,9 +9,9 @@ const divResultleaderboard = document.getElementById("resultleaderboard");
 
 const arrayRisposte = [];
 let intervalloUnico;
-let currentQuestion
+let currentQuestion;
 
-let resOrLead
+let resOrLead;
 
 const fermaTicToc = async function () {
   console.log("Fermato");
@@ -98,14 +98,13 @@ const timer = function (difficoltaStringa) {
     tempo = 0;
   }
   function aggiornaTimer() {
-
     if (tempo >= 1) {
-      tempo--
-      console.log("Aggiorno tempo")
-      document.getElementById("nSecondi").textContent = tempo
+      tempo--;
+      console.log("Aggiorno tempo");
+      document.getElementById("nSecondi").textContent = tempo;
     } else {
-      rispostaVuota()
-      fermaTicToc()
+      rispostaVuota();
+      fermaTicToc();
     }
   }
 
@@ -233,7 +232,7 @@ const populateLeaderboard = () => {
         </div>
     </div>
     <div class="points">${randomPoints} points</div>
-`
+`;
 
     leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
   }
@@ -241,8 +240,9 @@ const populateLeaderboard = () => {
   leaderboardItems.sort((a, b) => b.points - a.points);
 
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${index + 1
-      }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${
+      index + 1
+    }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
@@ -280,7 +280,11 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
-const checkRispostaVX = function (rispostaData, rispostaGiusta, rispostaCasella) {
+const checkRispostaVX = function (
+  rispostaData,
+  rispostaGiusta,
+  rispostaCasella
+) {
   if (rispostaData === rispostaCasella) {
     if (rispostaCasella === rispostaGiusta) {
       return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
@@ -308,9 +312,9 @@ const renderizzaLeaderBoard = function () {
     <p>3rd Place</p>
     <span>3º</span>
   </div>
-</div>`
+</div>`;
 
-  fermaTicToc()
+  fermaTicToc();
 
   divResultleaderboard.style.visibility = "visible";
   divResultleaderboard.innerHTML = `<div class="lboard_section">
@@ -318,77 +322,75 @@ const renderizzaLeaderBoard = function () {
       </div>
 </div>`;
 
-  const divPulsanteLeaderBoard = document.createElement("div")
-  const pPulsanteLeaderBoard = document.createElement("p")
-  const divPulsanteResultBoard = document.createElement("div")
-  const pPulsanteResultBoard = document.createElement("p")
-  const divPulsantiSwitchTab = document.createElement("div")
-  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
+  const divPulsanteLeaderBoard = document.createElement("div");
+  const pPulsanteLeaderBoard = document.createElement("p");
+  const divPulsanteResultBoard = document.createElement("div");
+  const pPulsanteResultBoard = document.createElement("p");
+  const divPulsantiSwitchTab = document.createElement("div");
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab";
 
-  pPulsanteLeaderBoard.id = "Leaderboard"
-  pPulsanteResultBoard.id = "Risultati"
+  pPulsanteLeaderBoard.id = "Leaderboard";
+  pPulsanteResultBoard.id = "Risultati";
 
   pPulsanteLeaderBoard.addEventListener("click", function () {
-    renderizzaLeaderBoard()
+    renderizzaLeaderBoard();
   });
 
   pPulsanteResultBoard.addEventListener("click", function () {
-    renderizza_risultato()
+    renderizza_risultato();
   });
 
-  pPulsanteLeaderBoard.classList = "switchTab"
-  pPulsanteResultBoard.classList = "switchTab"
-  pPulsanteLeaderBoard.textContent = "Leaderboard"
-  pPulsanteResultBoard.textContent = "Risultati"
+  pPulsanteLeaderBoard.classList = "switchTab";
+  pPulsanteResultBoard.classList = "switchTab";
+  pPulsanteLeaderBoard.textContent = "Leaderboard";
+  pPulsanteResultBoard.textContent = "Risultati";
 
-  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
-  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard);
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard);
 
-  divPulsantiSwitchTab.append(divPulsanteResultBoard)
-  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+  divPulsantiSwitchTab.append(divPulsanteResultBoard);
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
 
-  divResultleaderboard.appendChild(divPulsantiSwitchTab)
+  divResultleaderboard.appendChild(divPulsantiSwitchTab);
 
   populateLeaderboard();
-
-}
+};
 
 const renderizza_risultato = async function () {
-  divResultleaderboard.innerHTML = ``
+  divResultleaderboard.innerHTML = ``;
   divResultleaderboard.style.visibility = "visible";
   divTest.innerHTML = ``;
 
+  const divPulsanteLeaderBoard = document.createElement("div");
+  const pPulsanteLeaderBoard = document.createElement("p");
+  const divPulsanteResultBoard = document.createElement("div");
+  const pPulsanteResultBoard = document.createElement("p");
+  const divPulsantiSwitchTab = document.createElement("div");
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab";
 
-  const divPulsanteLeaderBoard = document.createElement("div")
-  const pPulsanteLeaderBoard = document.createElement("p")
-  const divPulsanteResultBoard = document.createElement("div")
-  const pPulsanteResultBoard = document.createElement("p")
-  const divPulsantiSwitchTab = document.createElement("div")
-  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
-
-  pPulsanteLeaderBoard.id = "Leaderboard"
-  pPulsanteResultBoard.id = "Risultati"
+  pPulsanteLeaderBoard.id = "Leaderboard";
+  pPulsanteResultBoard.id = "Risultati";
 
   pPulsanteLeaderBoard.addEventListener("click", function () {
-    renderizzaLeaderBoard()
+    renderizzaLeaderBoard();
   });
 
   pPulsanteResultBoard.addEventListener("click", function () {
-    renderizza_risultato()
+    renderizza_risultato();
   });
 
-  pPulsanteLeaderBoard.classList = "switchTab"
-  pPulsanteResultBoard.classList = "switchTab"
-  pPulsanteLeaderBoard.textContent = "Leaderboard"
-  pPulsanteResultBoard.textContent = "Risultati"
+  pPulsanteLeaderBoard.classList = "switchTab";
+  pPulsanteResultBoard.classList = "switchTab";
+  pPulsanteLeaderBoard.textContent = "Leaderboard";
+  pPulsanteResultBoard.textContent = "Risultati";
 
-  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
-  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard);
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard);
 
-  divPulsantiSwitchTab.append(divPulsanteResultBoard)
-  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+  divPulsantiSwitchTab.append(divPulsanteResultBoard);
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
 
-  divResultleaderboard.appendChild(divPulsantiSwitchTab)
+  divResultleaderboard.appendChild(divPulsantiSwitchTab);
 
   divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
@@ -403,24 +405,31 @@ const renderizza_risultato = async function () {
   const quanteGiuste = document.createElement("div");
   quanteGiuste.id = "divQuanteGiuste";
   quanteGiuste.classList = "divSchermataCiambella";
-  quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${(sbagliate / totaleDomande) * 100}%</p>
-  <p>${sbagliate}/${totaleDomande} questions</p>`;
+  quanteGiuste.innerHTML = `<p class="txtCiambella">Wrong</p>
+  <p class="percentualeCiambella">${Math.floor(
+    (sbagliate / totaleDomande) * 100
+  )}%</p>
+  <p class="quanteCiambella">${sbagliate}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
   fraseSuperamentoONo.classList = "divSchermataCiambella";
   fraseSuperamentoONo.id = "divFraseSuperamentoONo";
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
-    <p>Congratulations!/p>
-    <p>You have passed the exam</p>
-   <p>You will receive your<br>certificate by email shortly</p>`;
+    <p class="primaFraseResultCorrect">Congratulations!</p>
+    <p class="secondaFraseResultCorrect">You have passed the exam</p>
+   <p class="terzaFraseResultCorrect">We'll send you the certificate in few minutes</p>
+   <p class="terzaFraseResultCorrect">in few minutes</p>
+   <p class="terzaFraseResultCorrect">Check your email(including</p>
+   <p class="terzaFraseResultCorrect">promotions / spam folder)</p>`;
+    fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   } else {
     fraseSuperamentoONo.innerHTML = `
-    <p>We are sorry</p>
-    <p>You failed your test</p>
-   <p>It will be fine next<br>time, commit!</p>
+    <p class="primaFraseResultSbagliato ">Dammit!</p>
+    <p class="secondaFraseResultSbagliato ">You failed the exam</p>
+   <p class="terzaFraseResultSbagliato ">You can always make it up if you want.</p>
+   <p class="terzaFraseResultSbagliato "> Ask your teacher</p>
    `;
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
@@ -428,9 +437,11 @@ const renderizza_risultato = async function () {
   const quanteSbagliate = document.createElement("div");
   quanteSbagliate.id = "divQuanteSbagliate";
   quanteSbagliate.classList = "divSchermataCiambella";
-  quanteSbagliate.innerHTML = `<p>Correct</p>
-  <p>${(giuste / totaleDomande) * 100}%</p>
-  <p>${giuste}/${totaleDomande} questions</p>`;
+  quanteSbagliate.innerHTML = `<p class="txtCiambella">Correct</p>
+  <p class="percentualeCiambella">${Math.floor(
+    (giuste / totaleDomande) * 100
+  )}%</p>
+  <p  class="quanteCiambella">${giuste}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
@@ -443,10 +454,30 @@ const renderizza_risultato = async function () {
       divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(
+      arrayRisposte[i].answer,
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[0]
+    )}  ${
+        arrayRisposte[i].all_answer[0]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[1]
+      )} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[2])}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[3])} ${arrayRisposte[i].all_answer[3]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(
+      arrayRisposte[i].answer,
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[2]
+    )}  ${
+        arrayRisposte[i].all_answer[2]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[3]
+      )} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
 
@@ -457,8 +488,18 @@ const renderizza_risultato = async function () {
       divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
       <h1 class="h1Question">${arrayRisposte[i].question}</h1>
       <div class=rigaRisposte>
-      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
-      </div></div>`
+      <p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[0]
+      )}  ${
+        arrayRisposte[i].all_answer[0]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[1]
+      )} ${arrayRisposte[i].all_answer[1]}</p>
+      </div></div>`;
       divRisposteDate.appendChild(divRisposta);
     }
   }
@@ -471,7 +512,6 @@ const renderizza_risultato = async function () {
 let arrayDomande = [];
 
 const rispostaVuota = async function () {
-
   let risposta = {
     type: currentQuestion.type,
     question: currentQuestion.question,
@@ -484,13 +524,13 @@ const rispostaVuota = async function () {
 
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
-}
+};
 
 async function addRisposta(
   arrayRispostePresentate,
@@ -510,9 +550,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
@@ -534,9 +574,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
   renderizzaDomande();
 }
@@ -547,7 +587,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
-  currentQuestion = obgDomanda
+  currentQuestion = obgDomanda;
 
   await fermaTicToc();
 
