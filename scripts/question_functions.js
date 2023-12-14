@@ -252,9 +252,8 @@ const populateLeaderboard = () => {
   leaderboardItems.sort((a, b) => b.points - a.points);
 
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${
-      index + 1
-    }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${index + 1
+      }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
@@ -467,29 +466,27 @@ const renderizza_risultato = async function () {
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
-      arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer,
-      arrayRisposte[i].all_answer[0]
-    )}  ${
-        arrayRisposte[i].all_answer[0]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[1]
-      )} ${arrayRisposte[i].all_answer[1]}</p>
+        arrayRisposte[i].all_answer[0]
+      )}  ${arrayRisposte[i].all_answer[0]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[1]
+        )} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
-      arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer,
-      arrayRisposte[i].all_answer[2]
-    )}  ${
-        arrayRisposte[i].all_answer[2]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[3]
-      )} ${arrayRisposte[i].all_answer[3]}</p>
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[2]
+        )}  ${arrayRisposte[i].all_answer[2]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[3]
+        )} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
 
@@ -504,13 +501,12 @@ const renderizza_risultato = async function () {
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
         arrayRisposte[i].all_answer[0]
-      )}  ${
-        arrayRisposte[i].all_answer[0]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[1]
-      )} ${arrayRisposte[i].all_answer[1]}</p>
+      )}  ${arrayRisposte[i].all_answer[0]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[1]
+        )} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`;
       divRisposteDate.appendChild(divRisposta);
     }
@@ -536,9 +532,9 @@ const rispostaVuota = async function () {
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -562,9 +558,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -586,9 +582,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
   renderizzaDomande();
 }
@@ -694,7 +690,7 @@ const renderizzaDomande = async function () {
 
   if (arrayDomande.length === arrayRisposte.length) {
     divTest.innerHTML = ``;
-    superatoOno("perato");
+    superatoOno("cazzo");
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
