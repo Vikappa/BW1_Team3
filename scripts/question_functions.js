@@ -30,9 +30,14 @@ const graficoCiambella = function (sbagliate, giuste) {
   fermaTicToc();
   const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
-  canvas.width = 600;
-  canvas.height = 600;
+  canvas.width = 300;
+  canvas.height = 300;
   const ctx = canvas.getContext("2d");
+
+  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Colore dell'ombra
+  ctx.shadowBlur = 50; // Intensità dell'ombra
+  ctx.shadowOffsetX = 10; // Spostamento orizzontale dell'ombra
+  ctx.shadowOffsetY = 5; // Spostamento verticale dell'ombra
 
   // Dati del grafico
   const dati = {
@@ -687,7 +692,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length + 20) {
+  if (arrayDomande.length === arrayRisposte.length) {
     divTest.innerHTML = ``;
     superatoOno("perato");
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
