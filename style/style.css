@@ -438,3 +438,27 @@ form p {
 #loadingDiv {
   animation: loading 6s forwards;
 }
+
+@keyframes hourglass {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hourglass::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 20%;
+  margin-right: 20%;
+  border-width: 300px;
+  border-style: solid;
+  border-color: #00ffff transparent transparent transparent;
+  border-radius: 50%;
+  background-color: (#00ffff);
+  animation: hourglass 1s infinite;
+}
