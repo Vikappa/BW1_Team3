@@ -11,6 +11,8 @@ const arrayRisposte = [];
 let intervalloUnico;
 let currentQuestion
 
+let resOrLead
+
 const fermaTicToc = async function () {
   console.log("Fermato");
   clearInterval(intervalloUnico);
@@ -184,7 +186,69 @@ const diffInSecondi = function (diffString) {
       break;
   }
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
+const generateRandomName = () => {
+  const names = [
+    "Ali",
+    "Eric",
+    "Gabriel",
+    "Beatriz",
+    "Hanna",
+    "Diya",
+    "Fatima",
+  ];
+  return names[Math.floor(Math.random() * names.length)];
+};
 
+const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
+
+const generateRandomImages = () => {
+  const images = [
+    "https://placedog.net/100/100",
+    "https://placekitten.com/100",
+  ];
+  return images[Math.floor(Math.random() * images.length)];
+};
+
+const populateLeaderboard = () => {
+  const leaderboardItems = [];
+  const leaderboardContainer = document.getElementById("leaderboard");
+  for (let i = 1; i <= 10; i++) {
+    const randomName = generateRandomName();
+    const randomPoints = generateRandomPoints();
+    const randomImages = generateRandomImages();
+
+    const leaderboardItem = document.createElement("div");
+    leaderboardItem.classList.add("lboard_memory");
+
+    leaderboardItem.innerHTML = `
+    <div class="img">
+        <img class="leaderboardImg" src="${randomImages}" alt="random-image" />
+    </div>
+    <div class="name_barra">
+        <p><span>${i}.</span>${randomName}</p>
+        <div class="bar_wrap">
+            <div class="inner_bar" style="width: ${randomPoints}%"></div>
+        </div>
+    </div>
+    <div class="points">${randomPoints} points</div>
+`
+
+    leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+  }
+
+  leaderboardItems.sort((a, b) => b.points - a.points);
+
+  leaderboardItems.forEach((item, index) => {
+    item.element.querySelector(".name_barra p span").textContent = `${index + 1
+      }.`;
+
+    leaderboardContainer.appendChild(item.element);
+  });
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -227,11 +291,100 @@ const checkRispostaVX = function (rispostaData, rispostaGiusta, rispostaCasella)
   }
 };
 
-const renderizza_risultato = async function () {
-  divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
+const renderizzaLeaderBoard = function () {
+  divTest.innerHTML = `<div class="podium">
+  <div class="podium-item gold" id="gold">
+    <img src="" alt="Gold Medal" />
+    <p>1st Place</p>
+    <span>1º</span>
+  </div>
+  <div class="podium-item silver" id="silver">
+    <img src="" alt="Silver Medal" />
+    <p>2nd Place</p>
+    <span>2º</span>
+  </div>
+  <div class="podium-item bronze" id="bronze">
+    <img src="" alt="Bronze Medal" />
+    <p>3rd Place</p>
+    <span>3º</span>
+  </div>
+</div>`
+  fermaTicToc()
   divResultleaderboard.style.visibility = "visible";
+  divResultleaderboard.innerHTML = `<div class="lboard_section">
+      <div class="lboard_item Leaderboard" id="leaderboard">
+      </div>
+</div>`;
+  const divPulsanteLeaderBoard = document.createElement("div")
+  const pPulsanteLeaderBoard = document.createElement("p")
+  const divPulsanteResultBoard = document.createElement("div")
+  const pPulsanteResultBoard = document.createElement("p")
+  const divPulsantiSwitchTab = document.createElement("div")
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
 
+  pPulsanteLeaderBoard.id = "Leaderboard"
+  pPulsanteResultBoard.id = "Risultati"
+
+  pPulsanteLeaderBoard.addEventListener("click", function () {
+    renderizzaLeaderBoard()
+  });
+
+  pPulsanteResultBoard.addEventListener("click", function () {
+    renderizza_risultato()
+  });
+
+  pPulsanteLeaderBoard.classList = "switchTab"
+  pPulsanteResultBoard.classList = "switchTab"
+  pPulsanteLeaderBoard.textContent = "Leaderboard"
+  pPulsanteResultBoard.textContent = "Risultati"
+
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+
+  divPulsantiSwitchTab.append(divPulsanteResultBoard)
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+
+  divResultleaderboard.appendChild(divPulsantiSwitchTab)
+
+  populateLeaderboard();
+
+}
+
+const renderizza_risultato = async function () {
+  divResultleaderboard.style.visibility = "visible";
   divTest.innerHTML = ``;
+
+
+  const divPulsanteLeaderBoard = document.createElement("div")
+  const pPulsanteLeaderBoard = document.createElement("p")
+  const divPulsanteResultBoard = document.createElement("div")
+  const pPulsanteResultBoard = document.createElement("p")
+  const divPulsantiSwitchTab = document.createElement("div")
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab"
+
+  pPulsanteLeaderBoard.id = "Leaderboard"
+  pPulsanteResultBoard.id = "Risultati"
+
+  pPulsanteLeaderBoard.addEventListener("click", function () {
+    renderizzaLeaderBoard()
+  });
+
+  pPulsanteResultBoard.addEventListener("click", function () {
+    renderizza_risultato()
+  });
+
+  pPulsanteLeaderBoard.classList = "switchTab"
+  pPulsanteResultBoard.classList = "switchTab"
+  pPulsanteLeaderBoard.textContent = "Leaderboard"
+  pPulsanteResultBoard.textContent = "Risultati"
+
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard)
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard)
+
+  divPulsantiSwitchTab.append(divPulsanteResultBoard)
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard)
+
+  divResultleaderboard.appendChild(divPulsantiSwitchTab)
 
   divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
@@ -476,9 +629,6 @@ const renderizzaDomande = async function () {
     arrayDomande = await generaArrayDomande();
   }
 
-
-
-
   console.log(
     "Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto"
   );
@@ -486,13 +636,16 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
+  if (arrayDomande.length === arrayRisposte.length + 20) {
+    divTest.innerHTML = ``;
+
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
       arrayDomande[nDomandeFatte]
     );
+
     nDomandeFatte++;
     await divTest.appendChild(nuovaDomandaRenderizzata);
   }
