@@ -125,12 +125,12 @@ button {
 #pFalso {
   border-radius: 40px;
   padding: 10px;
-  padding-top: 5%;
+  padding-top: 30px;
   text-align: center;
-  width: 280px;
+  width: 320px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 5px -70px 15px;
+  margin: 85px 5px 0px 15px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
   box-shadow: -1px -3px 1.5px whitesmoke;
@@ -140,12 +140,12 @@ button {
 .multTypeButton {
   border-radius: 40px;
   padding: 10px;
-  padding-top: 2.5%;
+  padding-top: 30px;
   text-align: center;
-  width: 280px;
+  width: 320px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 5px -70px 15px;
+  margin: 85px 5px 0px 15px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
   box-shadow: -1px -3px 1.5px whitesmoke;
