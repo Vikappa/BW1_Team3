@@ -9,6 +9,7 @@ const divResultleaderboard = document.getElementById("resultleaderboard");
 
 const arrayRisposte = [];
 let intervalloUnico
+let currentQuestion
 
 const fermaTicToc = async function () {
   console.log("Fermato")
@@ -93,12 +94,13 @@ const timer = function (difficoltaStringa) {
     tempo = 0;
   }
   function aggiornaTimer() {
-    if (tempo >= 0) {
+
+    if (tempo >= 1) {
+      tempo--
       console.log("Aggiorno tempo")
       document.getElementById("nSecondi").textContent = tempo
-      tempo--
     } else {
-      //rispostaVuota()
+      rispostaVuota()
       fermaTicToc()
     }
   }
@@ -306,6 +308,28 @@ const renderizza_risultato = async function () {
 
 let arrayDomande = [];
 
+const rispostaVuota = async function () {
+
+  let risposta = {
+    type: currentQuestion.type,
+    question: currentQuestion.question,
+    answer: "Non ho risposto",
+    all_answer: currentQuestion.arrayRispostePresentate,
+    correctAnswer: currentQuestion.correct_answer,
+  };
+
+  arrayRisposte.push(risposta);
+
+  console.log(
+    "Lunghezza array risposte: " +
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
+  );
+
+  renderizzaDomande();
+}
+
 async function addRisposta(
   arrayRispostePresentate,
   indice_risposta_selezionata,
@@ -361,6 +385,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+  currentQuestion = obgDomanda
 
   await fermaTicToc()
 
@@ -446,6 +471,9 @@ const renderizzaDomande = async function () {
   if (arrayDomande.length === 0) {
     arrayDomande = await generaArrayDomande();
   }
+
+
+
 
   console.log(
     "Di seguito metto l'array risposte accumulate. Non so perchè se metto questa stringa nel prossimo console log smarmella tutto"
