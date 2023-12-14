@@ -21,8 +21,8 @@
 
 #graficoCiambella {
   position: absolute;
-  top: -238px;
-  left: -195px;
+  top: -132px;
+  left: -76px;
 }
 
 #divQuanteSbagliate {
@@ -43,57 +43,57 @@
 }
 
 .primaFraseResultCorrect {
-  font-size: 0.7em;
+  font-size: 0.45em;
   padding-bottom: 10px;
   text-align: center;
   position: relative;
-  right: 10px;
-  top: -5px;
+  right: -12px;
+  top: -9px;
   font-family: "Inter", sans-serif;
 }
 .secondaFraseResultCorrect {
-  font-size: 0.5em;
+  font-size: 0.3em;
   color: #00ffff;
   padding-bottom: 10px;
   text-align: center;
   position: relative;
-  right: 13px;
-  top: -9px;
+  right: -10px;
+  top: -17px;
   font-family: "Inter", sans-serif;
 }
 .terzaFraseResultCorrect {
-  font-size: 0.35em;
+  font-size: 0.18em;
   text-align: center;
   position: relative;
-  right: 9px;
-  top: 35px;
+  right: -13px;
+  top: -4px;
   font-family: "Inter", sans-serif;
 }
 .primaFraseResultSbagliato {
-  font-size: 1em;
+  font-size: 0.8em;
   padding-bottom: 10px;
   text-align: center;
   position: relative;
-  right: -4px;
-  top: -5px;
+  right: -10px;
+  top: -21px;
   font-family: "Inter", sans-serif;
 }
 .secondaFraseResultSbagliato {
-  font-size: 0.65em;
+  font-size: 0.4em;
   color: #00ffff;
   padding-bottom: 10px;
   text-align: center;
   position: relative;
-  right: -3px;
-  top: -9px;
+  right: -12px;
+  top: -27px;
   font-family: "Inter", sans-serif;
 }
 .terzaFraseResultSbagliato {
-  font-size: 0.35em;
+  font-size: 0.2em;
   text-align: center;
   position: relative;
-  right: -3px;
-  top: 35px;
+  right: -14px;
+  top: -11px;
   font-family: "Inter", sans-serif;
 }
 .quanteCiambella {
