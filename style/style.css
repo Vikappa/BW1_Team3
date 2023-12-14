@@ -1,6 +1,6 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
-@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 body {
   background-image: url(../assets/bg.jpg);
@@ -31,7 +31,7 @@ main {
 
 .title1,
 .title2 {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 60px;
   justify-self: left;
 }
@@ -45,7 +45,7 @@ main {
 .description,
 .elenco,
 span {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   justify-self: left;
 }
@@ -77,20 +77,6 @@ span {
 
 /* CONTROLLARE!!!!!! */
 #checkbox {
-}
-
-div button {
-  height: 58px;
-  width: 220px;
-  background-color: #00ffff;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-#button {
-  text-align: right;
-  margin-right: 6em;
-  margin-bottom: 4em;
 }
 
 button:hover {
@@ -161,7 +147,7 @@ button {
 
 #genitore p {
   text-align: center;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
 }
 
@@ -302,7 +288,7 @@ form p {
   height: 50px;
   background-color: #00ffff;
   font-size: 16px;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
@@ -312,7 +298,7 @@ form p {
 #body-feedback {
   text-align: center;
   color: #fff;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 16px;
 }
 
@@ -341,6 +327,17 @@ textarea {
 
 #buttonProceed {
   margin-top: 40px;
+  height: 58px;
+  width: 220px;
+  background-color: #00ffff;
+  font-weight: bold;
+  font-size: 16px;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  align-self: flex-end;
+  margin-right: 6em;
+  margin-bottom: 4em;
 }
 
 .stars img {
