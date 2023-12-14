@@ -117,7 +117,7 @@ button {
   width: 280px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 5px -70px 95px;
+  margin: 85px 5px -70px 15px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
   box-shadow: -1px -3px 1.5px whitesmoke;
@@ -132,7 +132,7 @@ button {
   width: 280px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 5px -70px 95px;
+  margin: 85px 5px -70px 15px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
   box-shadow: -1px -3px 1.5px whitesmoke;
