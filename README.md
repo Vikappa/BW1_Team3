@@ -20,5 +20,3 @@ Alessandro: Incrementata nella funzione "superatoOno" la condizione ELSE che fa 
 
 Giorno 3:
 Vincenzo: Ho fixato il timer delle domande usando una variabile comunea a tutti i div question dinamici. Corretto il posizionamento degli elementi nella schermata del grafico a ciambella. Aggiunta renderizzazione risposte date con icona presa da fontawesome
-
-Alessandro: Importato mie file "results" di animazione coriandoli o lacrime in file Questions, lasciati commentati. Ho iniziato a creare l'animazione che appare al caricamento della pagina Questions, da fixare.
