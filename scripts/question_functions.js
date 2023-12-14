@@ -22,8 +22,6 @@ const fermaTicToc = async function () {
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
-
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
   fermaTicToc()
@@ -40,10 +38,9 @@ const graficoCiambella = function (sbagliate, giuste) {
         data: [sbagliate, giuste],
         backgroundColor: ["#D20094", "#00FFFF"],
         borderColor: "white",
-        borderWidth: 2,
+        borderWidth: 0, // Riduci il bordo
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
@@ -52,14 +49,7 @@ const graficoCiambella = function (sbagliate, giuste) {
     responsive: false,
     plugins: {
       datalabels: {
-        color: "white",
-        font: {
-          weight: "bold",
-        },
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 4,
+        display: false, // Nascondi le etichette
       },
     },
   };
@@ -73,12 +63,10 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
-let tictoc;
-let timeleft;
-let diffValueCurrentQuestion;
-//modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
+
+const convertiStringaInSecondiTimer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
     return 30
   } else if (difficoltaStringa === "medium") {
@@ -91,14 +79,15 @@ const timer = function (difficoltaStringa) {
   }
 }
 
-async function aggiornaTimer() {
-  if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion);
-  }
-  if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = timeleft;
-    timeleft--;
+//modificato per ritornare un valore che non sia fuori dal metodo
+const timer = function (difficoltaStringa) {
+  let tempo;
+  if (difficoltaStringa === "easy") {
+    tempo = 30;
+  } else if (difficoltaStringa === "medium") {
+    tempo = 60;
+  } else if (difficoltaStringa === "hard") {
+    tempo = 120;
   } else {
     console.log("Errore numero inserito nel metodo timer")
     tempo = 0;
@@ -165,7 +154,6 @@ const cerchioTimer = function (difficolta) {
   nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
 
   nSecondi.textContent = timer(difficolta);
-  nSecondi.id = "nSecondi";
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
@@ -240,6 +228,7 @@ const renderizza_risultato = async function () {
 
   divTest.innerHTML = ``;
 
+  divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
@@ -719,85 +708,3 @@ renderizzaDomande();
 //   // fine Animazione Lacrime.
 // };
 // superatoOno("perato");
-//   // fine creazione ed animazione Lacrime.
-// };
-// // richiamo la funzione: "superato" = coriandoli, !== a superato = lacrime
-// superatoOno("perato");
-
-///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
-// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
-function hideLoadingAnimation() {
-  const loadingDiv = document.getElementById("loadingDiv");
-  if (loadingDiv) {
-    loadingDiv.style.display = "none";
-  }
-}
-
-// Verifica se il div genitore è stato creato:
-const parentDiv = document.getElementById("genitore");
-
-// Se il div genitore non è ancora stato creato, mostra l'animazione:
-if (!parentDiv) {
-  const loadingDiv = document.createElement("div");
-  loadingDiv.id = "loadingDiv";
-  loadingDiv.innerHTML = `<div class="hourglass"></div>`;
-  document.body.appendChild(loadingDiv);
-} else {
-  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato:
-  const loadingDiv = document.getElementById("loadingDiv");
-  // Aggiungi un listener per l'evento animationend all'elemento di caricamento
-  loadingDiv.addEventListener("animationend", () => {
-    // Una volta completata l'animazione di opacità, nascondi il div di caricamento
-    loadingDiv.style.display = "none";
-  });
-}
-<<<<<<< HEAD
->>>>>>> eab0fc9 (wip animazione che appare mentre la Questions Page viene carica, prima che appaiono le domande)
-=======
-
-// Aggiungi stili CSS per l'animazione della clessidra con gradiente di colore
-const css = `
-  @keyframes hourglass {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-<<<<<<< HEAD
-//   // Controlla se il div genitore è stato creato
-//   const parentDiv = document.getElementById("genitore");
-//   if (parentDiv) {
-//     // Se il div genitore è presente, attendi un secondo prima di nascondere l'animazione
-//     setTimeout(() => {
-//       hideLoadingAnimation();
-//     }, 1000);
-//   }
-// });
->>>>>>> 614984c (wip animazione durante caricamento pagina questions)
-=======
-  .hourglass::before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-width: 300px;
-    border-style: solid;
-    border-color: #00FFFF transparent transparent transparent;
-    border-radius: 50%;
-    background-color: (#00FFFF);
-    animation: hourglass 1s infinite;
-  }
-`;
-
-// Crea un elemento style per aggiungere gli stili al documento
-const style = document.createElement("style");
-style.appendChild(document.createTextNode(css));
-
-// Aggiungi gli stili al documento
-document.head.appendChild(style);
->>>>>>> b395cee (wip 3 animazione caricamento pagina)
