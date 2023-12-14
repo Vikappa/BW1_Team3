@@ -5,7 +5,15 @@ const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
 const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
+const divResultleaderboard = document.getElementById("resultleaderboard");
+
 const arrayRisposte = [];
+let intervalloUnico
+
+const fermaTicToc = async function () {
+  console.log("Fermato")
+  clearInterval(intervalloUnico)
+}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -14,13 +22,13 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
-
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
+  fermaTicToc()
+  const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
-
+  canvas.width = 600;
+  canvas.height = 600;
   const ctx = canvas.getContext("2d");
 
   // Dati del grafico
@@ -30,26 +38,18 @@ const graficoCiambella = function (sbagliate, giuste) {
         data: [sbagliate, giuste],
         backgroundColor: ["#D20094", "#00FFFF"],
         borderColor: "white",
-        borderWidth: 2,
+        borderWidth: 0, // Riduci il bordo
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 30,
+    cutoutPercentage: 70,
     responsive: false,
     plugins: {
       datalabels: {
-        color: "white",
-        font: {
-          weight: "bold",
-        },
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 4,
+        display: false, // Nascondi le etichette
       },
     },
   };
@@ -63,46 +63,52 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
-let tictoc;
-let timeleft;
-let diffValueCurrentQuestion;
-//modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
-  if (difficoltaStringa === "easy") {
-    return 30;
-  } else if (difficoltaStringa === "medium") {
-    return 60;
-  } else if (difficoltaStringa === "hard") {
-    return 120;
-  } else {
-    console.log("Errore numero inserito nel metodo timer");
-    return 0;
-  }
-  console.log("Errore numero inserito nel metodo timer");
-  return 0;
-};
 
-async function aggiornaTimer() {
-  if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion);
-  }
-  if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = timeleft;
-    timeleft--;
+const convertiStringaInSecondiTimer = function (difficoltaStringa) {
+  if (difficoltaStringa === "easy") {
+    return 30
+  } else if (difficoltaStringa === "medium") {
+    return 60
+  } else if (difficoltaStringa === "hard") {
+    return 120
   } else {
-    //rispostaVuota()
-    clearInterval(tictoc);
+    console.log("Errore numero inserito nel metodo convertiStringaInSecondiTimer")
+    return 0;
   }
 }
 
-const avviaTicToc = function (diffValue) {
-  //Ex aggiornatimer
-  if (tictoc === undefined) {
-    setInterval(aggiornaTimer, 1000);
+//modificato per ritornare un valore che non sia fuori dal metodo
+const timer = function (difficoltaStringa) {
+  let tempo;
+  if (difficoltaStringa === "easy") {
+    tempo = 30;
+  } else if (difficoltaStringa === "medium") {
+    tempo = 60;
+  } else if (difficoltaStringa === "hard") {
+    tempo = 120;
+  } else {
+    console.log("Errore numero inserito nel metodo timer")
+    tempo = 0;
   }
-};
+  function aggiornaTimer() {
+    if (tempo >= 0) {
+      console.log("Aggiorno tempo")
+      document.getElementById("nSecondi").textContent = tempo
+      tempo--
+    } else {
+      //rispostaVuota()
+      fermaTicToc()
+    }
+  }
+
+  intervalloUnico = setInterval(aggiornaTimer, 1000);
+
+  return tempo
+
+}
+/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
@@ -144,8 +150,10 @@ const cerchioTimer = function (difficolta) {
   const primanenti = document.createElement("p");
 
   pseconds.textContent = "seconds";
-  nSecondi.textContent = timer(difficolta);
   nSecondi.id = "nSecondi";
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
+
+  nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
@@ -205,11 +213,22 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
+const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
+  if (rispostaCasella === rispostaGiusta) {
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+  }
+  if (rispostaCasella !== rispostaGiusta) {
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+  }
+}
+
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
-  await delay(500);
+  divResultleaderboard.style.visibility = "visible"
+
   divTest.innerHTML = ``;
 
+  divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
@@ -219,21 +238,68 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
+  const quanteGiuste = document.createElement("div");
+  quanteGiuste.id = "divQuanteGiuste"
+  quanteGiuste.classList = "divSchermataCiambella"
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${sbagliate}%</p>`;
+  divTest.appendChild(quanteGiuste);
+  const fraseSuperamentoONo = document.createElement("div");
+  fraseSuperamentoONo.classList = "divSchermataCiambella"
+  fraseSuperamentoONo.id = "divFraseSuperamentoONo"
+  if (giuste > sbagliate) {
+    fraseSuperamentoONo.innerHTML = `
+    <p>Congratulations!/p>
+    <p>You have passed the exam</p>
+   <p>You will receive your<br>certificate by email shortly</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  } else {
+    fraseSuperamentoONo.innerHTML = `
+    <p>We are sorry</p>
+    <p>You failed your test</p>
+   <p>It will be fine next<br>time, commit!</p>`;
+    fraseSuperamentoONo.appendChild(grafic);
+    divTest.appendChild(fraseSuperamentoONo);
+  }
+  const quanteSbagliate = document.createElement("div");
+  quanteSbagliate.id = "divQuanteSbagliate"
+  quanteSbagliate.classList = "divSchermataCiambella"
+  quanteSbagliate.innerHTML = `<p>Correct</p>
+  <p>${giuste}%</p>`;
+  divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
-  divTest.appendChild(grafic);
+
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
-    const divRisposta = document.createElement("div");
-    const pDomanda = document.createElement("p");
-    pDomanda.textContent = arrayRisposte[i].question;
-    const pAnswer = document.createElement("p");
-    pAnswer.textContent = `Risposta data; ` + arrayRisposte[i].answer;
-    divRisposta.appendChild(pDomanda);
-    divRisposta.appendChild(pAnswer);
-    divRisposteDate.appendChild(divRisposta);
+    if (arrayRisposte[i].type === `multiple`) {
+      const divRisposta = document.createElement("div");
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
+    <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+    </div>    
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
+    </div>
+    </div>`
+
+      divRisposteDate.appendChild(divRisposta);
+    } else {
+      const divRisposta = document.createElement("div");
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
+      <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+      <div class=rigaRisposte>
+      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+      </div></div>`
+      divRisposteDate.appendChild(divRisposta);
+    }
   }
+
+  divResultleaderboard.appendChild(divRisposteDate)
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
@@ -258,9 +324,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -282,9 +348,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
   renderizzaDomande();
 }
@@ -295,6 +361,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
+  await fermaTicToc()
+
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
@@ -370,7 +439,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   }
   divRitorno.id = "genitore";
   divRitorno.appendChild(cerchioTimer(difficulty));
-  return divRitorno;
+  return divRitorno
 };
 
 const renderizzaDomande = async function () {
@@ -385,7 +454,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length + 20) {
+  if (arrayDomande.length === arrayRisposte.length) {
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
@@ -402,7 +471,7 @@ renderizzaDomande();
 ////////////////////////////////// ALESSANDRO Creazione coriandoli O Lacrime + audio /////////////////////////////////////
 // const superatoOno = function (pass) {
 //   if (pass === "superato") {
-//     // inzio creazione ed animazione Coriandoli + audio:
+//     // inzio Animazione Coriandoli + audio:
 //     let canvas = document.getElementById("animazioniCoriandoliOgocce");
 //     let contenuto = canvas.getContext("2d");
 //     let width = window.innerWidth;
@@ -517,8 +586,8 @@ renderizzaDomande();
 //       const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
 //       audioWinner.play();
 //     };
-//     // // fine creazione ed animazione Coriandoli.
-//     // inzio creazione ed animazione Lacrime + audio:
+//     // // fine Animazione Coriandoli.
+//     // inzio Animazione Lacrime + audio:
 //   } else {
 //     let canvas = document.getElementById("animazioniCoriandoliOgocce");
 //     let contenuto = canvas.getContext("2d");
@@ -636,69 +705,6 @@ renderizzaDomande();
 //       audioLooser.play();
 //     };
 //   }
-//   // fine creazione ed animazione Lacrime.
+//   // fine Animazione Lacrime.
 // };
-// // richiamo la funzione: "superato" = coriandoli, !== a superato = lacrime
 // superatoOno("perato");
-
-///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
-// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
-function hideLoadingAnimation() {
-  const loadingDiv = document.getElementById("loadingDiv");
-  if (loadingDiv) {
-    loadingDiv.style.display = "none";
-  }
-}
-
-// Verifica se il div genitore è stato creato:
-const parentDiv = document.getElementById("genitore");
-
-// Se il div genitore non è ancora stato creato, mostra l'animazione:
-if (!parentDiv) {
-  const loadingDiv = document.createElement("div");
-  loadingDiv.id = "loadingDiv";
-  loadingDiv.innerHTML = `<div class="hourglass"></div>`;
-  document.body.appendChild(loadingDiv);
-} else {
-  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato:
-  const loadingDiv = document.getElementById("loadingDiv");
-  // Aggiungi un listener per l'evento animationend all'elemento di caricamento
-  loadingDiv.addEventListener("animationend", () => {
-    // Una volta completata l'animazione di opacità, nascondi il div di caricamento
-    loadingDiv.style.display = "none";
-  });
-}
-
-// Aggiungi stili CSS per l'animazione della clessidra con gradiente di colore
-const css = `
-  @keyframes hourglass {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .hourglass::before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-width: 300px;
-    border-style: solid;
-    border-color: #00FFFF transparent transparent transparent;
-    border-radius: 50%;
-    background-color: (#00FFFF);
-    animation: hourglass 1s infinite;
-  }
-`;
-
-// Crea un elemento style per aggiungere gli stili al documento
-const style = document.createElement("style");
-style.appendChild(document.createTextNode(css));
-
-// Aggiungi gli stili al documento
-document.head.appendChild(style);
