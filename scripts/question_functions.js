@@ -309,12 +309,15 @@ const renderizzaLeaderBoard = function () {
     <span>3º</span>
   </div>
 </div>`
+
   fermaTicToc()
+
   divResultleaderboard.style.visibility = "visible";
   divResultleaderboard.innerHTML = `<div class="lboard_section">
       <div class="lboard_item Leaderboard" id="leaderboard">
       </div>
 </div>`;
+
   const divPulsanteLeaderBoard = document.createElement("div")
   const pPulsanteLeaderBoard = document.createElement("p")
   const divPulsanteResultBoard = document.createElement("div")
@@ -351,6 +354,7 @@ const renderizzaLeaderBoard = function () {
 }
 
 const renderizza_risultato = async function () {
+  divResultleaderboard.innerHTML = ``
   divResultleaderboard.style.visibility = "visible";
   divTest.innerHTML = ``;
 
