@@ -947,6 +947,7 @@ const superatoOno = function (pass) {
     };
   }
   // fine Animazione Lacrime.
+  console.log("avviata funzione supreatoOno");
 };
 
 // FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
