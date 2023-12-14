@@ -50,15 +50,13 @@ const graficoCiambella = function (sbagliate, giuste) {
   const options = {
     cutoutPercentage: 70,
     responsive: false,
-    radius: "90%",
     plugins: {
       datalabels: {
         display: false, // Nascondi le etichette
       },
     },
   };
-  console.log(options);
-  console.log(dati);
+
   // Crea e restituisci il grafico a ciambella
   return new Chart(ctx, {
     type: "doughnut",
@@ -402,31 +400,24 @@ const renderizza_risultato = async function () {
   const quanteGiuste = document.createElement("div");
   quanteGiuste.id = "divQuanteGiuste";
   quanteGiuste.classList = "divSchermataCiambella";
-  quanteGiuste.innerHTML = `<p class="txtCiambella">Wrong</p>
-  <p class="percentualeCiambella">${Math.floor(
-    (sbagliate / totaleDomande) * 100
-  )}%</p>
-  <p class="quanteCiambella">${sbagliate}/${totaleDomande} questions</p>`;
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${(sbagliate / totaleDomande) * 100}%</p>
+  <p>${sbagliate}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
   fraseSuperamentoONo.classList = "divSchermataCiambella";
   fraseSuperamentoONo.id = "divFraseSuperamentoONo";
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
-    <p class="primaFraseResultCorrect">Congratulations!</p>
-    <p class="secondaFraseResultCorrect">You have passed the exam</p>
-   <p class="terzaFraseResultCorrect">We'll send you the certificate in few minutes</p>
-   <p class="terzaFraseResultCorrect">in few minutes</p>
-   <p class="terzaFraseResultCorrect">Check your email(including</p>
-   <p class="terzaFraseResultCorrect">promotions / spam folder)</p>`;
-    fraseSuperamentoONo.appendChild(grafic);
+    <p>Congratulations!/p>
+    <p>You have passed the exam</p>
+   <p>You will receive your<br>certificate by email shortly</p>`;
     divTest.appendChild(fraseSuperamentoONo);
   } else {
     fraseSuperamentoONo.innerHTML = `
-    <p class="primaFraseResultSbagliato ">Dammit!</p>
-    <p class="secondaFraseResultSbagliato ">You failed the exam</p>
-   <p class="terzaFraseResultSbagliato ">You can always make it up if you want.</p>
-   <p class="terzaFraseResultSbagliato "> Ask your teacher</p>
+    <p>We are sorry</p>
+    <p>You failed your test</p>
+   <p>It will be fine next<br>time, commit!</p>
    `;
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
@@ -434,11 +425,9 @@ const renderizza_risultato = async function () {
   const quanteSbagliate = document.createElement("div");
   quanteSbagliate.id = "divQuanteSbagliate";
   quanteSbagliate.classList = "divSchermataCiambella";
-  quanteSbagliate.innerHTML = `<p class="txtCiambella">Correct</p>
-  <p class="percentualeCiambella">${Math.floor(
-    (giuste / totaleDomande) * 100
-  )}%</p>
-  <p  class="quanteCiambella">${giuste}/${totaleDomande} questions</p>`;
+  quanteSbagliate.innerHTML = `<p>Correct</p>
+  <p>${(giuste / totaleDomande) * 100}%</p>
+  <p>${giuste}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
