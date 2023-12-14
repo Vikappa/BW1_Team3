@@ -725,42 +725,48 @@ renderizzaDomande();
 // superatoOno("perato");
 
 ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
-// Funzione per nascondere l'animazione di caricamento
+// Funzione per nascondere l'animazione una volta che il div genitore è stato caricato:
 function hideLoadingAnimation() {
   const loadingDiv = document.getElementById("loadingDiv");
   if (loadingDiv) {
     loadingDiv.style.display = "none";
-    console.log("nascondo animazione di caticamento", loadingDiv);
   }
 }
-// Verifica quando tutto il contenuto è stato caricato (include anche immagini, iframe, ecc.)
-window.addEventListener("load", () => {
-  hideLoadingAnimation(); // Nasconde l'animazione quando tutto il contenuto è stato caricato
-});
 
-// Nascondi l'animazione dopo un secondo solo se il div genitore è stato creato
+// Verifica se il div genitore è stato creato:
 const parentDiv = document.getElementById("genitore");
 
-if (parentDiv) {
-  // Se il div genitore è presente, attendi un secondo prima di nascondere l'animazione
-  setTimeout(() => {
-    hideLoadingAnimation();
-  }, 1000);
-} else {
+// Se il div genitore non è ancora stato creato, mostra l'animazione:
+if (!parentDiv) {
   const loadingDiv = document.createElement("div");
   loadingDiv.id = "loadingDiv";
-  loadingDiv.textContent = "Caricamento in corso...";
+  loadingDiv.innerHTML = `<div class="hourglass"></div>`;
   document.body.appendChild(loadingDiv);
+} else {
+  hideLoadingAnimation(); // Nascondi l'animazione se il div genitore è già stato creato:
+  const loadingDiv = document.getElementById("loadingDiv");
+  // Aggiungi un listener per l'evento animationend all'elemento di caricamento
+  loadingDiv.addEventListener("animationend", () => {
+    // Una volta completata l'animazione di opacità, nascondi il div di caricamento
+    loadingDiv.style.display = "none";
+  });
 }
 <<<<<<< HEAD
 >>>>>>> eab0fc9 (wip animazione che appare mentre la Questions Page viene carica, prima che appaiono le domande)
 =======
 
-//   // Verifica quando tutto il contenuto è stato caricato (include anche immagini, iframe, ecc.)
-//   window.addEventListener("load", () => {
-//     hideLoadingAnimation(); // Nasconde l'animazione quando tutto il contenuto è stato caricato
-//   });
+// Aggiungi stili CSS per l'animazione della clessidra con gradiente di colore
+const css = `
+  @keyframes hourglass {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
+<<<<<<< HEAD
 //   // Controlla se il div genitore è stato creato
 //   const parentDiv = document.getElementById("genitore");
 //   if (parentDiv) {
@@ -771,3 +777,27 @@ if (parentDiv) {
 //   }
 // });
 >>>>>>> 614984c (wip animazione durante caricamento pagina questions)
+=======
+  .hourglass::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-width: 300px;
+    border-style: solid;
+    border-color: #00FFFF transparent transparent transparent;
+    border-radius: 50%;
+    background-color: (#00FFFF);
+    animation: hourglass 1s infinite;
+  }
+`;
+
+// Crea un elemento style per aggiungere gli stili al documento
+const style = document.createElement("style");
+style.appendChild(document.createTextNode(css));
+
+// Aggiungi gli stili al documento
+document.head.appendChild(style);
+>>>>>>> b395cee (wip 3 animazione caricamento pagina)

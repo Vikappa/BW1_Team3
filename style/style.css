@@ -511,7 +511,6 @@ textarea {
   } */
 
 /* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
-/* Stile per l'animazione di caricamento */
 @keyframes loading {
   0% {
     opacity: 1;
