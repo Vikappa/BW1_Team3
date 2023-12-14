@@ -413,7 +413,9 @@ const renderizza_risultato = async function () {
     if (arrayRisposte[index].correctAnswer === arrayRisposte[index].answer)
       giuste++;
   }
+
   let sbagliate = totaleDomande - giuste;
+
   const grafic = graficoCiambella(sbagliate, giuste);
   const quanteGiuste = document.createElement("div");
   quanteGiuste.id = "divQuanteGiuste";
