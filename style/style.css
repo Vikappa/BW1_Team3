@@ -76,8 +76,7 @@ span {
 }
 
 /* CONTROLLARE!!!!!! */
-/* #checkbox {
-} */
+#checkbox {}
 
 div button {
   height: 58px;
@@ -394,23 +393,6 @@ textarea {
 /* margin-right: 10px;
   } */
 
-#resultleaderboard {
-  position: relative;
-  margin-top: 8%;
-  visibility: hidden;
-  color: blueviolet;
-  font-size: 1.5em;
-  border-radius: 15px;
-  background-color: #17192b;
-  padding-top: 10px;
-  text-align: center;
-  width: 100%;
-  padding: 2%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 #headerRisposte {
   margin-bottom: 2%;
   font-size: 2em;
@@ -450,7 +432,6 @@ textarea {
 .switchTab {
   display: flex;
   color: white;
-
   background-color: #17192b;
   padding: 1%;
   border-radius: 5px;
@@ -459,14 +440,38 @@ textarea {
 
 #Risultati {
   position: absolute;
-  top: -1.5%;
+  top: 0%;
   left: 0;
 }
 
 #Leaderboard {
   position: absolute;
-  top: -1.5%;
+  top: 0%;
   left: 12%;
+}
+
+#Risultati:hover,
+#Risultati.active {
+  color: blueviolet;
+  font-size: 30px;
+  border-radius: 5px;
+  background-color: #17192b;
+  width: 100px;
+
+  cursor: pointer;
+  text-align: center;
+}
+
+#Leaderboard:hover,
+#Leaderboard.active {
+  color: blueviolet;
+  font-size: 30px;
+  border-radius: 5px;
+  background-color: #17192b;
+  width: 100px;
+
+  cursor: pointer;
+  text-align: center;
 }
 
 body {
@@ -477,8 +482,19 @@ body {
   color: #ffff;
 }
 
-.leaderboardImg img {
-  border-radius: 50%;
+#resultleaderboard {
+  position: relative;
+  margin-top: 8%;
+
+  visibility: hidden;
+  color: blueviolet;
+  font-size: 1.5em;
+  border-radius: 15px;
+  background-color: #17192b;
+  /* padding-top: 10px; */
+  padding: 25px 40px;
+  width: 100%;
+  padding: 2%;
 }
 
 .container {
@@ -486,18 +502,7 @@ body {
   height: 100%;
 }
 
-.lboard_section {
-  width: 500px;
-  height: 400px;
-  margin: 100px auto 0;
-  padding: 25px 40px;
-  position: relative;
-}
-
-.lboard_section ul {
-  display: flex;
-}
-
+/*
 .lboard_section ul li {
   margin-right: 50px;
   font-size: 30px;
@@ -516,12 +521,13 @@ body {
   padding-top: 10px;
   text-align: center;
 }
-
+*/
 .inner_bar {
   width: 95%;
   animation: progress 2s ease-in-out forwards;
 }
 
+/*
 @keyframes progress {
   0% {
     width: 0;
@@ -617,7 +623,7 @@ body {
   margin: 0 20px;
   width: calc(100% - 150px);
 }
-
+*/
 .lboard_contain .lboard_memory .name_barra p {
   color: orange;
 }
@@ -626,6 +632,7 @@ body {
   margin-right: 5px;
 }
 
+/*
 .lboard_contain .lboard_item .points {
   width: 100px;
 }
@@ -653,7 +660,7 @@ body {
   border-bottom: 0;
   padding-bottom: 0;
 }
-
+*/
 .lboard_contain .lboard_memory .img {
   width: 50px;
 }
@@ -664,49 +671,30 @@ body {
 }
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
+/* * {
+    box-sizing: border-box;
+  }
+  body {
+    overflow: hidden;
+  }
+  */
 
 #animazioniCoriandoliOgocce {
   position: absolute;
   top: 50px;
-  /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
+  /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato); */
   left: 10px;
-  /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
-  box-sizing: border-box;
-  /* controllare questa riga*/
+  /* Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato); */
+  overflow: hidden;
 }
 
-#messaggioGocce {
-  display: none;
-  text-align: center;
-  color: #e9eaed;
-  font-size: 370%;
-  font-family: "Outfit", sans-serif;
-}
+/*
+  } 
 
-/* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
-@keyframes clessidra {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.clessidra::before {
-  content: "";
-  display: block;
-  width: 0.5%;
-  margin-left: auto;
-  margin-right: auto;
-  border-width: 130px;
-  border-style: solid;
-  border-color: #00ffff transparent transparent transparent;
-  border-radius: 50%;
-  background-color: (#00ffff);
-  animation: clessidra 1s infinite;
-  margin-top: 10%;
-  /* transform: translate(-50%, -50%);
-  z-index: 100; */
-}
+/* #messaggioGocce {
+    display: none;
+    text-align: center;
+    color: #e9eaed;
+    font-size: 370%;
+    font-family: "Outfit", sans-serif;
+  } */
