@@ -76,8 +76,8 @@ span {
 }
 
 /* CONTROLLARE!!!!!! */
-#checkbox {
-}
+/* #checkbox {
+} */
 
 button:hover {
   transition: 0.7s;
@@ -273,7 +273,9 @@ textarea {
 
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid /* #900080 */ #d20094;
+  border-bottom: 1px solid
+    /* #900080 */
+    #d20094;
 }
 
 form p {
@@ -659,21 +661,49 @@ body {
 }
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
-/* * {
-    box-sizing: border-box;
+
+#animazioniCoriandoliOgocce {
+  position: absolute;
+  top: 50px;
+  /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
+  left: 10px;
+  /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
+  box-sizing: border-box;
+  /* controllare questa riga*/
+}
+
+#messaggioGocce {
+  display: none;
+  text-align: center;
+  color: #e9eaed;
+  font-size: 370%;
+  font-family: "Outfit", sans-serif;
+}
+
+/* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
+@keyframes clessidra {
+  0% {
+    transform: rotate(0);
   }
-  body {
-    overflow: hidden;
+
+  100% {
+    transform: rotate(360deg);
   }
-  #animazioniCoriandoliOgocce {
-    position: absolute;
-    top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
-/* left: 10px; Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato)
-  } */
-/* #messaggioGocce {
-    display: none;
-    text-align: center;
-    color: #e9eaed;
-    font-size: 370%;
-    font-family: "Outfit", sans-serif;
-  } */
+}
+
+.clessidra::before {
+  content: "";
+  display: block;
+  width: 0.5%;
+  margin-left: auto;
+  margin-right: auto;
+  border-width: 130px;
+  border-style: solid;
+  border-color: #00ffff transparent transparent transparent;
+  border-radius: 50%;
+  background-color: (#00ffff);
+  animation: clessidra 1s infinite;
+  margin-top: 10%;
+  /* transform: translate(-50%, -50%);
+  z-index: 100; */
+}
