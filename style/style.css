@@ -117,9 +117,11 @@ button {
   width: 280px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 95px 0px 95px;
+  margin: 85px 5px -70px 95px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
+  box-shadow: -1px -3px 1.5px whitesmoke;
+  border-color: rgba(255, 255, 255, 0.386);
 }
 
 .multTypeButton {
@@ -130,9 +132,11 @@ button {
   width: 280px;
   height: 40px;
   line-height: 20px;
-  margin: 85px 95px 0px 95px;
+  margin: 85px 5px -70px 95px;
   border: 3px solid white;
   background-color: rgba(116, 116, 116, 0.1);
+  box-shadow: -1px -3px 1.5px whitesmoke;
+  border-color: rgba(255, 255, 255, 0.386);
 }
 
 #genitore {
@@ -273,9 +277,7 @@ textarea {
 
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid
-    /* #900080 */
-    #d20094;
+  border-bottom: 1px solid /* #900080 */ #d20094;
 }
 
 form p {
@@ -677,7 +679,7 @@ body {
   text-align: center;
   color: #e9eaed;
   font-size: 370%;
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
@@ -692,7 +694,7 @@ body {
 }
 
 .clessidra::before {
-  content: "";
+  content: '';
   display: block;
   width: 0.5%;
   margin-left: auto;
