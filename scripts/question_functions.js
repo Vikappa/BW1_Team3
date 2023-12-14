@@ -216,12 +216,14 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
-const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
-  if (rispostaCasella === rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
-  }
-  if (rispostaCasella !== rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
+const checkRispostaVX = function (rispostaData, rispostaGiusta, rispostaCasella) {
+  if (rispostaData === rispostaCasella) {
+    if (rispostaCasella === rispostaGiusta) {
+      return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
+    }
+    if (rispostaCasella !== rispostaGiusta) {
+      return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
+    }
   }
 };
 
@@ -284,10 +286,10 @@ const renderizza_risultato = async function () {
       divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[2])}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[3])} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
 
@@ -298,7 +300,7 @@ const renderizza_risultato = async function () {
       divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
       <h1 class="h1Question">${arrayRisposte[i].question}</h1>
       <div class=rigaRisposte>
-      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[0])}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer, arrayRisposte[i].all_answer[1])} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`
       divRisposteDate.appendChild(divRisposta);
     }
