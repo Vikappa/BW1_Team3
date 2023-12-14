@@ -6,7 +6,11 @@ const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
 const arrayRisposte = [];
-
+let intervalloUnico;
+const fermaTicToc = async function () {
+  console.log("Fermato");
+  clearInterval(intervalloUnico);
+};
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
 // For making a request and fetching a resource, use the fetch() method. It is a global method in both Window and Worker contexts.
@@ -14,11 +18,9 @@ const arrayRisposte = [];
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
-
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  const canvas = document.createElement("canvas"); // Crea un elemento canvas dinamicamente invece di get-tarlo dal body
+  const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
 
   const ctx = canvas.getContext("2d");
@@ -30,26 +32,18 @@ const graficoCiambella = function (sbagliate, giuste) {
         data: [sbagliate, giuste],
         backgroundColor: ["#D20094", "#00FFFF"],
         borderColor: "white",
-        borderWidth: 2,
+        borderWidth: 0, // Riduci il bordo
       },
     ],
-    labels: ["SBAGLIATE", "GIUSTE"],
   };
 
   // Configurazione del grafico
   const options = {
-    cutoutPercentage: 30,
+    cutoutPercentage: 50, // Aumenta la percentuale di buco centrale
     responsive: false,
     plugins: {
       datalabels: {
-        color: "white",
-        font: {
-          weight: "bold",
-        },
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        shadowBlur: 10,
-        shadowOffsetX: 0,
-        shadowOffsetY: 4,
+        display: false, // Nascondi le etichette
       },
     },
   };
@@ -63,12 +57,10 @@ const graficoCiambella = function (sbagliate, giuste) {
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
-let tictoc;
-let timeleft;
-let diffValueCurrentQuestion;
-//modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
+
+const convertiStringaInSecondiTimer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
     return 30;
   } else if (difficoltaStringa === "medium") {
@@ -76,33 +68,42 @@ const timer = function (difficoltaStringa) {
   } else if (difficoltaStringa === "hard") {
     return 120;
   } else {
-    console.log("Errore numero inserito nel metodo timer");
+    console.log(
+      "Errore numero inserito nel metodo convertiStringaInSecondiTimer"
+    );
     return 0;
   }
-  console.log("Errore numero inserito nel metodo timer");
-  return 0;
 };
 
-async function aggiornaTimer() {
-  if (!timeleft) {
-    timeleft = timer(diffValueCurrentQuestion);
-  }
-  if (timeleft >= 0) {
-    const timerInHtml = document.getElementById("nSecondi");
-    timerInHtml.textContent = timeleft;
-    timeleft--;
+//modificato per ritornare un valore che non sia fuori dal metodo
+const timer = function (difficoltaStringa) {
+  let tempo;
+  if (difficoltaStringa === "easy") {
+    tempo = 30;
+  } else if (difficoltaStringa === "medium") {
+    tempo = 60;
+  } else if (difficoltaStringa === "hard") {
+    tempo = 120;
   } else {
-    //rispostaVuota()
-    clearInterval(tictoc);
+    console.log("Errore numero inserito nel metodo timer");
+    tempo = 0;
   }
-}
+  function aggiornaTimer() {
+    if (tempo >= 0) {
+      console.log("Aggiorno tempo");
+      document.getElementById("nSecondi").textContent = tempo;
+      tempo--;
+    } else {
+      //rispostaVuota()
+      fermaTicToc();
+    }
+  }
 
-const avviaTicToc = function (diffValue) {
-  //Ex aggiornatimer
-  if (tictoc === undefined) {
-    setInterval(aggiornaTimer, 1000);
-  }
+  intervalloUnico = setInterval(aggiornaTimer, 1000);
+
+  return tempo;
 };
+/////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
 const cerchioTimer = function (difficolta) {
@@ -144,8 +145,10 @@ const cerchioTimer = function (difficolta) {
   const primanenti = document.createElement("p");
 
   pseconds.textContent = "seconds";
-  nSecondi.textContent = timer(difficolta);
   nSecondi.id = "nSecondi";
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta);
+
+  nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
 
   divTime.appendChild(pseconds);
@@ -210,6 +213,7 @@ const renderizza_risultato = async function () {
   await delay(500);
   divTest.innerHTML = ``;
 
+  divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
   let giuste = 0;
 
@@ -219,6 +223,28 @@ const renderizza_risultato = async function () {
   }
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
+  const quanteGiuste = document.createElement("div");
+  quanteGiuste.innerHTML = `<p>Wrong</p>
+  <p>${sbagliate}%</p>`;
+  divTest.appendChild(quanteGiuste);
+  const fraseSuperamentoONo = document.createElement("div");
+  if (giuste > sbagliate) {
+    fraseSuperamentoONo.innerHTML = `
+    <p>Congratulations!/p>
+    <p>You have passed the exam</p>
+   <p>You will receive your certificate by email shortly</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  } else {
+    fraseSuperamentoONo.innerHTML = `
+    <p>We are sorry</p>
+    <p>You failed your test</p>
+   <p>It will be fine next time, commit!</p>`;
+    divTest.appendChild(fraseSuperamentoONo);
+  }
+  const quanteSbagliate = document.createElement("div");
+  quanteSbagliate.innerHTML = `<p>Correct</p>
+  <p>${giuste}%</p>`;
+  divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
   divTest.appendChild(grafic);
@@ -295,6 +321,8 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+
+  await fermaTicToc();
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;

@@ -1,32 +1,35 @@
 //TIMER - FRANCESCO
-// const timer = function (difficolta) {
-//   let timer;
-//   if (difficolta === "easy") {
-//     timer = 30;
-//   } else if (difficolta === "medium") {
-//     timer = 60;
-//   } else if (difficolta === "hard") {
-//     timer = 120;
-//   }
+const timer = function (difficolta) {
+  let timer;
+  if (difficolta === "easy") {
+    timer = 30;
+  } else if (difficolta === "medium") {
+    timer = 60;
+  } else if (difficolta === "hard") {
+    timer = 120;
+  }
 
-//   async function aggiornaTimer() {
-//     if (timer >= 0) {
-//       const timerInHtml = document.getElementById("time");
-//       timerInHtml.innerHTML = `
-//       <p>Second</p>
-//       <p class="tempoHtml">${timer}</p>
-//       <p>Remaing</p> `;
-//       console.log(timer);
-//       timer--;
-//     } else {
-//       //rispostaVuota()
-//       clearInterval(intervallo);
-//     }
-//   }
+  async function aggiornaTimer() {
+    if (timer >= 0) {
+      const divACaso = document.createElement("div");
+      divACaso.id = "DivACaso";
+      body.appendChild("DivACaso");
+      const timerInHtml = document.getElementById("DivACaso");
+      timerInHtml.innerHTML = `
+      <p>Second</p>
+      <p class="tempoHtml">${timer}</p>
+      <p>Remaing</p> `;
+      console.log(timer);
+      timer--;
+    } else {
+      //rispostaVuota()
+      clearInterval(intervallo);
+    }
+  }
 
-//   const intervallo = setInterval(aggiornaTimer, 1000);
-// };
-// timer("easy");
+  const intervallo = setInterval(aggiornaTimer, 1000);
+};
+timer("easy");
 
 //
 //
