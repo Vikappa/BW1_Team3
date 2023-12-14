@@ -2,6 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
+html {
+  margin-top: -1em;
+}
 body {
   background-image: url(../assets/bg.jpg);
   color: white;
@@ -89,8 +92,8 @@ div button {
 
 #button {
   text-align: right;
-  margin-right: 6em;
-  margin-bottom: 4em;
+  margin-right: 2em;
+  margin-top: -2.5em;
 }
 
 button:hover {
@@ -339,9 +342,9 @@ textarea {
   width: 100%;
 }
 
-#buttonProceed {
+/* #buttonProceed {
   margin-top: 40px;
-}
+} */
 
 .stars img {
   width: 30px;

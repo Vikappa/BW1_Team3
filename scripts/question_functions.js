@@ -9,6 +9,7 @@ const divResultleaderboard = document.getElementById("resultleaderboard");
 
 const arrayRisposte = [];
 let intervalloUnico;
+let currentQuestion;
 
 const fermaTicToc = async function () {
   console.log("Fermato");
@@ -243,7 +244,8 @@ const renderizza_risultato = async function () {
   quanteGiuste.id = "divQuanteGiuste";
   quanteGiuste.classList = "divSchermataCiambella";
   quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${sbagliate}%</p>`;
+  <p>${(sbagliate / totaleDomande) * 100}%</p>
+  <p>${sbagliate}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
   fraseSuperamentoONo.classList = "divSchermataCiambella";
@@ -258,7 +260,8 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.innerHTML = `
     <p>We are sorry</p>
     <p>You failed your test</p>
-   <p>It will be fine next<br>time, commit!</p>`;
+   <p>It will be fine next<br>time, commit!</p>
+   `;
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   }
@@ -266,7 +269,8 @@ const renderizza_risultato = async function () {
   quanteSbagliate.id = "divQuanteSbagliate";
   quanteSbagliate.classList = "divSchermataCiambella";
   quanteSbagliate.innerHTML = `<p>Correct</p>
-  <p>${giuste}%</p>`;
+  <p>${(giuste / totaleDomande) * 100}%</p>
+  <p>${giuste}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
@@ -330,6 +334,27 @@ const renderizza_risultato = async function () {
 
 let arrayDomande = [];
 
+const rispostaVuota = async function () {
+  let risposta = {
+    type: currentQuestion.type,
+    question: currentQuestion.question,
+    answer: "Non ho risposto",
+    all_answer: currentQuestion.arrayRispostePresentate,
+    correctAnswer: currentQuestion.correct_answer,
+  };
+
+  arrayRisposte.push(risposta);
+
+  console.log(
+    "Lunghezza array risposte: " +
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
+  );
+
+  renderizzaDomande();
+};
+
 async function addRisposta(
   arrayRispostePresentate,
   indice_risposta_selezionata,
@@ -385,6 +410,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     await delay(1000);
     return await divDinamicoQuestion(obgDomanda);
   }
+  currentQuestion = obgDomanda;
 
   await fermaTicToc();
 
