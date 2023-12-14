@@ -272,32 +272,33 @@ const renderizza_risultato = async function () {
 
 
   const divRisposteDate = document.createElement("div");
-
   for (let i = 0; i < arrayRisposte.length; i++) {
     if (arrayRisposte[i].type === `multiple`) {
       const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta"
-      divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
-    <h1 class="h1Question">${arrayRisposte[i].question}</h1>
-    <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
-    </div>    
-    <div class=rigaRisposte>
-    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
-    </div>
-    </div>`
+      divRisposta.innerHTML = `<table>
+    <caption>${arrayRisposte[i].question}</caption>
+    <tBody>
+    <tr>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
+    </tr>    
+    <tr>
+    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td>
+    </tr>
+    </tbody>
+    </table>`
       divRisposteDate.appendChild(divRisposta);
     } else {
       const divRisposta = document.createElement("div");
-      divRisposta.innerHTML = `<div>
-      <h1 class="h1Question">${arrayRisposte[i].question}</h1>
-      <div class=rigaRisposte>
-      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
-      </div></div>`
+      divRisposta.innerHTML = `<table>
+      <caption>${arrayRisposte[i].question}</caption>
+      <tBody>
+      <tr>
+      <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
+      </tbody>
+      </table>`
       divRisposteDate.appendChild(divRisposta);
     }
   }
-  divResultleaderboard.innerHTML = `<h1 id="headerRisposte">Le tue risposte:</h1>`
 
   divResultleaderboard.appendChild(divRisposteDate)
 
@@ -362,7 +363,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
     return await divDinamicoQuestion(obgDomanda);
   }
 
-  fermaTicToc()
+  await fermaTicToc()
 
 
   difficulty = obgDomanda.difficulty;
@@ -454,7 +455,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length) {
+  if (arrayDomande.length === arrayRisposte.length + 20) {
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
