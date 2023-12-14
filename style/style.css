@@ -517,19 +517,6 @@ body {
     color: #ffff;
 }
 
-.tabs {
-    width: 500px;
-}
-
-ul {
-    width: 500px;
-}
-
-li {
-    font-size: 100px;
-    text-align: center;
-    margin-left: auto;
-}
 
 .leaderboardImg img {
     border-radius: 50%;
