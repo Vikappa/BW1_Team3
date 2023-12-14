@@ -8,13 +8,13 @@ const divTest = document.getElementById("testAppend");
 const divResultleaderboard = document.getElementById("resultleaderboard");
 
 const arrayRisposte = [];
-let intervalloUnico
+let intervalloUnico;
 let currentQuestion
 
 const fermaTicToc = async function () {
-  console.log("Fermato")
-  clearInterval(intervalloUnico)
-}
+  console.log("Fermato");
+  clearInterval(intervalloUnico);
+};
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -25,7 +25,7 @@ const fermaTicToc = async function () {
 
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
-  fermaTicToc()
+  fermaTicToc();
   const canvas = document.createElement("canvas");
   canvas.id = "graficoCiambella";
   canvas.width = 600;
@@ -69,16 +69,18 @@ const main = document.getElementById("main");
 
 const convertiStringaInSecondiTimer = function (difficoltaStringa) {
   if (difficoltaStringa === "easy") {
-    return 30
+    return 30;
   } else if (difficoltaStringa === "medium") {
-    return 60
+    return 60;
   } else if (difficoltaStringa === "hard") {
-    return 120
+    return 120;
   } else {
-    console.log("Errore numero inserito nel metodo convertiStringaInSecondiTimer")
+    console.log(
+      "Errore numero inserito nel metodo convertiStringaInSecondiTimer"
+    );
     return 0;
   }
-}
+};
 
 //modificato per ritornare un valore che non sia fuori dal metodo
 const timer = function (difficoltaStringa) {
@@ -90,7 +92,7 @@ const timer = function (difficoltaStringa) {
   } else if (difficoltaStringa === "hard") {
     tempo = 120;
   } else {
-    console.log("Errore numero inserito nel metodo timer")
+    console.log("Errore numero inserito nel metodo timer");
     tempo = 0;
   }
   function aggiornaTimer() {
@@ -107,9 +109,8 @@ const timer = function (difficoltaStringa) {
 
   intervalloUnico = setInterval(aggiornaTimer, 1000);
 
-  return tempo
-
-}
+  return tempo;
+};
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
@@ -153,7 +154,7 @@ const cerchioTimer = function (difficolta) {
 
   pseconds.textContent = "seconds";
   nSecondi.id = "nSecondi";
-  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta)
+  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta);
 
   nSecondi.textContent = timer(difficolta);
   primanenti.textContent = "remeaning";
@@ -217,16 +218,16 @@ const generaArrayDomande = async function () {
 
 const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
   if (rispostaCasella === rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
   }
   if (rispostaCasella !== rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`
+    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
   }
-}
+};
 
 const renderizza_risultato = async function () {
   divTest.innerHTML = `INIZIO SEQUENZA RISULTATO`;
-  divResultleaderboard.style.visibility = "visible"
+  divResultleaderboard.style.visibility = "visible";
 
   divTest.innerHTML = ``;
 
@@ -241,14 +242,15 @@ const renderizza_risultato = async function () {
   let sbagliate = totaleDomande - giuste;
   const grafic = graficoCiambella(sbagliate, giuste);
   const quanteGiuste = document.createElement("div");
-  quanteGiuste.id = "divQuanteGiuste"
-  quanteGiuste.classList = "divSchermataCiambella"
+  quanteGiuste.id = "divQuanteGiuste";
+  quanteGiuste.classList = "divSchermataCiambella";
   quanteGiuste.innerHTML = `<p>Wrong</p>
-  <p>${sbagliate}%</p>`;
+  <p>${(sbagliate / totaleDomande) * 100}%</p>
+  <p>${sbagliate}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteGiuste);
   const fraseSuperamentoONo = document.createElement("div");
-  fraseSuperamentoONo.classList = "divSchermataCiambella"
-  fraseSuperamentoONo.id = "divFraseSuperamentoONo"
+  fraseSuperamentoONo.classList = "divSchermataCiambella";
+  fraseSuperamentoONo.id = "divFraseSuperamentoONo";
   if (giuste > sbagliate) {
     fraseSuperamentoONo.innerHTML = `
     <p>Congratulations!/p>
@@ -259,25 +261,26 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.innerHTML = `
     <p>We are sorry</p>
     <p>You failed your test</p>
-   <p>It will be fine next<br>time, commit!</p>`;
+   <p>It will be fine next<br>time, commit!</p>
+   `;
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   }
   const quanteSbagliate = document.createElement("div");
-  quanteSbagliate.id = "divQuanteSbagliate"
-  quanteSbagliate.classList = "divSchermataCiambella"
+  quanteSbagliate.id = "divQuanteSbagliate";
+  quanteSbagliate.classList = "divSchermataCiambella";
   quanteSbagliate.innerHTML = `<p>Correct</p>
-  <p>${giuste}%</p>`;
+  <p>${(giuste / totaleDomande) * 100}%</p>
+  <p>${giuste}/${totaleDomande} questions</p>`;
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
-
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
     if (arrayRisposte[i].type === `multiple`) {
       const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta"
+      divRisposta.id = "divRisposta";
       divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
@@ -286,12 +289,12 @@ const renderizza_risultato = async function () {
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
-    </div>`
+    </div>`;
 
       divRisposteDate.appendChild(divRisposta);
     } else {
       const divRisposta = document.createElement("div");
-      divRisposta.id = "divRisposta"
+      divRisposta.id = "divRisposta";
       divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
       <h1 class="h1Question">${arrayRisposte[i].question}</h1>
       <div class=rigaRisposte>
@@ -301,7 +304,7 @@ const renderizza_risultato = async function () {
     }
   }
 
-  divResultleaderboard.appendChild(divRisposteDate)
+  divResultleaderboard.appendChild(divRisposteDate);
 
   //////////////////////////////////////////////////////////////////////////////////////CONTINUA QUY
 };
@@ -387,8 +390,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   }
   currentQuestion = obgDomanda
 
-  await fermaTicToc()
-
+  await fermaTicToc();
 
   difficulty = obgDomanda.difficulty;
   const rispostaCorretta = obgDomanda.correct_answer;
@@ -464,7 +466,7 @@ const divDinamicoQuestion = async function (obgDomanda) {
   }
   divRitorno.id = "genitore";
   divRitorno.appendChild(cerchioTimer(difficulty));
-  return divRitorno
+  return divRitorno;
 };
 
 const renderizzaDomande = async function () {
