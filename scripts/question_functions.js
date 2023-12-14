@@ -11,6 +11,8 @@ const arrayRisposte = [];
 let intervalloUnico;
 let currentQuestion;
 
+let resOrLead;
+
 const fermaTicToc = async function () {
   console.log("Fermato");
   clearInterval(intervalloUnico);
@@ -96,12 +98,12 @@ const timer = function (difficoltaStringa) {
     tempo = 0;
   }
   function aggiornaTimer() {
-    if (tempo >= 0) {
+    if (tempo >= 1) {
+      tempo--;
       console.log("Aggiorno tempo");
       document.getElementById("nSecondi").textContent = tempo;
-      tempo--;
     } else {
-      //rispostaVuota()
+      rispostaVuota();
       fermaTicToc();
     }
   }
@@ -215,12 +217,18 @@ const generaArrayDomande = async function () {
   return arrayFinale;
 };
 
-const checkRispostaVX = function (rispostaCasella, rispostaGiusta) {
-  if (rispostaCasella === rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
-  }
-  if (rispostaCasella !== rispostaGiusta) {
-    return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
+const checkRispostaVX = function (
+  rispostaData,
+  rispostaGiusta,
+  rispostaCasella
+) {
+  if (rispostaData === rispostaCasella) {
+    if (rispostaCasella === rispostaGiusta) {
+      return `<i class="fas fa-check" style="color: #00ff4c;"></i>`;
+    }
+    if (rispostaCasella !== rispostaGiusta) {
+      return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
+    }
   }
 };
 
@@ -229,6 +237,29 @@ const renderizza_risultato = async function () {
   divResultleaderboard.style.visibility = "visible";
 
   divTest.innerHTML = ``;
+
+  const divPulsanteLeaderBoard = document.createElement("div");
+  const pPulsanteLeaderBoard = document.createElement("p");
+  const divPulsanteResultBoard = document.createElement("div");
+  const pPulsanteResultBoard = document.createElement("p");
+  const divPulsantiSwitchTab = document.createElement("div");
+  divPulsantiSwitchTab.id = "divPulsantiSwitchTab";
+
+  pPulsanteLeaderBoard.id = "Leaderboard";
+  pPulsanteResultBoard.id = "Risultati";
+
+  pPulsanteLeaderBoard.classList = "switchTab";
+  pPulsanteResultBoard.classList = "switchTab";
+  pPulsanteLeaderBoard.textContent = "Leaderboard";
+  pPulsanteResultBoard.textContent = "Risultati";
+
+  divPulsantiSwitchTab.appendChild(pPulsanteResultBoard);
+  divPulsantiSwitchTab.appendChild(pPulsanteLeaderBoard);
+
+  divPulsantiSwitchTab.append(divPulsanteResultBoard);
+  divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
+
+  divResultleaderboard.appendChild(divPulsantiSwitchTab);
 
   divTest.classList = "divCiambella";
   let totaleDomande = arrayDomande.length;
@@ -285,23 +316,27 @@ const renderizza_risultato = async function () {
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
       arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[0]
     )}  ${
         arrayRisposte[i].all_answer[0]
       }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[1]
       )} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
       arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[2]
     )}  ${
         arrayRisposte[i].all_answer[2]
       }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[3]
       )} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
@@ -315,12 +350,14 @@ const renderizza_risultato = async function () {
       <div class=rigaRisposte>
       <p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[0]
       )}  ${
         arrayRisposte[i].all_answer[0]
       }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[1]
       )} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`;
       divRisposteDate.appendChild(divRisposta);
