@@ -662,10 +662,6 @@ body {
 }
 
 /* PER ANIMAZIONE CORIANOLI/GOCCE */
-
-body {
-  overflow: hidden;
-}
 #animazioniCoriandoliOgocce {
   position: absolute;
   top: 50px; /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato) */
