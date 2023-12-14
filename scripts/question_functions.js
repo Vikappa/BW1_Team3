@@ -275,27 +275,26 @@ const renderizza_risultato = async function () {
   for (let i = 0; i < arrayRisposte.length; i++) {
     if (arrayRisposte[i].type === `multiple`) {
       const divRisposta = document.createElement("div");
-      divRisposta.innerHTML = `<table>
-    <caption>${arrayRisposte[i].question}</caption>
-    <tBody>
-    <tr>
-    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
-    </tr>    
-    <tr>
-    <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</td>
-    </tr>
-    </tbody>
-    </table>`
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div class="casellaQuestionAnswer">
+    <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+    </div>    
+    <div class=rigaRisposte>
+    <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[2]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[3]}</p>
+    </div>
+    </div>`
+
       divRisposteDate.appendChild(divRisposta);
     } else {
       const divRisposta = document.createElement("div");
-      divRisposta.innerHTML = `<table>
-      <caption>${arrayRisposte[i].question}</caption>
-      <tBody>
-      <tr>
-      <td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</td><td class="tdTableRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</td>
-      </tbody>
-      </table>`
+      divRisposta.id = "divRisposta"
+      divRisposta.innerHTML = `<div div class="casellaQuestionAnswer">
+      <h1 class="h1Question">${arrayRisposte[i].question}</h1>
+      <div class=rigaRisposte>
+      <p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)}  ${arrayRisposte[i].all_answer[0]}</p><p class="CasellaRisposta">${checkRispostaVX(arrayRisposte[i].answer, arrayRisposte[i].correctAnswer)} ${arrayRisposte[i].all_answer[1]}</p>
+      </div></div>`
       divRisposteDate.appendChild(divRisposta);
     }
   }
@@ -455,7 +454,7 @@ const renderizzaDomande = async function () {
 
   divTest.innerHTML = ``;
 
-  if (arrayDomande.length === arrayRisposte.length + 20) {
+  if (arrayDomande.length === arrayRisposte.length) {
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
   } else {
