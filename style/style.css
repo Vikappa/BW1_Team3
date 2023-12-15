@@ -723,3 +723,25 @@ body {
   /* transform: translate(-50%, -50%);
   z-index: 100; */
 }
+
+#divnomeutente {
+  position: absolute;
+  padding: 20%;
+  background-color: #17192b;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 30px 7px #050505;
+
+}
+
+#divnomeutente div {
+  margin: 2%;
+  left: 0%;
+  top: 200px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+  font-size: 60px;
+  justify-self: left;
+}

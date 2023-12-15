@@ -315,6 +315,8 @@ function setUtente() {
   var nome = document.getElementById("nomeUtente").value;
   utente = nome;
   console.log("Utente impostato su: " + utente); // Questo è solo per il debug, mostra il valore nella console del browser
+  const divNom = document.getElementById("divnomeutente")
+  divNom.style.visibility = "hidden"
 }
 
 
@@ -322,6 +324,7 @@ const inserisci_numeUtente = function () {
   if (typeof username === 'undefined') {
     //////////////////////////////////////////////////////////////////////////////////////APPARE DIV INSERISCI NOME UTENTE
     const casellaNomeUtente = document.createElement("div")
+    casellaNomeUtente.id = "divnomeutente"
     casellaNomeUtente.innerHTML = `<div style="position: absolute">
  <p>Inserisci nome utente</p>
  <form action="javascript:void(0);">
@@ -330,8 +333,6 @@ const inserisci_numeUtente = function () {
  </form>
 </div>`
     document.body.appendChild(casellaNomeUtente)
-    inserisci_numeUtente()
-
   } else {
     let giuste = checkRisposte()
     let points = Math.floor(percentualeDiXSuY(giuste, arrayRisposte.length))
@@ -390,6 +391,7 @@ const aggiungiVincenzo = function () {
 };
 
 ////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
+aggiungiVincenzo();
 
 const populateLeaderboard = () => {
   const leaderboardContainer = document.getElementById("leaderboard");
@@ -424,7 +426,6 @@ const populateLeaderboard = () => {
     }
   }
 
-  aggiungiVincenzo();
 
 
 
