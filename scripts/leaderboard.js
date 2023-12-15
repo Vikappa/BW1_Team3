@@ -1,3 +1,24 @@
+const changeTab = (tabName) => {
+  const tabs = document.querySelectorAll(".tabs li");
+  for (let i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove("active");
+  }
+
+  const activeTab = document.getElementById(`${tabName.toLowerCase()}Tab`);
+  activeTab.classList.add("active");
+
+  const lboardItems = document.querySelectorAll(".lboard_item");
+  for (let i = 0; i < lboardItems.length; i++) {
+    lboardItems[i].style.display = "none";
+  }
+
+  const activeLboardItems = document.querySelector(`.lboard_item.${tabName}`);
+  activeLboardItems.style.display = "block";
+};
+
+// Chiamare la funzione changeTab con il nome del tab desiderato
+changeTab("Risposte");
+
 const generateRandomName = () => {
   const names = [
     "Ali",
@@ -51,15 +72,15 @@ const populateLeaderboard = () => {
   leaderboardItems.sort((a, b) => b.points - a.points);
 
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${index + 1
-      }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${
+      index + 1
+    }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
 };
 
 populateLeaderboard();
-
 
 populatePodium();
 const populatePodium = () => {
@@ -91,3 +112,4 @@ const populatePodium = () => {
     ).textContent = `${participant.name} - ${participant.points} points`;
   }
 };
+populatePodium();

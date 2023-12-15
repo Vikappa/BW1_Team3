@@ -215,10 +215,7 @@ const generateRandomName = () => {
 const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
 
 const generateRandomImages = () => {
-  const images = [
-    "https://placedog.net/100/100",
-    "https://placekitten.com/100",
-  ];
+  const images = ["https://placedog.net/100/100"];
   return images[Math.floor(Math.random() * images.length)];
 };
 
