@@ -135,6 +135,9 @@ function avviaAnimazioneCoriandoli() {
   // Riproduzione dell'audio
   const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
   audioWinner.play();
+  setTimeout(() => {
+    audioWinner.pause();
+  }, durataAnimazione);
 }
 ///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
