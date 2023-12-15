@@ -406,6 +406,7 @@ const checkRispostaVX = function (
       return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
     }
   }
+  return ``
 };
 
 const populatePodium = () => {
