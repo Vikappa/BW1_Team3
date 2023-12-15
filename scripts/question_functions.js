@@ -149,8 +149,8 @@ const avviaAnimazioneLacrime = function () {
   canvas.height = height;
 
   let lacrime = [];
-  const durataAnimazione = 6000; //
-  const gravitaBase = 0.1; // Gravità base per tutte le lacrime
+  const durataAnimazione = 6000;
+  const gravitaBase = 0.1;
 
   function creaLacrima() {
     return {
@@ -160,7 +160,8 @@ const avviaAnimazioneLacrime = function () {
       thickness: Math.random() * (4 - 1) + 1,
       velocitaX: Math.random() * 4 - 2,
       velocitaY: Math.random() * 4 + 3,
-      gravita: gravitaBase * (Math.random() * 5 + 1), // Gravità variabile
+      gravita: gravitaBase * (Math.random() * 5 + 1),
+      opacita: 1, // Aggiunta dell'opacità iniziale
     };
   }
 
@@ -170,7 +171,7 @@ const avviaAnimazioneLacrime = function () {
 
   function aggiorna() {
     contenuto.clearRect(0, 0, width, height);
-    let lacrimeSulDisplay = false; // Flag per verificare se ci sono lacrime ancora sul display
+    let lacrimeSulDisplay = false;
 
     lacrime.forEach((lacrima) => {
       if (lacrima.y < height) {
@@ -188,17 +189,20 @@ const avviaAnimazioneLacrime = function () {
         lacrima.y + lacrima.length
       );
       contenuto.closePath();
-      contenuto.fillStyle = "blue"; // Colore delle lacrime
+      contenuto.fillStyle = `rgba(0, 0, 255, ${lacrima.opacita})`;
       contenuto.fill();
 
-      // Aggiornamento della posizione delle lacrime
       lacrima.x += lacrima.velocitaX;
       lacrima.y += lacrima.velocitaY + lacrima.gravita;
 
-      // Riporta le lacrime in cima al canvas quando escono dalla schermata
       if (lacrima.y - lacrima.length > height) {
         lacrima.x = Math.random() * width;
         lacrima.y = Math.random() * height - height;
+      }
+
+      // Verifica se l'animazione è terminata
+      if (lacrima.opacita > 0) {
+        lacrima.opacita -= 0.0025; // Modifica il valore per controllare la velocità di dissolvenza
       }
     });
 
@@ -209,14 +213,12 @@ const avviaAnimazioneLacrime = function () {
 
   setTimeout(() => {
     requestAnimationFrame(aggiorna);
-  }, 600); // Ritardo iniziale
+  }, 600);
 
-  // Imposta il tempo massimo dell'animazione
   setTimeout(() => {
-    lacrime = []; // Svuota l'array di coriandoli dopo 4 secondi
+    lacrime = [];
   }, durataAnimazione);
 
-  // Riproduzione dell'audio
   const audioLooser = new Audio("./sounds/looser-results.wav");
   audioLooser.play();
 };
