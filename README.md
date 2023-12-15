@@ -24,4 +24,4 @@ Vincenzo: Ho fixato il timer delle domande usando una variabile comunea a tutti 
 Alessandro: Trasferiti tutti i miei file "results" dentro i fle già esistenti "questions" ("results" cancellati). Animazione che appare appena la pagina vviene ricaricata (da fixare).
 
 Giorno 4:
-Alessandro: Vincenzo mi ha aiutato a fixare la logica dell'animazione durante il caricamento della pagina, riguardo il momento in cui deve terminare dell'animazione. Vincenzo mi ha aiutato ad inserire le animazioni dei coriandoli e delle lacrime nel giusto contesto all'interno del  resto del file (file question_function.js); appaiono al caricamento della pagina "risultati", appena finisce il test.
+Alessandro: Vincenzo mi ha aiutato a fixare la logica dell'animazione durante il caricamento della pagina, riguardo il momento in cui deve terminare l'animazione. Vincenzo mi ha aiutato ad inserire le animazioni dei coriandoli e delle lacrime nel giusto contesto all'interno del  resto del file (file question_function.js); appaiono al caricamento della pagina "risultati", appena finisce il test.
