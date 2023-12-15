@@ -194,16 +194,35 @@ const diffInSecondi = function (diffString) {
 ////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
 const generateRandomName = () => {
   const names = [
-    "Ali",
-    "Eric",
-    "Gabriel",
-    "Beatriz",
-    "Hanna",
-    "Diya",
-    "Fatima",
+    "Meryl Silverburgh",
+    "Roy Campbell",
+    "Major Zero",
+    "Raiden",
+    "Otacon",
+    "The Boss",
+    "Ocelot",
+    "Liquid Snake",
+    "Big Boss",
+    "Solid Snake",
   ];
-  return names[Math.floor(Math.random() * names.length)];
+
+  if (!generateRandomName.usedNames) {
+    generateRandomName.usedNames = [];
+  }
+  if (generateRandomName.usedNames.length === names.length) {
+    generateRandomName.usedNames = [];
+  }
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * names.length);
+  } while (generateRandomName.usedNames.includes(randomIndex));
+  generateRandomName.usedNames.push(randomIndex);
+
+  return names[randomIndex];
 };
+for (let i = 0; i < 10; i++) {
+  console.log(generateRandomName());
+}
 
 const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
 
