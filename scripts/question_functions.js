@@ -73,7 +73,7 @@ const graficoCiambella = function (sbagliate, giuste) {
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 ///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 function avviaAnimazioneCoriandoli() {
-  const canvas = document.getElementById("animazioniCoriandoliOgocce");
+  const canvas = document.getElementById("animazioneCoriandoli");
   const contenuto = canvas.getContext("2d");
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -81,7 +81,7 @@ function avviaAnimazioneCoriandoli() {
   canvas.height = height;
 
   let coriandoli = [];
-  const durataAnimazione = 4000; // 4 secondi
+  const durataAnimazione = 6000; // 4 secondi
 
   function creaCoriandolo() {
     return {
@@ -91,9 +91,6 @@ function avviaAnimazioneCoriandoli() {
       color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
         }, 1)`,
       velocita: Math.random() * 8 + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
-        }, 1)`,
-      velocita: Math.random() * 5 + 2,
     };
   }
 
@@ -129,7 +126,7 @@ function avviaAnimazioneCoriandoli() {
 
   setTimeout(() => {
     requestAnimationFrame(aggiorna);
-  }, 100); // Ritardo iniziale
+  }, 600); // Ritardo iniziale
 
   setTimeout(() => {
     coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
@@ -139,7 +136,93 @@ function avviaAnimazioneCoriandoli() {
   const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
   audioWinner.play();
 }
+
 ///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
+///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
+const avviaAnimazioneLacrime = function () {
+  const canvas = document.getElementById("animazioneGocce");
+  const contenuto = canvas.getContext("2d");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  let lacrime = [];
+  const durataAnimazione = 6000;
+  const gravitaBase = 0.1;
+
+  function creaLacrima() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      length: Math.random() * (50 - 20) + 20,
+      thickness: Math.random() * (4 - 1) + 1,
+      velocitaX: Math.random() * 4 - 2,
+      velocitaY: Math.random() * 4 + 3,
+      gravita: gravitaBase * (Math.random() * 5 + 1),
+      opacita: 1, // Aggiunta dell'opacità iniziale
+    };
+  }
+
+  for (let i = 0; i < 180; i++) {
+    lacrime.push(creaLacrima());
+  }
+
+  function aggiorna() {
+    contenuto.clearRect(0, 0, width, height);
+    let lacrimeSulDisplay = false;
+
+    lacrime.forEach((lacrima) => {
+      if (lacrima.y < height) {
+        lacrimeSulDisplay = true;
+      }
+
+      contenuto.beginPath();
+      contenuto.moveTo(lacrima.x, lacrima.y);
+      contenuto.lineTo(
+        lacrima.x + lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.lineTo(
+        lacrima.x - lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.closePath();
+      contenuto.fillStyle = `rgba(0, 0, 255, ${lacrima.opacita})`;
+      contenuto.fill();
+
+      lacrima.x += lacrima.velocitaX;
+      lacrima.y += lacrima.velocitaY + lacrima.gravita;
+
+      if (lacrima.y - lacrima.length > height) {
+        lacrima.x = Math.random() * width;
+        lacrima.y = Math.random() * height - height;
+      }
+
+      // Verifica se l'animazione è terminata
+      if (lacrima.opacita > 0) {
+        lacrima.opacita -= 0.0025; // Modifica il valore per controllare la velocità di dissolvenza
+      }
+    });
+
+    if (lacrimeSulDisplay) {
+      requestAnimationFrame(aggiorna);
+    }
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(aggiorna);
+  }, 600);
+
+  setTimeout(() => {
+    lacrime = [];
+  }, durataAnimazione);
+
+  const audioLooser = new Audio("./sounds/looser-results.wav");
+  audioLooser.play();
+};
+
+///////////////////////////////////////////////// FINE ANIMAZIONE LACRIME /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 
@@ -461,7 +544,47 @@ const populateLeaderboard = () => {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  divTest.innerHTML = ``;
 
+  leaderboardItems.sort((a, b) => b.points - a.points);
+
+  const divPodium = document.createElement("div");
+  divPodium.classList.add("podium");
+  const divGold = document.createElement("div");
+  divGold.id = "gold";
+  divGold.classList.add("podium-item");
+  const goldImg = document.createElement("img");
+  goldImg.src = leaderboardItems[0].image;
+  const pGold = document.createElement("p");
+  pGold.textContent = "1st Place";
+  divGold.appendChild(goldImg);
+  divGold.appendChild(pGold);
+
+  const divSilver = document.createElement("div");
+  divSilver.id = "silver";
+  divSilver.classList.add("podium-item");
+  const silverImg = document.createElement("img");
+  silverImg.src = leaderboardItems[1].image;
+  const pSilver = document.createElement("p");
+  pSilver.textContent = "2nd Place";
+  divSilver.appendChild(silverImg);
+  divSilver.appendChild(pSilver);
+
+  const divBronze = document.createElement("div");
+  divBronze.id = "bronze";
+  divBronze.classList.add("podium-item");
+  const bronzeImg = document.createElement("img");
+  bronzeImg.src = leaderboardItems[2].image;
+  const pBronze = document.createElement("p");
+  pBronze.textContent = "3rd Place";
+  divBronze.appendChild(bronzeImg);
+  divBronze.appendChild(pBronze);
+
+  divPodium.appendChild(divSilver);
+  divPodium.appendChild(divGold);
+  divPodium.appendChild(divBronze);
+
+  divTest.appendChild(divPodium);
 
   leaderboardItems.forEach((item, index) => {
     item.element.querySelector(".name_barra p span").textContent = `${index + 1
@@ -559,8 +682,6 @@ const populatePodium = () => {
 };
 
 const renderizzaLeaderBoard = function () {
-
-
   fermaTicToc();
 
   divResultleaderboard.style.visibility = "visible";
@@ -674,6 +795,7 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   } else {
+    avviaAnimazioneLacrime();
     fraseSuperamentoONo.innerHTML = `
     <p class="primaFraseResultSbagliato ">Dammit!</p>
     <p class="secondaFraseResultSbagliato ">You failed the exam</p>
@@ -694,6 +816,14 @@ const renderizza_risultato = async function () {
   divTest.appendChild(quanteSbagliate);
   console.log("Sbagliate " + sbagliate);
   console.log("Giuste " + giuste);
+  const bottoneFeedback = document.createElement("button");
+  bottoneFeedback.innerText = "Rate Us";
+  bottoneFeedback.classList.add("buttonProceed");
+  const vaiAltraPagina = function () {
+    window.location.href = "../feedbackpage.html";
+  };
+  bottoneFeedback.addEventListener("click", vaiAltraPagina);
+  divTest.appendChild(bottoneFeedback);
 
   const divRisposteDate = document.createElement("div");
   for (let i = 0; i < arrayRisposte.length; i++) {
