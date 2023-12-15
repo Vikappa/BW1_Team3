@@ -24,3 +24,9 @@ Giorno 3:
 Vincenzo: Ho fixato il timer delle domande usando una variabile comunea a tutti i div question dinamici. Corretto il posizionamento degli elementi nella schermata del grafico a ciambella. Aggiunta renderizzazione risposte date con icona presa da fontawesome
 
 Luca: Ho collaborato con Vincenzo sulla parte JS della pagina benvenuti, sul corretto funzionamento del button (PROCEED) al flag della checkbox ed ho provveduto al collegamento della stessa pagina in un'unica scheda con le pagine a seguire.
+
+Giorno 3/4 -- Francesco:
+Migliorie grafico ambiente grafico a ciambella e timer. Varie migliorie e supporto colleghi nel Javascript
+
+Giorno 5:
+Francesco: Aggiunta pulsante "Rate Us" generato dinamicamente e migliorie varie del codice improntate alla finalizzazione e consegna del progetto
