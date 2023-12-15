@@ -73,7 +73,7 @@ const graficoCiambella = function (sbagliate, giuste) {
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 ///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 function avviaAnimazioneCoriandoli() {
-  const canvas = document.getElementById("animazioneCoriandoli");
+  const canvas = document.getElementById("animazioniCoriandoliOgocce");
   const contenuto = canvas.getContext("2d");
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -81,7 +81,7 @@ function avviaAnimazioneCoriandoli() {
   canvas.height = height;
 
   let coriandoli = [];
-  const durataAnimazione = 6000; // 4 secondi
+  const durataAnimazione = 4000; // 4 secondi
 
   function creaCoriandolo() {
     return {
@@ -90,7 +90,7 @@ function avviaAnimazioneCoriandoli() {
       radius: Math.random() * (5 - 2) + 2,
       color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
         }, 1)`,
-      velocita: Math.random() * 8 + 2,
+      velocita: Math.random() * 5 + 2,
     };
   }
 
@@ -126,7 +126,7 @@ function avviaAnimazioneCoriandoli() {
 
   setTimeout(() => {
     requestAnimationFrame(aggiorna);
-  }, 600); // Ritardo iniziale
+  }, 100); // Ritardo iniziale
 
   setTimeout(() => {
     coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
@@ -136,94 +136,8 @@ function avviaAnimazioneCoriandoli() {
   const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
   audioWinner.play();
 }
-
 ///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
-///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
-const avviaAnimazioneLacrime = function () {
-  const canvas = document.getElementById("animazioneGocce");
-  const contenuto = canvas.getContext("2d");
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-
-  let lacrime = [];
-  const durataAnimazione = 6000;
-  const gravitaBase = 0.1;
-
-  function creaLacrima() {
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height - height,
-      length: Math.random() * (50 - 20) + 20,
-      thickness: Math.random() * (4 - 1) + 1,
-      velocitaX: Math.random() * 4 - 2,
-      velocitaY: Math.random() * 4 + 3,
-      gravita: gravitaBase * (Math.random() * 5 + 1),
-      opacita: 1, // Aggiunta dell'opacità iniziale
-    };
-  }
-
-  for (let i = 0; i < 180; i++) {
-    lacrime.push(creaLacrima());
-  }
-
-  function aggiorna() {
-    contenuto.clearRect(0, 0, width, height);
-    let lacrimeSulDisplay = false;
-
-    lacrime.forEach((lacrima) => {
-      if (lacrima.y < height) {
-        lacrimeSulDisplay = true;
-      }
-
-      contenuto.beginPath();
-      contenuto.moveTo(lacrima.x, lacrima.y);
-      contenuto.lineTo(
-        lacrima.x + lacrima.thickness,
-        lacrima.y + lacrima.length
-      );
-      contenuto.lineTo(
-        lacrima.x - lacrima.thickness,
-        lacrima.y + lacrima.length
-      );
-      contenuto.closePath();
-      contenuto.fillStyle = `rgba(0, 0, 255, ${lacrima.opacita})`;
-      contenuto.fill();
-
-      lacrima.x += lacrima.velocitaX;
-      lacrima.y += lacrima.velocitaY + lacrima.gravita;
-
-      if (lacrima.y - lacrima.length > height) {
-        lacrima.x = Math.random() * width;
-        lacrima.y = Math.random() * height - height;
-      }
-
-      // Verifica se l'animazione è terminata
-      if (lacrima.opacita > 0) {
-        lacrima.opacita -= 0.0025; // Modifica il valore per controllare la velocità di dissolvenza
-      }
-    });
-
-    if (lacrimeSulDisplay) {
-      requestAnimationFrame(aggiorna);
-    }
-  }
-
-  setTimeout(() => {
-    requestAnimationFrame(aggiorna);
-  }, 600);
-
-  setTimeout(() => {
-    lacrime = [];
-  }, durataAnimazione);
-
-  const audioLooser = new Audio("./sounds/looser-results.wav");
-  audioLooser.play();
-};
-
-///////////////////////////////////////////////// FINE ANIMAZIONE LACRIME /////////////////////////////////////////////////
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO  ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 
 const convertiStringaInSecondiTimer = function (difficoltaStringa) {
@@ -269,7 +183,6 @@ const timer = function (difficoltaStringa) {
 
   return tempo;
 };
-
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
@@ -360,14 +273,21 @@ const generateRandomName = () => {
     "Hanna",
     "Diya",
     "Fatima",
-    "Alfred",
-    "Igor",
-    "Al",
-    "Jon",
-    "Jack",
-    "Alan",
   ];
-  return names[Math.floor(Math.random() * names.length)];
+
+  if (!generateRandomName.usedNames) {
+    generateRandomName.usedNames = [];
+  }
+  if (generateRandomName.usedNames.length === names.length) {
+    generateRandomName.usedNames = [];
+  }
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * names.length);
+  } while (generateRandomName.usedNames.includes(randomIndex));
+  generateRandomName.usedNames.push(randomIndex);
+
+  return names[randomIndex];
 };
 for (let i = 0; i < 10; i++) {
   console.log(generateRandomName());
@@ -398,8 +318,6 @@ const aggiungiVincenzo = function () {
 `;
 
   leaderboardItems.push({ element: leaderboardItem, points: 100, name: "Vincenzo", image: "https://scontent-fco2-1.xx.fbcdn.net/v/t39.30808-6/332322660_229280442872270_1966642424894709984_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=IwcCZThU24QAX_YsqMf&_nc_ht=scontent-fco2-1.xx&oh=00_AfA-u19WOGqYi9cergtQwbHZNkwXvdOXXQNx4LT0C0f3RA&oe=6581C12B" });
-};
-leaderboardItems.push({ element: leaderboardItem, points: 100 });
 };
 ////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -488,7 +406,36 @@ const checkRispostaVX = function (
       return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
     }
   }
-  return ``;
+};
+
+const populatePodium = () => {
+  const goldElement = document.getElementById("gold");
+  const silverElement = document.getElementById("silver");
+  const bronzeElement = document.getElementById("bronze");
+
+  const participants = [];
+
+  for (let i = 0; i < 10; i++) {
+    participants.push({
+      name: leaderboardItems[i].name,
+      points: leaderboardItems[i].points,
+      image: leaderboardItems[i].image,
+    });
+  }
+
+  participants.sort((a, b) => b.points - a.points);
+
+  const podiumElements = [goldElement, silverElement, bronzeElement];
+
+  for (let i = 0; i < 3; i++) {
+    const podiumItem = podiumElements[i];
+    const participant = participants[i];
+
+    podiumItem.querySelector("img").src = participant.image;
+    podiumItem.querySelector(
+      "p"
+    ).textContent = `${participant.name} - ${participant.points} points`;
+  }
 };
 
 const renderizzaLeaderBoard = function () {
@@ -611,9 +558,7 @@ const renderizza_risultato = async function () {
     if (arrayRisposte[index].correctAnswer === arrayRisposte[index].answer)
       giuste++;
   }
-
   let sbagliate = totaleDomande - giuste;
-
   const grafic = graficoCiambella(sbagliate, giuste);
   const quanteGiuste = document.createElement("div");
   quanteGiuste.id = "divQuanteGiuste";
@@ -640,7 +585,6 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   } else {
-    avviaAnimazioneLacrime();
     fraseSuperamentoONo.innerHTML = `
     <p class="primaFraseResultSbagliato ">Dammit!</p>
     <p class="secondaFraseResultSbagliato ">You failed the exam</p>
@@ -770,7 +714,6 @@ async function addRisposta(
 
   renderizzaDomande();
 }
-
 async function addRispostaBool(bool, domanda, correct_answer) {
   let ans;
   if (bool === "true") {
