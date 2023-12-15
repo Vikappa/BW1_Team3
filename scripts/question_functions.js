@@ -363,6 +363,7 @@ const populateLeaderboard = () => {
   divPodium.classList.add("podium")
   const divGold = document.createElement("div");
   divGold.id = "gold";
+  divGold.classList.add("podium-item")
   const goldImg = document.createElement("img");
   goldImg.src = leaderboardItems[0].image;
   const pGold = document.createElement("p");
@@ -372,6 +373,7 @@ const populateLeaderboard = () => {
 
   const divSilver = document.createElement("div");
   divSilver.id = "silver";
+  divSilver.classList.add("podium-item")
   const silverImg = document.createElement("img");
   silverImg.src = leaderboardItems[1].image;
   const pSilver = document.createElement("p");
@@ -381,6 +383,7 @@ const populateLeaderboard = () => {
 
   const divBronze = document.createElement("div");
   divBronze.id = "bronze";
+  divBronze.classList.add("podium-item")
   const bronzeImg = document.createElement("img");
   bronzeImg.src = leaderboardItems[2].image;
   const pBronze = document.createElement("p");
