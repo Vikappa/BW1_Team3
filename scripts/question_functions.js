@@ -312,11 +312,40 @@ function percentualeDiXSuY(x, y) {
   }
 }
 function setUtente() {
+  let giuste = checkRisposte()
+  let points = Math.floor(percentualeDiXSuY(giuste, arrayRisposte.length))
   var nome = document.getElementById("nomeUtente").value;
   utente = nome;
   console.log("Utente impostato su: " + utente); // Questo è solo per il debug, mostra il valore nella console del browser
   const divNom = document.getElementById("divnomeutente")
+
   divNom.style.visibility = "hidden"
+  const leaderboardItem = document.createElement("div");
+  leaderboardItem.classList.add("lboard_memory");
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  leaderboardItem.innerHTML = `
+  <div class="img">
+      <img class="leaderboardImg" src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41xsPjrM-pL._AC_UF894,1000_QL80_.jpg" alt="Foto-Utente" />
+  </div>
+  <div class="name_barra">
+      <p><span></span>${utente}</p>
+      <div class="bar_wrap">
+          <div class="inner_bar" style="width: ${points}%"></div>
+      </div>
+  </div>
+  <div class="points">${points} points</div>
+`;
+
+  leaderboardItems.push({
+    element: leaderboardItem,
+    points: points,
+    name: "Vincenzo",
+    image:
+      "https://scontent-fco2-1.xx.fbcdn.net/v/t39.30808-6/332322660_229280442872270_1966642424894709984_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=IwcCZThU24QAX_YsqMf&_nc_ht=scontent-fco2-1.xx&oh=00_AfA-u19WOGqYi9cergtQwbHZNkwXvdOXXQNx4LT0C0f3RA&oe=6581C12B",
+
+  });
+  leaderboardItems.sort((a, b) => b.points - a.points);
+
 }
 
 
@@ -394,6 +423,8 @@ const aggiungiVincenzo = function () {
 aggiungiVincenzo();
 
 const populateLeaderboard = () => {
+  leaderboardItems.sort((a, b) => b.points - a.points);
+
   const leaderboardContainer = document.getElementById("leaderboard");
   if (leaderboardItems.length < 10) {
     for (let i = 1; i <= 10; i++) {
@@ -430,47 +461,7 @@ const populateLeaderboard = () => {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  divTest.innerHTML = ``
 
-  leaderboardItems.sort((a, b) => b.points - a.points);
-
-  const divPodium = document.createElement("div");
-  divPodium.classList.add("podium")
-  const divGold = document.createElement("div");
-  divGold.id = "gold";
-  divGold.classList.add("podium-item")
-  const goldImg = document.createElement("img");
-  goldImg.src = leaderboardItems[0].image;
-  const pGold = document.createElement("p");
-  pGold.textContent = "1st Place";
-  divGold.appendChild(goldImg);
-  divGold.appendChild(pGold);
-
-  const divSilver = document.createElement("div");
-  divSilver.id = "silver";
-  divSilver.classList.add("podium-item")
-  const silverImg = document.createElement("img");
-  silverImg.src = leaderboardItems[1].image;
-  const pSilver = document.createElement("p");
-  pSilver.textContent = "2nd Place";
-  divSilver.appendChild(silverImg);
-  divSilver.appendChild(pSilver);
-
-  const divBronze = document.createElement("div");
-  divBronze.id = "bronze";
-  divBronze.classList.add("podium-item")
-  const bronzeImg = document.createElement("img");
-  bronzeImg.src = leaderboardItems[2].image;
-  const pBronze = document.createElement("p");
-  pBronze.textContent = "3rd Place";
-  divBronze.appendChild(bronzeImg);
-  divBronze.appendChild(pBronze);
-
-  divPodium.appendChild(divSilver)
-  divPodium.appendChild(divGold)
-  divPodium.appendChild(divBronze)
-
-  divTest.appendChild(divPodium);
 
   leaderboardItems.forEach((item, index) => {
     item.element.querySelector(".name_barra p span").textContent = `${index + 1
