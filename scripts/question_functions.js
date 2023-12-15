@@ -88,13 +88,11 @@ function avviaAnimazioneCoriandoli() {
       x: Math.random() * width,
       y: Math.random() * height - height,
       radius: Math.random() * (5 - 2) + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
-        Math.random() * 255
-      }, 1)`,
+      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
+        }, 1)`,
       velocita: Math.random() * 8 + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
-        Math.random() * 255
-      }, 1)`,
+      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
+        }, 1)`,
       velocita: Math.random() * 5 + 2,
     };
   }
@@ -369,12 +367,49 @@ const populateLeaderboard = () => {
 
   aggiungiVincenzo();
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  divTest.innerHTML = ``
+
   leaderboardItems.sort((a, b) => b.points - a.points);
 
+  const divPodium = document.createElement("div");
+  divPodium.classList.add("podium")
+  const divGold = document.createElement("div");
+  divGold.id = "gold";
+  const goldImg = document.createElement("img");
+  goldImg.src = leaderboardItems[0].image;
+  const pGold = document.createElement("p");
+  pGold.textContent = "1st Place";
+  divGold.appendChild(goldImg);
+  divGold.appendChild(pGold);
+
+  const divSilver = document.createElement("div");
+  divSilver.id = "silver";
+  const silverImg = document.createElement("img");
+  silverImg.src = leaderboardItems[1].image;
+  const pSilver = document.createElement("p");
+  pSilver.textContent = "2nd Place";
+  divSilver.appendChild(silverImg);
+  divSilver.appendChild(pSilver);
+
+  const divBronze = document.createElement("div");
+  divBronze.id = "bronze";
+  const bronzeImg = document.createElement("img");
+  bronzeImg.src = leaderboardItems[2].image;
+  const pBronze = document.createElement("p");
+  pBronze.textContent = "3rd Place";
+  divBronze.appendChild(bronzeImg);
+  divBronze.appendChild(pBronze);
+
+  divPodium.appendChild(divSilver)
+  divPodium.appendChild(divGold)
+  divPodium.appendChild(divBronze)
+
+  divTest.appendChild(divPodium);
+
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${
-      index + 1
-    }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${index + 1
+      }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
@@ -458,36 +493,7 @@ const populatePodium = () => {
 };
 
 const renderizzaLeaderBoard = function () {
-  const divPodium = document.createElement("div");
 
-  const divGold = document.createElement("div");
-  divGold.id = "gold";
-  const goldImg = document.createElement("img");
-  goldImg.src = leaderboardItems[0].image;
-  const pGold = document.createElement("p");
-  pGold.textContent = "1st Place";
-  divGold.appendChild(goldImg);
-  divGold.appendChild(pGold);
-
-  const divSilver = document.createElement("div");
-  divSilver.id = "silver";
-  const silverImg = document.createElement("img");
-  silverImg.src = leaderboardItems[1].image;
-  const pSilver = document.createElement("p");
-  pSilver.textContent = "2nd Place";
-  divSilver.appendChild(silverImg);
-  divSilver.appendChild(pSilver);
-
-  const divBronze = document.createElement("div");
-  divBronze.id = "bronze";
-  const bronzeImg = document.createElement("img");
-  bronzeImg.src = leaderboardItems[2].image;
-  const pBronze = document.createElement("p");
-  pBronze.textContent = "3rd Place";
-  divBronze.appendChild(bronzeImg);
-  divBronze.appendChild(pBronze);
-
-  divTest.appendChild(divPodium);
 
   fermaTicToc();
 
@@ -632,29 +638,27 @@ const renderizza_risultato = async function () {
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
-      arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer,
-      arrayRisposte[i].all_answer[0]
-    )}  ${
-        arrayRisposte[i].all_answer[0]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[1]
-      )} ${arrayRisposte[i].all_answer[1]}</p>
+        arrayRisposte[i].all_answer[0]
+      )}  ${arrayRisposte[i].all_answer[0]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[1]
+        )} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
-      arrayRisposte[i].answer,
-      arrayRisposte[i].correctAnswer,
-      arrayRisposte[i].all_answer[2]
-    )}  ${
-        arrayRisposte[i].all_answer[2]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[3]
-      )} ${arrayRisposte[i].all_answer[3]}</p>
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[2]
+        )}  ${arrayRisposte[i].all_answer[2]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[3]
+        )} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
 
@@ -669,13 +673,12 @@ const renderizza_risultato = async function () {
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
         arrayRisposte[i].all_answer[0]
-      )}  ${
-        arrayRisposte[i].all_answer[0]
-      }</p><p class="CasellaRisposta">${checkRispostaVX(
-        arrayRisposte[i].answer,
-        arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[1]
-      )} ${arrayRisposte[i].all_answer[1]}</p>
+      )}  ${arrayRisposte[i].all_answer[0]
+        }</p><p class="CasellaRisposta">${checkRispostaVX(
+          arrayRisposte[i].answer,
+          arrayRisposte[i].correctAnswer,
+          arrayRisposte[i].all_answer[1]
+        )} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`;
       divRisposteDate.appendChild(divRisposta);
     }
@@ -701,9 +704,9 @@ const rispostaVuota = async function () {
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -727,9 +730,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
 
   renderizzaDomande();
@@ -751,9 +754,9 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-      arrayRisposte.length +
-      " lunghezza array domande: " +
-      arrayDomande.length
+    arrayRisposte.length +
+    " lunghezza array domande: " +
+    arrayDomande.length
   );
   renderizzaDomande();
 }
