@@ -421,11 +421,11 @@ function setUtente() {
 
   leaderboardItems.push({
     element: leaderboardItem,
-    points: points,
+    points: 100,
     name: "Vincenzo",
     image:
       "https://scontent-fco2-1.xx.fbcdn.net/v/t39.30808-6/332322660_229280442872270_1966642424894709984_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=IwcCZThU24QAX_YsqMf&_nc_ht=scontent-fco2-1.xx&oh=00_AfA-u19WOGqYi9cergtQwbHZNkwXvdOXXQNx4LT0C0f3RA&oe=6581C12B",
-
+    points
   });
   leaderboardItems.sort((a, b) => b.points - a.points);
 
@@ -506,8 +506,6 @@ const aggiungiVincenzo = function () {
 aggiungiVincenzo();
 
 const populateLeaderboard = () => {
-  leaderboardItems.sort((a, b) => b.points - a.points);
-
   const leaderboardContainer = document.getElementById("leaderboard");
   if (leaderboardItems.length < 10) {
     for (let i = 1; i <= 10; i++) {
@@ -589,6 +587,7 @@ const populateLeaderboard = () => {
   leaderboardItems.forEach((item, index) => {
     item.element.querySelector(".name_barra p span").textContent = `${index + 1
       }.`;
+    leaderboardItems.sort((a, b) => b.points - a.points);
 
     leaderboardContainer.appendChild(item.element);
   });
