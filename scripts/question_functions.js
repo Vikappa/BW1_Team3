@@ -26,147 +26,162 @@ const fermaTicToc = async function () {
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
 //////////////////////////////////////////////// ANIMAZIONE CORDIANDOLI E LACRIME ///////////////////////////////////////////////////////////////////
-const superatoOno = function (pass) {
-  if (pass === "superato") {
-    const canvas = document.getElementById("animazioniCoriandoli");
-    const contenuto = canvas.getContext("2d");
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
 
-    let coriandoli = [];
-    const durataAnimazione = 4000; //
+function avviaAnimazioneCoriandoli() {
+  const canvas = document.getElementById("animazioniCoriandoliOgocce");
+  const contenuto = canvas.getContext("2d");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
 
-    function creaCoriandolo() {
-      return {
-        x: Math.random() * width,
-        y: Math.random() * height - height,
-        radius: Math.random() * (5 - 2) + 2,
-        color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
-          Math.random() * 255
-        }, 1)`,
-        velocita: Math.random() * 5 + 2,
-      };
-    }
-    for (let i = 0; i < 300; i++) {
-      coriandoli.push(creaCoriandolo());
-    }
-    function aggiorna() {
-      contenuto.clearRect(0, 0, width, height);
-      coriandoli.forEach((coriandolo) => {
-        contenuto.beginPath();
-        contenuto.arc(
-          coriandolo.x,
-          coriandolo.y,
-          coriandolo.radius,
-          0,
-          Math.PI * 2
-        );
-        contenuto.fillStyle = coriandolo.color;
-        contenuto.fill();
-        contenuto.closePath();
-        // Aggiornamento della posizione dei coriandoli
-        coriandolo.y += coriandolo.velocita;
-      });
-      coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
-      if (coriandoli.length !== 0) {
-        requestAnimationFrame(aggiorna);
-      }
-    }
-    setTimeout(() => {
-      requestAnimationFrame(aggiorna);
-    }, 600); // Ritardo iniziale
-    setTimeout(() => {
-      coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
-    }, durataAnimazione);
-    // Riproduzione dell'audio
-    const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-    audioWinner.play();
-  } else {
-    const canvas = document.getElementById("animazioneCoriandoliOgocce");
-    const contenuto = canvas.getContext("2d");
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+  let coriandoli = [];
+  const durataAnimazione = 4000; // 4 secondi
 
-    let lacrime = [];
-    const durataAnimazione = 4000; //
-    const gravitaBase = 0.1; // Gravità base per tutte le lacrime
-
-    function creaLacrima() {
-      return {
-        x: Math.random() * width,
-        y: Math.random() * height - height,
-        length: Math.random() * (50 - 20) + 20,
-        thickness: Math.random() * (4 - 1) + 1,
-        velocitaX: Math.random() * 4 - 2,
-        velocitaY: Math.random() * 4 + 3,
-        gravita: gravitaBase * (Math.random() * 3 + 1), // Gravità variabile
-      };
-    }
-
-    for (let i = 0; i < 180; i++) {
-      lacrime.push(creaLacrima());
-    }
-
-    function aggiorna() {
-      contenuto.clearRect(0, 0, width, height);
-      let lacrimeSulDisplay = false; // Flag per verificare se ci sono lacrime ancora sul display
-
-      lacrime.forEach((lacrima) => {
-        if (lacrima.y < height) {
-          lacrimeSulDisplay = true;
-        }
-
-        contenuto.beginPath();
-        contenuto.moveTo(lacrima.x, lacrima.y);
-        contenuto.lineTo(
-          lacrima.x + lacrima.thickness,
-          lacrima.y + lacrima.length
-        );
-        contenuto.lineTo(
-          lacrima.x - lacrima.thickness,
-          lacrima.y + lacrima.length
-        );
-        contenuto.closePath();
-        contenuto.fillStyle = "blue"; // Colore delle lacrime
-        contenuto.fill();
-
-        // Aggiornamento della posizione delle lacrime
-        lacrima.x += lacrima.velocitaX;
-        lacrima.y += lacrima.velocitaY + lacrima.gravita;
-
-        // Riporta le lacrime in cima al canvas quando escono dalla schermata
-        if (lacrima.y - lacrima.length > height) {
-          lacrima.x = Math.random() * width;
-          lacrima.y = Math.random() * height - height;
-        }
-      });
-
-      if (lacrimeSulDisplay) {
-        requestAnimationFrame(aggiorna);
-      }
-    }
-
-    setTimeout(() => {
-      requestAnimationFrame(aggiorna);
-    }, 600); // Ritardo iniziale
-
-    // Imposta il tempo massimo dell'animazione
-    setTimeout(() => {
-      lacrime.forEach((lacrima) => {
-        lacrima.y = height + lacrima.length + 1; // Spinge tutte le lacrime fuori dalla finestra
-      });
-    }, durataAnimazione);
-
-    // Riproduzione dell'audio
-    const audioLooser = new Audio("./sounds/looser-results.wav");
-    audioLooser.play();
+  function creaCoriandolo() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      radius: Math.random() * (5 - 2) + 2,
+      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
+        Math.random() * 255
+      }, 1)`,
+      velocita: Math.random() * 5 + 2,
+    };
   }
+
+  for (let i = 0; i < 300; i++) {
+    coriandoli.push(creaCoriandolo());
+  }
+
+  function aggiorna() {
+    contenuto.clearRect(0, 0, width, height);
+    coriandoli.forEach((coriandolo) => {
+      contenuto.beginPath();
+      contenuto.arc(
+        coriandolo.x,
+        coriandolo.y,
+        coriandolo.radius,
+        0,
+        Math.PI * 2
+      );
+      contenuto.fillStyle = coriandolo.color;
+      contenuto.fill();
+      contenuto.closePath();
+
+      // Aggiornamento della posizione dei coriandoli
+      coriandolo.y += coriandolo.velocita;
+    });
+
+    coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
+
+    if (coriandoli.length !== 0) {
+      requestAnimationFrame(aggiorna);
+    }
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(aggiorna);
+  }, 100); // Ritardo iniziale
+
+  setTimeout(() => {
+    coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
+  }, durataAnimazione);
+
+  // Riproduzione dell'audio
+  const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+  audioWinner.play();
+}
+const avviaAnimazioneLacrime = function () {
+  const canvas = document.getElementById("animazioneCoriandoliOgocce");
+  const contenuto = canvas.getContext("2d");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  let lacrime = [];
+  const durataAnimazione = 4000; //
+  const gravitaBase = 0.1; // Gravità base per tutte le lacrime
+
+  function creaLacrima() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      length: Math.random() * (50 - 20) + 20,
+      thickness: Math.random() * (4 - 1) + 1,
+      velocitaX: Math.random() * 4 - 2,
+      velocitaY: Math.random() * 4 + 3,
+      gravita: gravitaBase * (Math.random() * 3 + 1), // Gravità variabile
+    };
+  }
+
+  for (let i = 0; i < 180; i++) {
+    lacrime.push(creaLacrima());
+  }
+
+  function aggiorna() {
+    contenuto.clearRect(0, 0, width, height);
+    let lacrimeSulDisplay = false; // Flag per verificare se ci sono lacrime ancora sul display
+
+    lacrime.forEach((lacrima) => {
+      if (lacrima.y < height) {
+        lacrimeSulDisplay = true;
+      }
+
+      contenuto.beginPath();
+      contenuto.moveTo(lacrima.x, lacrima.y);
+      contenuto.lineTo(
+        lacrima.x + lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.lineTo(
+        lacrima.x - lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.closePath();
+      contenuto.fillStyle = "blue"; // Colore delle lacrime
+      contenuto.fill();
+
+      // Aggiornamento della posizione delle lacrime
+      lacrima.x += lacrima.velocitaX;
+      lacrima.y += lacrima.velocitaY + lacrima.gravita;
+
+      // Riporta le lacrime in cima al canvas quando escono dalla schermata
+      if (lacrima.y - lacrima.length > height) {
+        lacrima.x = Math.random() * width;
+        lacrima.y = Math.random() * height - height;
+      }
+    });
+
+    if (lacrimeSulDisplay) {
+      requestAnimationFrame(aggiorna);
+    }
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(aggiorna);
+  }, 600); // Ritardo iniziale
+
+  // Imposta il tempo massimo dell'animazione
+  setTimeout(() => {
+    lacrime.forEach((lacrima) => {
+      lacrima.y = height + lacrima.length + 1; // Spinge tutte le lacrime fuori dalla finestra
+    });
+  }, durataAnimazione);
+
+  // Riproduzione dell'audio
+  const audioLooser = new Audio("./sounds/looser-results.wav");
+  audioLooser.play();
 };
 
+const superatoOno = function (pass) {
+  if (pass === "superato") {
+    avviaAnimazioneCoriandoli();
+  } else {
+    avviaAnimazioneLacrime();
+  }
+};
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
   fermaTicToc();
