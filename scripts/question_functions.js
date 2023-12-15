@@ -6,6 +6,7 @@ const body = document.getElementsByName("body")[0];
 let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
 const divResultleaderboard = document.getElementById("resultleaderboard");
+const leaderboardItems = [];
 
 const arrayRisposte = [];
 let intervalloUnico;
@@ -349,7 +350,6 @@ loadingDiv.classList.add("clessidra");
 divTest.appendChild(loadingDiv);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
 const generateRandomName = () => {
   const names = [
     "Ali",
@@ -359,6 +359,12 @@ const generateRandomName = () => {
     "Hanna",
     "Diya",
     "Fatima",
+    "Alfred",
+    "Igor",
+    "Al",
+    "Jon",
+    "Jack",
+    "Alan",
   ];
   return names[Math.floor(Math.random() * names.length)];
 };
@@ -370,20 +376,41 @@ const generateRandomImages = () => {
   return images[Math.floor(Math.random() * images.length)];
 };
 
+const aggiungiVincenzo = function () {
+  const leaderboardItem = document.createElement("div");
+  leaderboardItem.classList.add("lboard_memory");
+
+  leaderboardItem.innerHTML = `
+  <div class="img">
+      <img class="leaderboardImg" src="https://scontent-fco2-1.xx.fbcdn.net/v/t39.30808-6/332322660_229280442872270_1966642424894709984_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=IwcCZThU24QAX_YsqMf&_nc_ht=scontent-fco2-1.xx&oh=00_AfA-u19WOGqYi9cergtQwbHZNkwXvdOXXQNx4LT0C0f3RA&oe=6581C12B" alt="Foto-Vincenzo" />
+  </div>
+  <div class="name_barra">
+      <p><span>100.</span>Vincenzo</p>
+      <div class="bar_wrap">
+          <div class="inner_bar" style="width: 100"></div>
+      </div>
+  </div>
+  <div class="points">100 points</div>
+`;
+
+  leaderboardItems.push({ element: leaderboardItem, points: 100 });
+};
+////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
+
 const populateLeaderboard = () => {
-  const leaderboardItems = [];
   const leaderboardContainer = document.getElementById("leaderboard");
-  for (let i = 1; i <= 10; i++) {
-    const randomName = generateRandomName();
-    const randomPoints = generateRandomPoints();
-    const randomImages = generateRandomImages();
+  if (leaderboardItems.length < 10) {
+    for (let i = 1; i <= 10; i++) {
+      const randomName = generateRandomName();
+      const randomPoints = generateRandomPoints();
+      const randomImages = generateRandomImages();
 
-    const leaderboardItem = document.createElement("div");
-    leaderboardItem.classList.add("lboard_memory");
+      const leaderboardItem = document.createElement("div");
+      leaderboardItem.classList.add("lboard_memory");
 
-    leaderboardItem.innerHTML = `
+      leaderboardItem.innerHTML = `
     <div class="img">
-        <img class="leaderboardImg" src="${randomImages}" alt="random-image" />
+        <img class="leaderboardImg" src="${randomImages}" alt="random-image"/>
     </div>
     <div class="name_barra">
         <p><span>${i}.</span>${randomName}</p>
@@ -394,7 +421,8 @@ const populateLeaderboard = () => {
     <div class="points">${randomPoints} points</div>
 `;
 
-    leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+      leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+    }
   }
 
   leaderboardItems.sort((a, b) => b.points - a.points);
@@ -453,6 +481,7 @@ const checkRispostaVX = function (
       return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
     }
   }
+  return ``;
 };
 
 const renderizzaLeaderBoard = function () {
@@ -861,17 +890,3 @@ const renderizzaDomande = async function () {
 };
 
 renderizzaDomande();
-
-// FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
-// const avvioAnimazioniResults = function () {
-//   for (let i = arrayDomande.length - 1; i >= 0; i--) {
-//     if (arrayDomande[i].correctAnswer === arrayDomande[i].answer) {
-//       const ultimaRisposta = document.getElementById(arrayDomande[i].question);
-//       ultimaRisposta.addEventListener("click", () => {
-//         superatoOno("superato");
-//       });
-//     } else {
-//       superatoOno("nonSuperato");
-//     }
-//   }
-// };
