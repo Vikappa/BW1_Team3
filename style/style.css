@@ -291,9 +291,7 @@ textarea {
 
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid
-    /* #900080 */
-    #d20094;
+  border-bottom: 1px solid /* #900080 */ #d20094;
 }
 
 form p {
@@ -545,7 +543,6 @@ body {
   width: 95%;
   animation: progress 2s ease-in-out forwards;
 }
-
 /*
 
 /*
@@ -560,7 +557,15 @@ body {
   }
 }
 
-
+.podium {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
 
 .podium-item {
   text-align: center;
@@ -644,17 +649,6 @@ body {
 .lboard_contain .lboard_memory .name_barra p span {
   margin-right: 5px;
 }
-
-.podium {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
 /*
 
 /*
