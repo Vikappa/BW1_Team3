@@ -1,6 +1,8 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
 @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 body {
   background-image: url(../assets/bg.jpg);
@@ -32,6 +34,7 @@ main {
 .title1,
 .title2 {
   font-family: "Outfit", sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 60px;
   justify-self: left;
 }
@@ -45,6 +48,7 @@ main {
 .description,
 .elenco,
 span {
+  font-family: "Inter", sans-serif;
   font-family: "Inter", sans-serif;
   font-size: 16px;
   justify-self: left;
@@ -151,6 +155,7 @@ button {
 
 #genitore p {
   text-align: center;
+  font-family: "Outfit", sans-serif;
   font-family: "Outfit", sans-serif;
   font-size: 16px;
 }
@@ -293,6 +298,7 @@ form p {
   background-color: #00ffff;
   font-size: 16px;
   font-family: "Outfit", sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
@@ -302,6 +308,7 @@ form p {
 #body-feedback {
   text-align: center;
   color: #fff;
+  font-family: "Outfit", sans-serif;
   font-family: "Outfit", sans-serif;
   font-size: 16px;
 }
@@ -330,6 +337,20 @@ textarea {
 }
 
 #buttonProceed {
+  margin-top: 40px;
+  height: 58px;
+  width: 220px;
+  background-color: #00ffff;
+  font-weight: bold;
+  font-size: 16px;
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  align-self: flex-end;
+  margin-right: 6em;
+  margin-bottom: 4em;
+}
+.buttonProceed {
   margin-top: 40px;
   height: 58px;
   width: 220px;
@@ -449,6 +470,7 @@ textarea {
   top: 0%;
   left: 12%;
 }
+
 #Risultati:hover,
 #Risultati.active {
   color: blueviolet;
@@ -460,6 +482,7 @@ textarea {
   cursor: pointer;
   text-align: center;
 }
+
 #Leaderboard:hover,
 #Leaderboard.active {
   color: blueviolet;
@@ -471,6 +494,7 @@ textarea {
   cursor: pointer;
   text-align: center;
 }
+
 body {
   background-image: url(../assets/bg.jpg);
   background-repeat: no-repeat;
@@ -478,6 +502,7 @@ body {
   background-attachment: fixed;
   color: #ffff;
 }
+
 #resultleaderboard {
   position: relative;
   margin-top: 8%;
@@ -496,6 +521,26 @@ body {
 .container {
   width: 100%;
   height: 100%;
+}
+
+.podium {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.podium-item {
+  text-align: center;
+  padding: 20px;
+  flex: 1;
+  background-color: #17192b;
+  border-bottom: 1px solid #900080;
+  transition: background-color 0.5s ease;
+  border-radius: 10px;
 }
 
 /*
@@ -522,6 +567,7 @@ body {
   width: 95%;
   animation: progress 2s ease-in-out forwards;
 }
+
 /*
 @keyframes progress {
   0% {
@@ -534,25 +580,9 @@ body {
   }
 }
 
-.podium {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
 
-.podium-item {
-  text-align: center;
-  padding: 20px;
-  flex: 1;
-  background-color: #17192b;
-  border-bottom: 1px solid #900080;
-  transition: background-color 0.5s ease;
-  border-radius: 10px;
-}
+
+
 
 .podium-item img {
   width: 50px;
@@ -626,6 +656,7 @@ body {
 .lboard_contain .lboard_memory .name_barra p span {
   margin-right: 5px;
 }
+
 /*
 .lboard_contain .lboard_item .points {
   width: 100px;
@@ -686,6 +717,7 @@ body {
 }
 
 .clessidra::before {
+  content: "";
   content: "";
   display: block;
   width: 0.5%;
