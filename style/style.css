@@ -689,17 +689,9 @@ body {
   display: block;
 }
 
-/* PER ANIMAZIONE CORIANOLI/GOCCE */
-/* * {
-    box-sizing: border-box;
-  }
-  body {
-    overflow: hidden;
-  }
-  */
-
-#animazioneCoriandoliOgocce,
-#animazioneCoriandolissssss {
+/*/////////////////////////////////////// PER ANIMAZIONE CORIANOLI/GOCCE ////////////////////////////////////////////*/
+#animazioneCoriandoli,
+#animazioneGocce {
   position: absolute;
   top: 50px;
   /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato); */

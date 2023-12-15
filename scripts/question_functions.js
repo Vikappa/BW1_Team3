@@ -25,11 +25,122 @@ const fermaTicToc = async function () {
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-//////////////////////////////////////////////// ANIMAZIONE CORDIANDOLI E LACRIME ///////////////////////////////////////////////////////////////////
+///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
+const graficoCiambella = function (sbagliate, giuste) {
+  fermaTicToc();
+  const canvas = document.createElement("canvas");
+  canvas.id = "graficoCiambella";
+  canvas.width = 300;
+  canvas.height = 300;
+  const ctx = canvas.getContext("2d");
 
-function avviaAnimazioneCoriandoli() {}
+  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Colore dell'ombra
+  ctx.shadowBlur = 50; // Intensità dell'ombra
+  ctx.shadowOffsetX = 10; // Spostamento orizzontale dell'ombra
+  ctx.shadowOffsetY = 5; // Spostamento verticale dell'ombra
+
+  // Dati del grafico
+  const dati = {
+    datasets: [
+      {
+        data: [sbagliate, giuste],
+        backgroundColor: ["#D20094", "#00FFFF"],
+        borderColor: "white",
+        borderWidth: 0, // Riduci il bordo
+      },
+    ],
+  };
+
+  // Configurazione del grafico
+  const options = {
+    cutoutPercentage: 70,
+    responsive: false,
+    plugins: {
+      datalabels: {
+        display: false, // Nascondi le etichette
+      },
+    },
+  };
+
+  // Crea e restituisci il grafico a ciambella
+  return new Chart(ctx, {
+    type: "doughnut",
+    data: dati,
+    options: options,
+  }).canvas;
+};
+///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
+///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
+function avviaAnimazioneCoriandoli() {
+  const canvas = document.getElementById("animazioneCoriandoli");
+  const contenuto = canvas.getContext("2d");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  let coriandoli = [];
+  const durataAnimazione = 6000; // 4 secondi
+
+  function creaCoriandolo() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      radius: Math.random() * (5 - 2) + 2,
+      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
+        Math.random() * 255
+      }, 1)`,
+      velocita: Math.random() * 8 + 2,
+    };
+  }
+
+  for (let i = 0; i < 300; i++) {
+    coriandoli.push(creaCoriandolo());
+  }
+
+  function aggiorna() {
+    contenuto.clearRect(0, 0, width, height);
+    coriandoli.forEach((coriandolo) => {
+      contenuto.beginPath();
+      contenuto.arc(
+        coriandolo.x,
+        coriandolo.y,
+        coriandolo.radius,
+        0,
+        Math.PI * 2
+      );
+      contenuto.fillStyle = coriandolo.color;
+      contenuto.fill();
+      contenuto.closePath();
+
+      // Aggiornamento della posizione dei coriandoli
+      coriandolo.y += coriandolo.velocita;
+    });
+
+    coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
+
+    if (coriandoli.length !== 0) {
+      requestAnimationFrame(aggiorna);
+    }
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(aggiorna);
+  }, 600); // Ritardo iniziale
+
+  setTimeout(() => {
+    coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
+  }, durataAnimazione);
+
+  // Riproduzione dell'audio
+  const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+  audioWinner.play();
+}
+
+///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
+///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
 const avviaAnimazioneLacrime = function () {
-  const canvas = document.getElementById("animazioneCoriandoliOgocce");
+  const canvas = document.getElementById("animazioneGocce");
   const contenuto = canvas.getContext("2d");
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -37,7 +148,7 @@ const avviaAnimazioneLacrime = function () {
   canvas.height = height;
 
   let lacrime = [];
-  const durataAnimazione = 4000; //
+  const durataAnimazione = 6000; //
   const gravitaBase = 0.1; // Gravità base per tutte le lacrime
 
   function creaLacrima() {
@@ -48,7 +159,7 @@ const avviaAnimazioneLacrime = function () {
       thickness: Math.random() * (4 - 1) + 1,
       velocitaX: Math.random() * 4 - 2,
       velocitaY: Math.random() * 4 + 3,
-      gravita: gravitaBase * (Math.random() * 3 + 1), // Gravità variabile
+      gravita: gravitaBase * (Math.random() * 5 + 1), // Gravità variabile
     };
   }
 
@@ -101,9 +212,7 @@ const avviaAnimazioneLacrime = function () {
 
   // Imposta il tempo massimo dell'animazione
   setTimeout(() => {
-    lacrime.forEach((lacrima) => {
-      lacrima.y = height + lacrima.length + 1; // Spinge tutte le lacrime fuori dalla finestra
-    });
+    lacrime = []; // Svuota l'array di coriandoli dopo 4 secondi
   }, durataAnimazione);
 
   // Riproduzione dell'audio
@@ -111,126 +220,8 @@ const avviaAnimazioneLacrime = function () {
   audioLooser.play();
 };
 
-const superatoOno = function (pass) {
-  if (pass === "superato") {
-    avviaAnimazioneCoriandoli();
-  } else {
-    avviaAnimazioneLacrime();
-  }
-};
-///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
-const graficoCiambella = function (sbagliate, giuste) {
-  fermaTicToc();
-  const canvas = document.createElement("canvas");
-  canvas.id = "graficoCiambella";
-  canvas.width = 300;
-  canvas.height = 300;
-  const ctx = canvas.getContext("2d");
-
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Colore dell'ombra
-  ctx.shadowBlur = 50; // Intensità dell'ombra
-  ctx.shadowOffsetX = 10; // Spostamento orizzontale dell'ombra
-  ctx.shadowOffsetY = 5; // Spostamento verticale dell'ombra
-
-  // Dati del grafico
-  const dati = {
-    datasets: [
-      {
-        data: [sbagliate, giuste],
-        backgroundColor: ["#D20094", "#00FFFF"],
-        borderColor: "white",
-        borderWidth: 0, // Riduci il bordo
-      },
-    ],
-  };
-
-  // Configurazione del grafico
-  const options = {
-    cutoutPercentage: 70,
-    responsive: false,
-    plugins: {
-      datalabels: {
-        display: false, // Nascondi le etichette
-      },
-    },
-  };
-
-  // Crea e restituisci il grafico a ciambella
-  return new Chart(ctx, {
-    type: "doughnut",
-    data: dati,
-    options: options,
-  }).canvas;
-};
-///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
-///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
-function avviaAnimazioneCoriandoli() {
-  const canvas = document.getElementById("animazioniCoriandoliOgocce");
-  const contenuto = canvas.getContext("2d");
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-
-  let coriandoli = [];
-  const durataAnimazione = 4000; // 4 secondi
-
-  function creaCoriandolo() {
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height - height,
-      radius: Math.random() * (5 - 2) + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
-        Math.random() * 255
-      }, 1)`,
-      velocita: Math.random() * 5 + 2,
-    };
-  }
-
-  for (let i = 0; i < 300; i++) {
-    coriandoli.push(creaCoriandolo());
-  }
-
-  function aggiorna() {
-    contenuto.clearRect(0, 0, width, height);
-    coriandoli.forEach((coriandolo) => {
-      contenuto.beginPath();
-      contenuto.arc(
-        coriandolo.x,
-        coriandolo.y,
-        coriandolo.radius,
-        0,
-        Math.PI * 2
-      );
-      contenuto.fillStyle = coriandolo.color;
-      contenuto.fill();
-      contenuto.closePath();
-
-      // Aggiornamento della posizione dei coriandoli
-      coriandolo.y += coriandolo.velocita;
-    });
-
-    coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
-
-    if (coriandoli.length !== 0) {
-      requestAnimationFrame(aggiorna);
-    }
-  }
-
-  setTimeout(() => {
-    requestAnimationFrame(aggiorna);
-  }, 100); // Ritardo iniziale
-
-  setTimeout(() => {
-    coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
-  }, durataAnimazione);
-
-  // Riproduzione dell'audio
-  const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-  audioWinner.play();
-}
-///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
-/////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
+///////////////////////////////////////////////// FINE ANIMAZIONE LACRIME /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////// TIMER - FRANCESCO  ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 
 const convertiStringaInSecondiTimer = function (difficoltaStringa) {
@@ -598,6 +589,7 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   } else {
+    avviaAnimazioneLacrime();
     fraseSuperamentoONo.innerHTML = `
     <p class="primaFraseResultSbagliato ">Dammit!</p>
     <p class="secondaFraseResultSbagliato ">You failed the exam</p>
@@ -858,7 +850,6 @@ const renderizzaDomande = async function () {
     divTest.innerHTML = ``;
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
-    superatoOno("superato");
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
       arrayDomande[nDomandeFatte]
