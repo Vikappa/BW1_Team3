@@ -345,6 +345,7 @@ const diffInSecondi = function (diffString) {
 };
 
 ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
+
 const loadingDiv = document.createElement("div");
 loadingDiv.id = "loadingDiv";
 loadingDiv.classList.add("clessidra");
@@ -376,7 +377,8 @@ for (let i = 0; i < 10; i++) {
 const generateRandomPoints = () => Math.floor(Math.random() * 100) + 1;
 
 const generateRandomImages = () => {
-  const images = "https://placedog.net/" + (100 + Math.floor(Math.random() * 100))
+  x = (100 + Math.floor(Math.random() * 100))
+  const images = "https://placedog.net/" + x + "/" + x
   return images
 };
 
@@ -398,10 +400,12 @@ const aggiungiVincenzo = function () {
 `;
 
   leaderboardItems.push({ element: leaderboardItem, points: 100, name: "Vincenzo", image: "https://scontent-fco2-1.xx.fbcdn.net/v/t39.30808-6/332322660_229280442872270_1966642424894709984_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=IwcCZThU24QAX_YsqMf&_nc_ht=scontent-fco2-1.xx&oh=00_AfA-u19WOGqYi9cergtQwbHZNkwXvdOXXQNx4LT0C0f3RA&oe=6581C12B" });
+
 };
 leaderboardItems.push({ element: leaderboardItem, points: 100 });
 };
 ////////////////////////////////////////////////////////  ALEX   /////////////////////////////////////////////////////////////////////////////////////////////
+aggiungiVincenzo()
 
 const populateLeaderboard = () => {
   const leaderboardContainer = document.getElementById("leaderboard");
@@ -431,7 +435,68 @@ const populateLeaderboard = () => {
     }
   }
 
-  aggiungiVincenzo()
+
+  const goldElement = document.getElementById("gold");
+  const silverElement = document.getElementById("silver");
+  const bronzeElement = document.getElementById("bronze");
+
+  const participants = [];
+
+  for (let i = 0; i < 10; i++) {
+    participants.push({
+      name: leaderboardItems[i].name,
+      points: leaderboardItems[i].points,
+      image: leaderboardItems[i].image,
+    });
+  }
+
+
+  const podiumElements = [goldElement, silverElement, bronzeElement];
+
+  for (let i = 0; i < 3; i++) {
+    const podiumItem = podiumElements[i];
+    const participant = participants[i];
+  }
+
+
+
+  const divPodium = document.createElement("div")
+  divPodium.classList = "podium"
+  const divGold = document.createElement("div")
+  divGold.id = "gold"
+  const goldImg = document.createElement("img")
+  goldImg.src = leaderboardItems[0].image
+  const pGold = document.createElement("p")
+  pGold.textContent = "1st Place"
+  divGold.appendChild(goldImg)
+  divGold.appendChild(pGold)
+
+
+  const divSilver = document.createElement("div")
+  divSilver.id = "silver"
+  const silverImg = document.createElement("img")
+  silverImg.src = leaderboardItems[1].image
+  const pSilver = document.createElement("p")
+  pSilver.textContent = "2nd Place"
+  divSilver.appendChild(silverImg)
+  divSilver.appendChild(pSilver)
+
+  const divBronze = document.createElement("div")
+  divBronze.id = "bronze"
+  const bronzeImg = document.createElement("img")
+  bronzeImg.src = leaderboardItems[2].image
+  const pBronze = document.createElement("p")
+  pBronze.textContent = "3rd Place"
+  divBronze.appendChild(bronzeImg)
+  divBronze.appendChild(pBronze)
+
+  divPodium.appendChild(divSilver)
+  divPodium.appendChild(divGold)
+  divPodium.appendChild(divBronze)
+
+  divTest.innerHTML = ``
+  divTest.appendChild(divPodium)
+
 
   leaderboardItems.sort((a, b) => b.points - a.points);
 
@@ -492,38 +557,6 @@ const checkRispostaVX = function (
 };
 
 const renderizzaLeaderBoard = function () {
-  const divPodium = document.createElement("div")
-
-  const divGold = document.createElement("div")
-  divGold.id = "gold"
-  const goldImg = document.createElement("img")
-  goldImg.src = leaderboardItems[0].image
-  const pGold = document.createElement("p")
-  pGold.textContent = "1st Place"
-  divGold.appendChild(goldImg)
-  divGold.appendChild(pGold)
-
-  const divSilver = document.createElement("div")
-  divSilver.id = "silver"
-  const silverImg = document.createElement("img")
-  silverImg.src = leaderboardItems[1].image
-  const pSilver = document.createElement("p")
-  pSilver.textContent = "2nd Place"
-  divSilver.appendChild(silverImg)
-  divSilver.appendChild(pSilver)
-
-  const divBronze = document.createElement("div")
-  divBronze.id = "bronze"
-  const bronzeImg = document.createElement("img")
-  bronzeImg.src = leaderboardItems[2].image
-  const pBronze = document.createElement("p")
-  pBronze.textContent = "3rd Place"
-  divBronze.appendChild(bronzeImg)
-  divBronze.appendChild(pBronze)
-
-  divTest.appendChild(divPodium)
-
-
 
   fermaTicToc();
 
@@ -563,8 +596,8 @@ const renderizzaLeaderBoard = function () {
   divPulsantiSwitchTab.append(divPulsanteLeaderBoard);
 
   divResultleaderboard.appendChild(divPulsantiSwitchTab);
-
   populateLeaderboard();
+
 };
 
 const renderizza_risultato = async function () {
