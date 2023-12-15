@@ -73,7 +73,7 @@ const graficoCiambella = function (sbagliate, giuste) {
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
 ///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 function avviaAnimazioneCoriandoli() {
-  const canvas = document.getElementById("animazioniCoriandoliOgocce");
+  const canvas = document.getElementById("animazioneCoriandoli");
   const contenuto = canvas.getContext("2d");
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -81,7 +81,7 @@ function avviaAnimazioneCoriandoli() {
   canvas.height = height;
 
   let coriandoli = [];
-  const durataAnimazione = 4000; // 4 secondi
+  const durataAnimazione = 6000; // 4 secondi
 
   function creaCoriandolo() {
     return {
@@ -92,10 +92,6 @@ function avviaAnimazioneCoriandoli() {
         Math.random() * 255
       }, 1)`,
       velocita: Math.random() * 8 + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
-        Math.random() * 255
-      }, 1)`,
-      velocita: Math.random() * 5 + 2,
     };
   }
 
@@ -131,7 +127,7 @@ function avviaAnimazioneCoriandoli() {
 
   setTimeout(() => {
     requestAnimationFrame(aggiorna);
-  }, 100); // Ritardo iniziale
+  }, 600); // Ritardo iniziale
 
   setTimeout(() => {
     coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
@@ -141,7 +137,93 @@ function avviaAnimazioneCoriandoli() {
   const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
   audioWinner.play();
 }
+
 ///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
+///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
+const avviaAnimazioneLacrime = function () {
+  const canvas = document.getElementById("animazioneGocce");
+  const contenuto = canvas.getContext("2d");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  let lacrime = [];
+  const durataAnimazione = 6000;
+  const gravitaBase = 0.1;
+
+  function creaLacrima() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      length: Math.random() * (50 - 20) + 20,
+      thickness: Math.random() * (4 - 1) + 1,
+      velocitaX: Math.random() * 4 - 2,
+      velocitaY: Math.random() * 4 + 3,
+      gravita: gravitaBase * (Math.random() * 5 + 1),
+      opacita: 1, // Aggiunta dell'opacità iniziale
+    };
+  }
+
+  for (let i = 0; i < 180; i++) {
+    lacrime.push(creaLacrima());
+  }
+
+  function aggiorna() {
+    contenuto.clearRect(0, 0, width, height);
+    let lacrimeSulDisplay = false;
+
+    lacrime.forEach((lacrima) => {
+      if (lacrima.y < height) {
+        lacrimeSulDisplay = true;
+      }
+
+      contenuto.beginPath();
+      contenuto.moveTo(lacrima.x, lacrima.y);
+      contenuto.lineTo(
+        lacrima.x + lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.lineTo(
+        lacrima.x - lacrima.thickness,
+        lacrima.y + lacrima.length
+      );
+      contenuto.closePath();
+      contenuto.fillStyle = `rgba(0, 0, 255, ${lacrima.opacita})`;
+      contenuto.fill();
+
+      lacrima.x += lacrima.velocitaX;
+      lacrima.y += lacrima.velocitaY + lacrima.gravita;
+
+      if (lacrima.y - lacrima.length > height) {
+        lacrima.x = Math.random() * width;
+        lacrima.y = Math.random() * height - height;
+      }
+
+      // Verifica se l'animazione è terminata
+      if (lacrima.opacita > 0) {
+        lacrima.opacita -= 0.0025; // Modifica il valore per controllare la velocità di dissolvenza
+      }
+    });
+
+    if (lacrimeSulDisplay) {
+      requestAnimationFrame(aggiorna);
+    }
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(aggiorna);
+  }, 600);
+
+  setTimeout(() => {
+    lacrime = [];
+  }, durataAnimazione);
+
+  const audioLooser = new Audio("./sounds/looser-results.wav");
+  audioLooser.play();
+};
+
+///////////////////////////////////////////////// FINE ANIMAZIONE LACRIME /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 
@@ -599,6 +681,7 @@ const renderizza_risultato = async function () {
     fraseSuperamentoONo.appendChild(grafic);
     divTest.appendChild(fraseSuperamentoONo);
   } else {
+    avviaAnimazioneLacrime();
     fraseSuperamentoONo.innerHTML = `
     <p class="primaFraseResultSbagliato ">Dammit!</p>
     <p class="secondaFraseResultSbagliato ">You failed the exam</p>
