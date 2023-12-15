@@ -7,7 +7,7 @@ let nDomandeFatte = 0;
 const divTest = document.getElementById("testAppend");
 const divResultleaderboard = document.getElementById("resultleaderboard");
 const leaderboardItems = [];
-
+let username
 const arrayRisposte = [];
 let intervalloUnico;
 let currentQuestion;
@@ -304,6 +304,65 @@ const generateRandomImages = () => {
   return images;
 };
 
+function percentualeDiXSuY(x, y) {
+  if (y === 0) {
+    return "Errore: Il valore di Y non può essere zero.";
+  } else {
+    return (x / y) * 100;
+  }
+}
+function setUtente() {
+  var nome = document.getElementById("nomeUtente").value;
+  utente = nome;
+  console.log("Utente impostato su: " + utente); // Questo è solo per il debug, mostra il valore nella console del browser
+}
+
+
+const inserisci_numeUtente = function () {
+  if (typeof username === 'undefined') {
+    //////////////////////////////////////////////////////////////////////////////////////APPARE DIV INSERISCI NOME UTENTE
+    const casellaNomeUtente = document.createElement("div")
+    casellaNomeUtente.innerHTML = `<div style="position: absolute">
+ <p>Inserisci nome utente</p>
+ <form action="javascript:void(0);">
+     <input type="text" id="nomeUtente" placeholder="Nome Utente">
+     <button type="submit" onclick="setUtente()">Imposta Utente</button>
+ </form>
+</div>`
+    document.body.appendChild(casellaNomeUtente)
+    inserisci_numeUtente()
+
+  } else {
+    let giuste = checkRisposte()
+    let points = Math.floor(percentualeDiXSuY(giuste, arrayRisposte.length))
+
+    const leaderboardItem = document.createElement("div");
+    leaderboardItem.classList.add("lboard_memory");
+
+    leaderboardItem.innerHTML = `
+    <div class="img">
+        <img class="leaderboardImg" src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41xsPjrM-pL._AC_UF894,1000_QL80_.jpg" alt="Foto-Utente" />
+    </div>
+    <div class="name_barra">
+        <p><span></span>${username}</p>
+        <div class="bar_wrap">
+            <div class="inner_bar" style="width: ${points}%"></div>
+        </div>
+    </div>
+    <div class="points">${points}points</div>
+  `;
+
+    leaderboardItems.push({
+      element: leaderboardItem,
+      points: points,
+      name: username,
+      image:
+        `https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41xsPjrM-pL._AC_UF894,1000_QL80_.jpg`,
+    });
+    leaderboardItems.sort((a, b) => b.points - a.points);
+  }
+}
+
 const aggiungiVincenzo = function () {
   const leaderboardItem = document.createElement("div");
   leaderboardItem.classList.add("lboard_memory");
@@ -366,6 +425,8 @@ const populateLeaderboard = () => {
   }
 
   aggiungiVincenzo();
+
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   divTest.innerHTML = ``
@@ -463,6 +524,16 @@ const checkRispostaVX = function (
       return `<i class="fas fa-times" style="color: #ff0000;"></i>`;
     }
   }
+};
+
+const checkRisposte = function () {
+  let punti = 0
+  for (let i = 0; i < arrayRisposte.length; i++) {
+    if (arrayRisposte[i].answer === arrayRisposte[i].correctAnswer) {
+      punti++
+    }
+  }
+  return punti
 };
 
 const populatePodium = () => {
@@ -866,6 +937,7 @@ const renderizzaDomande = async function () {
   if (arrayDomande.length === arrayRisposte.length) {
     divTest.innerHTML = ``;
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
+    inserisci_numeUtente()
     renderizza_risultato(arrayRisposte);
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
