@@ -427,6 +427,37 @@ const renderizzaLeaderBoard = function () {
   </div>
 </div>`;
 
+  const populatePodium = () => {
+    const goldElement = document.getElementById("gold");
+    const silverElement = document.getElementById("silver");
+    const bronzeElement = document.getElementById("bronze");
+
+    const participants = [];
+
+    for (let i = 0; i < 10; i++) {
+      participants.push({
+        name: generateRandomName(),
+        points: generateRandomPoints(),
+        image: generateRandomImages(),
+      });
+    }
+
+    participants.sort((a, b) => b.points - a.points);
+
+    const podiumElements = [goldElement, silverElement, bronzeElement];
+
+    for (let i = 0; i < 3; i++) {
+      const podiumItem = podiumElements[i];
+      const participant = participants[i];
+
+      podiumItem.querySelector("img").src = participant.image;
+      podiumItem.querySelector(
+        "p"
+      ).textContent = `${participant.name} - ${participant.points} points`;
+    }
+  };
+  populatePodium();
+
   fermaTicToc();
 
   divResultleaderboard.style.visibility = "visible";
