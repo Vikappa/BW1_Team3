@@ -695,16 +695,17 @@ body {
   display: block;
 }
 
-/*/////////////////////////////////////// PER ANIMAZIONE CORIANOLI/GOCCE ////////////////////////////////////////////*/
+/* PER ANIMAZIONE CORIANOLI/GOCCE */
+
 #animazioneCoriandoli,
 #animazioneGocce {
   position: absolute;
   top: 50px;
   /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato); */
   left: 10px;
-  /* Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato); */
-  /* overflow: hidden; */
+  /*Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato) */
 }
+
 /* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
 @keyframes clessidra {
   0% {
