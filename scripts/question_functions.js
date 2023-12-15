@@ -136,9 +136,6 @@ function avviaAnimazioneCoriandoli() {
   // Riproduzione dell'audio
   const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
   audioWinner.play();
-  setTimeout(() => {
-    audioWinner.pause();
-  }, durataAnimazione);
 }
 ///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
@@ -327,15 +324,16 @@ const aggiungiVincenzo = function () {
 
 const populateLeaderboard = () => {
   const leaderboardContainer = document.getElementById("leaderboard");
-  for (let i = 1; i <= 10; i++) {
-    const randomName = generateRandomName();
-    const randomPoints = generateRandomPoints();
-    const randomImages = generateRandomImages();
+  if (leaderboardItems.length < 10) {
+    for (let i = 1; i <= 10; i++) {
+      const randomName = generateRandomName();
+      const randomPoints = generateRandomPoints();
+      const randomImages = generateRandomImages();
 
-    const leaderboardItem = document.createElement("div");
-    leaderboardItem.classList.add("lboard_memory");
+      const leaderboardItem = document.createElement("div");
+      leaderboardItem.classList.add("lboard_memory");
 
-    leaderboardItem.innerHTML = `
+      leaderboardItem.innerHTML = `
     <div class="img">
         <img class="leaderboardImg" src="${randomImages}" alt="random-image"/>
     </div>
@@ -348,7 +346,8 @@ const populateLeaderboard = () => {
     <div class="points">${randomPoints} points</div>
 `;
 
-    leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+      leaderboardItems.push({ element: leaderboardItem, points: randomPoints });
+    }
   }
 
   leaderboardItems.sort((a, b) => b.points - a.points);
