@@ -25,6 +25,148 @@ const fermaTicToc = async function () {
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
+//////////////////////////////////////////////// ANIMAZIONE CORDIANDOLI E LACRIME ///////////////////////////////////////////////////////////////////
+const superatoOno = function (pass) {
+  if (pass === "superato") {
+    const canvas = document.getElementById("animazioniCoriandoli");
+    const contenuto = canvas.getContext("2d");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let coriandoli = [];
+    const durataAnimazione = 4000; //
+
+    function creaCoriandolo() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height - height,
+        radius: Math.random() * (5 - 2) + 2,
+        color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
+          Math.random() * 255
+        }, 1)`,
+        velocita: Math.random() * 5 + 2,
+      };
+    }
+    for (let i = 0; i < 300; i++) {
+      coriandoli.push(creaCoriandolo());
+    }
+    function aggiorna() {
+      contenuto.clearRect(0, 0, width, height);
+      coriandoli.forEach((coriandolo) => {
+        contenuto.beginPath();
+        contenuto.arc(
+          coriandolo.x,
+          coriandolo.y,
+          coriandolo.radius,
+          0,
+          Math.PI * 2
+        );
+        contenuto.fillStyle = coriandolo.color;
+        contenuto.fill();
+        contenuto.closePath();
+        // Aggiornamento della posizione dei coriandoli
+        coriandolo.y += coriandolo.velocita;
+      });
+      coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
+      if (coriandoli.length !== 0) {
+        requestAnimationFrame(aggiorna);
+      }
+    }
+    setTimeout(() => {
+      requestAnimationFrame(aggiorna);
+    }, 600); // Ritardo iniziale
+    setTimeout(() => {
+      coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
+    }, durataAnimazione);
+    // Riproduzione dell'audio
+    const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
+    audioWinner.play();
+  } else {
+    const canvas = document.getElementById("animazioneCoriandoliOgocce");
+    const contenuto = canvas.getContext("2d");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let lacrime = [];
+    const durataAnimazione = 4000; //
+    const gravitaBase = 0.1; // Gravità base per tutte le lacrime
+
+    function creaLacrima() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height - height,
+        length: Math.random() * (50 - 20) + 20,
+        thickness: Math.random() * (4 - 1) + 1,
+        velocitaX: Math.random() * 4 - 2,
+        velocitaY: Math.random() * 4 + 3,
+        gravita: gravitaBase * (Math.random() * 3 + 1), // Gravità variabile
+      };
+    }
+
+    for (let i = 0; i < 180; i++) {
+      lacrime.push(creaLacrima());
+    }
+
+    function aggiorna() {
+      contenuto.clearRect(0, 0, width, height);
+      let lacrimeSulDisplay = false; // Flag per verificare se ci sono lacrime ancora sul display
+
+      lacrime.forEach((lacrima) => {
+        if (lacrima.y < height) {
+          lacrimeSulDisplay = true;
+        }
+
+        contenuto.beginPath();
+        contenuto.moveTo(lacrima.x, lacrima.y);
+        contenuto.lineTo(
+          lacrima.x + lacrima.thickness,
+          lacrima.y + lacrima.length
+        );
+        contenuto.lineTo(
+          lacrima.x - lacrima.thickness,
+          lacrima.y + lacrima.length
+        );
+        contenuto.closePath();
+        contenuto.fillStyle = "blue"; // Colore delle lacrime
+        contenuto.fill();
+
+        // Aggiornamento della posizione delle lacrime
+        lacrima.x += lacrima.velocitaX;
+        lacrima.y += lacrima.velocitaY + lacrima.gravita;
+
+        // Riporta le lacrime in cima al canvas quando escono dalla schermata
+        if (lacrima.y - lacrima.length > height) {
+          lacrima.x = Math.random() * width;
+          lacrima.y = Math.random() * height - height;
+        }
+      });
+
+      if (lacrimeSulDisplay) {
+        requestAnimationFrame(aggiorna);
+      }
+    }
+
+    setTimeout(() => {
+      requestAnimationFrame(aggiorna);
+    }, 600); // Ritardo iniziale
+
+    // Imposta il tempo massimo dell'animazione
+    setTimeout(() => {
+      lacrime.forEach((lacrima) => {
+        lacrima.y = height + lacrima.length + 1; // Spinge tutte le lacrime fuori dalla finestra
+      });
+    }, durataAnimazione);
+
+    // Riproduzione dell'audio
+    const audioLooser = new Audio("./sounds/looser-results.wav");
+    audioLooser.play();
+  }
+};
+
 ///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
 const graficoCiambella = function (sbagliate, giuste) {
   fermaTicToc();
@@ -117,6 +259,7 @@ const timer = function (difficoltaStringa) {
 
   return tempo;
 };
+
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
@@ -252,8 +395,9 @@ const populateLeaderboard = () => {
   leaderboardItems.sort((a, b) => b.points - a.points);
 
   leaderboardItems.forEach((item, index) => {
-    item.element.querySelector(".name_barra p span").textContent = `${index + 1
-      }.`;
+    item.element.querySelector(".name_barra p span").textContent = `${
+      index + 1
+    }.`;
 
     leaderboardContainer.appendChild(item.element);
   });
@@ -364,7 +508,6 @@ const renderizzaLeaderBoard = function () {
 
   divResultleaderboard.appendChild(divPulsantiSwitchTab);
 
-
   populateLeaderboard();
 };
 
@@ -389,7 +532,6 @@ const renderizza_risultato = async function () {
 
   pPulsanteResultBoard.addEventListener("click", function () {
     renderizza_risultato();
-
   });
 
   pPulsanteLeaderBoard.classList = "switchTab";
@@ -470,27 +612,29 @@ const renderizza_risultato = async function () {
     <h1 class="h1Question">${arrayRisposte[i].question}</h1>
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
+      arrayRisposte[i].answer,
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[0]
+    )}  ${
+        arrayRisposte[i].all_answer[0]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
-        arrayRisposte[i].all_answer[0]
-      )}  ${arrayRisposte[i].all_answer[0]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[1]
-        )} ${arrayRisposte[i].all_answer[1]}</p>
+        arrayRisposte[i].all_answer[1]
+      )} ${arrayRisposte[i].all_answer[1]}</p>
     </div>    
     <div class=rigaRisposte>
     <p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[2]
-        )}  ${arrayRisposte[i].all_answer[2]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[3]
-        )} ${arrayRisposte[i].all_answer[3]}</p>
+      arrayRisposte[i].answer,
+      arrayRisposte[i].correctAnswer,
+      arrayRisposte[i].all_answer[2]
+    )}  ${
+        arrayRisposte[i].all_answer[2]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[3]
+      )} ${arrayRisposte[i].all_answer[3]}</p>
     </div>
     </div>`;
 
@@ -505,12 +649,13 @@ const renderizza_risultato = async function () {
         arrayRisposte[i].answer,
         arrayRisposte[i].correctAnswer,
         arrayRisposte[i].all_answer[0]
-      )}  ${arrayRisposte[i].all_answer[0]
-        }</p><p class="CasellaRisposta">${checkRispostaVX(
-          arrayRisposte[i].answer,
-          arrayRisposte[i].correctAnswer,
-          arrayRisposte[i].all_answer[1]
-        )} ${arrayRisposte[i].all_answer[1]}</p>
+      )}  ${
+        arrayRisposte[i].all_answer[0]
+      }</p><p class="CasellaRisposta">${checkRispostaVX(
+        arrayRisposte[i].answer,
+        arrayRisposte[i].correctAnswer,
+        arrayRisposte[i].all_answer[1]
+      )} ${arrayRisposte[i].all_answer[1]}</p>
       </div></div>`;
       divRisposteDate.appendChild(divRisposta);
     }
@@ -536,9 +681,9 @@ const rispostaVuota = async function () {
 
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
@@ -562,9 +707,9 @@ async function addRisposta(
 
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
 
   renderizzaDomande();
@@ -587,252 +732,12 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   arrayRisposte.push(risposta);
   console.log(
     "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
+      arrayRisposte.length +
+      " lunghezza array domande: " +
+      arrayDomande.length
   );
   renderizzaDomande();
 }
-
-const superatoOno = function (pass) {
-  if (pass === "superato") {
-    // inzio Animazione Coriandoli + audio:
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let coriandoli = [];
-    let coriandoliSetting = {
-      count: 500,
-      gravity: 0.05,
-      wave: 0,
-    };
-
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
-
-    function Coriandolo() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.area = numeroRandom(12, 15);
-      this.dimension = numeroRandom(9, 24); // Nuovo campo per la dimensione
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-      this.color = `rgb(${numeroRandom(0, 255)}, ${numeroRandom(
-        0,
-        255
-      )}, ${numeroRandom(0, 255)})`;
-    }
-
-    Coriandolo.prototype.draw = function () {
-      contenuto.beginPath();
-      contenuto.lineJoin = "round"; // Smusso degli angoli
-      contenuto.lineCap = "round"; // Smusso delle estremità
-      contenuto.lineWidth = this.dimension; // Utilizza la dimensione
-      contenuto.strokeStyle = this.color;
-      this.x = this.x + this.tilt;
-      contenuto.moveTo(this.x + this.dimension / 5, this.y);
-      contenuto.lineTo(this.x, this.y + this.tilt + this.dimension / 30);
-      contenuto.stroke();
-    };
-
-    const creaCoriandoli = function () {
-      while (coriandoli.length < coriandoliSetting.count) {
-        let coriandolo = new Coriandolo();
-        coriandoli.push(coriandolo);
-      }
-    };
-
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
-
-    const inizia = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
-
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-
-      contenuto.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < coriandoli.length; i++) {
-        coriandoliSetting.wave += 0.4;
-        coriandoli[i].tiltAngle += numeroRandom(0.1, 0.2);
-        coriandoli[i].y +=
-          (Math.sin(coriandoliSetting.wave) +
-            coriandoli[i].area +
-            coriandoliSetting.gravity) *
-          0.36;
-        coriandoli[i].tilt = Math.cos(coriandoli[i].tiltAngle) * 0.355;
-
-        coriandoli[i].draw();
-
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime; // Aggiornamento del tempo corrente
-        } else {
-          // Animazione terminata, i coriandoli possono scendere fuori dal canvas
-          coriandoli[i].y += 10; // Modifica la velocità di caduta al termine del tempo
-        }
-
-        if (coriandoli[i].y > height) {
-          coriandoli.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
-
-      if (coriandoli.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(inizia);
-      }
-    };
-
-    window.onload = () => {
-      canvas.width = width;
-      canvas.height = height;
-
-      // Attendi 700 millisecondi (0.7 secondi) prima di chiamare creaCoriandoli()
-      setTimeout(() => {
-        creaCoriandoli();
-        window.requestAnimationFrame(inizia);
-      }, 700);
-      const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-      audioWinner.play();
-    };
-    // // fine Animazione Coriandoli.
-    // inzio Animazione Lacrime + audio:
-  } else {
-    let canvas = document.getElementById("animazioniCoriandoliOgocce");
-    let contenuto = canvas.getContext("2d");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let lacrime = [];
-    let lacrimeSetting = {
-      count: 400,
-      gravity: 0.4,
-      wave: 0,
-    };
-
-    window.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-
-    const numeroRandom = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
-
-    function Lacrima() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.dimension = numeroRandom(8, 20);
-      this.color = `rgba(0, 0, 255, ${numeroRandom(0.5, 1)})`;
-      this.speed = numeroRandom(5, 15);
-      this.tilt = numeroRandom(-4, 4);
-      this.tiltAngle = 0;
-    }
-
-    Lacrima.prototype.draw = function () {
-      contenuto.beginPath();
-      contenuto.lineWidth = 5;
-      contenuto.strokeStyle = this.color;
-      contenuto.moveTo(this.x, this.y);
-      contenuto.quadraticCurveTo(
-        this.x + this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y - this.dimension * 2.5 // Inverti la posizione del punto di arrivo
-      );
-      contenuto.quadraticCurveTo(
-        this.x - this.dimension / 1.5, // Inverti la posizione del punto di controllo
-        this.y - this.dimension, // Inverti la posizione del punto di controllo
-        this.x,
-        this.y
-      );
-      contenuto.stroke();
-    };
-
-    const creaLacrime = function () {
-      while (lacrime.length < lacrimeSetting.count) {
-        let lacrima = new Lacrima();
-        lacrime.push(lacrima);
-      }
-    };
-
-    let startTime = null;
-    let duration = 3000; // Durata in millisecondi
-    let tempoCorrente = 0; // Tempo corrente di animazione
-
-    const iniziaLacrime = (timestamp) => {
-      const tempoTrascorso = timestamp - startTime;
-
-      if (!startTime) {
-        startTime = timestamp;
-      }
-
-      tempoCorrente = timestamp - startTime;
-
-      contenuto.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < lacrime.length; i++) {
-        lacrimeSetting.wave += 0.00001;
-        lacrime[i].tiltAngle += numeroRandom(0.1, 0.2);
-        lacrime[i].y +=
-          (Math.sin(lacrimeSetting.wave) + lacrimeSetting.gravity) *
-          lacrime[i].speed;
-        lacrime[i].tilt = Math.cos(lacrime[i].tiltAngle) * 0.1;
-
-        lacrime[i].draw();
-
-        if (tempoCorrente < duration) {
-          tempoCorrente = timestamp - startTime;
-        } else {
-          lacrime[i].y += 10;
-        }
-        if (lacrime[i].y > height + lacrime[i].dimension) {
-          lacrime.splice(i, 1);
-          i--; // Decrementa l'indice dopo la rimozione dell'elemento
-        }
-      }
-
-      if (lacrime.length > 0 && tempoCorrente < duration) {
-        window.requestAnimationFrame(iniziaLacrime);
-      }
-    };
-
-    window.onload = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      setTimeout(() => {
-        document.getElementById("messaggioGocce").style.display = "block";
-        creaLacrime();
-        window.requestAnimationFrame(iniziaLacrime);
-      }, 700);
-      const audioLooser = new Audio("./sounds/looser-results.wav");
-      audioLooser.play();
-    };
-  }
-  // fine Animazione Lacrime.
-  console.log("avviata funzione supreatoOno");
-};
 
 const divDinamicoQuestion = async function (obgDomanda) {
   if (!obgDomanda) {
@@ -937,8 +842,7 @@ const renderizzaDomande = async function () {
     divTest.innerHTML = ``;
     ////////////////////////////////////////////////////////////////////////////////////////////ABBREVIA SEQUENZA DOMANDE
     renderizza_risultato(arrayRisposte);
-    superatoOno("superato")
-
+    superatoOno("superato");
   } else {
     const nuovaDomandaRenderizzata = await divDinamicoQuestion(
       arrayDomande[nDomandeFatte]
@@ -950,8 +854,6 @@ const renderizzaDomande = async function () {
 };
 
 renderizzaDomande();
-
-
 
 // FUNZIONE PER FAR PARTIRE ANIMAZIONI AL CLICK SU ULTIMA RISPOSTA:
 // const avvioAnimazioniResults = function () {
@@ -966,4 +868,3 @@ renderizzaDomande();
 //     }
 //   }
 // };
-

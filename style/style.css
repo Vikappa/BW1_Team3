@@ -1,6 +1,6 @@
 /* CSS COMUNE PER TUTTO IL PROGETTO */
-@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 body {
   background-image: url(../assets/bg.jpg);
@@ -31,7 +31,7 @@ main {
 
 .title1,
 .title2 {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 60px;
   justify-self: left;
 }
@@ -45,7 +45,7 @@ main {
 .description,
 .elenco,
 span {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   justify-self: left;
 }
@@ -76,7 +76,8 @@ span {
 }
 
 /* CONTROLLARE!!!!!! */
-#checkbox {}
+#checkbox {
+}
 
 div button {
   height: 58px;
@@ -164,7 +165,7 @@ button {
 
 #genitore p {
   text-align: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 16px;
 }
 
@@ -290,9 +291,7 @@ textarea {
 
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid
-    /* #900080 */
-    #d20094;
+  border-bottom: 1px solid /* #900080 */ #d20094;
 }
 
 form p {
@@ -307,7 +306,7 @@ form p {
   height: 50px;
   background-color: #00ffff;
   font-size: 16px;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 30px rgba(0, 255, 255, 1);
@@ -317,7 +316,7 @@ form p {
 #body-feedback {
   text-align: center;
   color: #fff;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 16px;
 }
 
@@ -694,21 +693,14 @@ body {
   }
   */
 
-#animazioniCoriandoliOgocce {
+#animazioneCoriandoliOgocce,
+#animazioneCoriandolissssss {
   position: absolute;
   top: 50px;
   /* Regola la posizione verticale del canvas (sostituisci con il valore desiderato); */
   left: 10px;
   /* Regola la posizione orizzontale del canvas (sostituisci con il valore desiderato); */
-  overflow: hidden;
-}
-
-#messaggioGocce {
-  display: none;
-  text-align: center;
-  color: #e9eaed;
-  font-size: 370%;
-  font-family: 'Outfit', sans-serif;
+  /* overflow: hidden; */
 }
 
 /* ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA /////////////////////////////////////////////////////////////////// */
@@ -723,7 +715,7 @@ body {
 }
 
 .clessidra::before {
-  content: '';
+  content: "";
   display: block;
   width: 0.5%;
   margin-left: auto;
