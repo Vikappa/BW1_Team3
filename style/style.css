@@ -455,11 +455,13 @@ textarea {
 #Risultati {
   position: absolute;
   top: 0%;
+  top: 0%;
   left: 0;
 }
 
 #Leaderboard {
   position: absolute;
+  top: 0%;
   top: 0%;
   left: 12%;
 }
@@ -517,6 +519,7 @@ body {
 }
 
 /*
+/*
 .lboard_section ul li {
   margin-right: 50px;
   font-size: 30px;
@@ -536,10 +539,11 @@ body {
   text-align: center;
 }
 */
-.inner_bar {
+*/ .inner_bar {
   width: 95%;
   animation: progress 2s ease-in-out forwards;
 }
+/*
 
 /*
 @keyframes progress {
@@ -638,13 +642,14 @@ body {
   width: calc(100% - 150px);
 }
 */
-.lboard_contain .lboard_memory .name_barra p {
+*/ .lboard_contain .lboard_memory .name_barra p {
   color: orange;
 }
 
 .lboard_contain .lboard_memory .name_barra p span {
   margin-right: 5px;
 }
+/*
 
 /*
 .lboard_contain .lboard_item .points {
@@ -675,7 +680,7 @@ body {
   padding-bottom: 0;
 }
 */
-.lboard_contain .lboard_memory .img {
+*/ .lboard_contain .lboard_memory .img {
   width: 50px;
 }
 
