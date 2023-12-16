@@ -33,4 +33,5 @@ Vincenzo: Corretta renderizzazione domande VERO/FALSO o a risposta multipla. Ini
 
 Giorno 5:
 Francesco: Aggiunta pulsante "Rate Us" generato dinamicamente e migliorie varie del codice improntate alla finalizzazione e consegna del progetto
+
 Vincenzo: Modifica metodo di memorizzazione degli score del corso. Fix gestione array memoria leaderboard. Fix layout leaderboard. Fix metodo V o X sulle risposte scelte. Fix animazione coriandoli. Fix metodo renderizzazione podio. Aggiunto div per input nomeutente, che lo inserisce nell'array di score da renderizzare. 
