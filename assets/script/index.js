@@ -1,5 +1,4 @@
 const buttonClick = function () {
-    console.log("Prova")
     window.location.href = "";
 };
 
@@ -9,8 +8,13 @@ checkbox.addEventListener('click', function () {
     if (checkbox.checked) {
         console.log('true');
         button.disabled = false;
+        button.classList.add('enabled');
+        button.classList.remove('disabled');
     } else {
-        button.disabled = true;
         console.log('false');
+        button.disabled = true;
+        button.classList.remove('enabled');
+        button.classList.add('disabled');
     }
 });
+
