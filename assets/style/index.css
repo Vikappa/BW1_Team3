@@ -62,8 +62,9 @@
 @media (max-width: 360px) {
     #buttonProceed {
         position: relative;
-        margin-top: 10vh;
-        margin-bottom: 1vh;
+        bottom: 0;
+        right: auto;
+        margin: 1vh;
         float: right;
         height: 50px;
         width: 200px;
