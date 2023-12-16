@@ -87,9 +87,7 @@ button:hover {
   border-style: 5px;
 }
 
-button {
-  border: none;
-}
+button {}
 
 /* CSS TIMER - FRANCESCO */
 
