@@ -16,230 +16,20 @@ let resOrLead;
 
 // Metodo brutalmente copiato da https://www.youtube.com/watch?v=-cX5jnQgqSM senza sapere cosa siano le async functions
 
-///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
-const graficoCiambella = function (sbagliate, giuste) {
-  fermaTicToc();
-  const canvas = document.createElement("canvas");
-  canvas.id = "graficoCiambella";
-  canvas.width = 300;
-  canvas.height = 300;
-  const ctx = canvas.getContext("2d");
 
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Colore dell'ombra
-  ctx.shadowBlur = 50; // Intensità dell'ombra
-  ctx.shadowOffsetX = 10; // Spostamento orizzontale dell'ombra
-  ctx.shadowOffsetY = 5; // Spostamento verticale dell'ombra
-
-  // Dati del grafico
-  const dati = {
-    datasets: [
-      {
-        data: [sbagliate, giuste],
-        backgroundColor: ["#D20094", "#00FFFF"],
-        borderColor: "white",
-        borderWidth: 0, // Riduci il bordo
-      },
-    ],
-  };
-
-  // Configurazione del grafico
-  const options = {
-    cutoutPercentage: 70,
-    responsive: false,
-    plugins: {
-      datalabels: {
-        display: false, // Nascondi le etichette
-      },
-    },
-  };
-
-  // Crea e restituisci il grafico a ciambella
-  return new Chart(ctx, {
-    type: "doughnut",
-    data: dati,
-    options: options,
-  }).canvas;
-};
-///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
-
-///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
-const avviaAnimazioneLacrime = function () {
-  const canvas = document.getElementById("animazioneGocce");
-  const contenuto = canvas.getContext("2d");
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-
-  let lacrime = [];
-  const durataAnimazione = 6000;
-  const gravitaBase = 0.1;
-
-  function creaLacrima() {
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height - height,
-      length: Math.random() * (50 - 20) + 20,
-      thickness: Math.random() * (4 - 1) + 1,
-      velocitaX: Math.random() * 4 - 2,
-      velocitaY: Math.random() * 4 + 3,
-      gravita: gravitaBase * (Math.random() * 5 + 1),
-      opacita: 1, // Aggiunta dell'opacità iniziale
-    };
-  }
-
-  for (let i = 0; i < 180; i++) {
-    lacrime.push(creaLacrima());
-  }
-
-  function aggiorna() {
-    contenuto.clearRect(0, 0, width, height);
-    let lacrimeSulDisplay = false;
-
-    lacrime.forEach((lacrima) => {
-      if (lacrima.y < height) {
-        lacrimeSulDisplay = true;
-      }
-
-      contenuto.beginPath();
-      contenuto.moveTo(lacrima.x, lacrima.y);
-      contenuto.lineTo(
-        lacrima.x + lacrima.thickness,
-        lacrima.y + lacrima.length
-      );
-      contenuto.lineTo(
-        lacrima.x - lacrima.thickness,
-        lacrima.y + lacrima.length
-      );
-      contenuto.closePath();
-      contenuto.fillStyle = `rgba(0, 0, 255, ${lacrima.opacita})`;
-      contenuto.fill();
-
-      lacrima.x += lacrima.velocitaX;
-      lacrima.y += lacrima.velocitaY + lacrima.gravita;
-
-      if (lacrima.y - lacrima.length > height) {
-        lacrima.x = Math.random() * width;
-        lacrima.y = Math.random() * height - height;
-      }
-
-      // Verifica se l'animazione è terminata
-      if (lacrima.opacita > 0) {
-        lacrima.opacita -= 0.0025; // Modifica il valore per controllare la velocità di dissolvenza
-      }
-    });
-
-    if (lacrimeSulDisplay) {
-      requestAnimationFrame(aggiorna);
-    }
-  }
-
-  setTimeout(() => {
-    requestAnimationFrame(aggiorna);
-  }, 600);
-
-  setTimeout(() => {
-    lacrime = [];
-  }, durataAnimazione);
-
-  const audioLooser = new Audio("./sounds/looser-results.wav");
-  audioLooser.play();
-};
-
-///////////////////////////////////////////////// FINE ANIMAZIONE LACRIME /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////// TIMER - FRANCESCO   ///////////////////////////////////////////////////
 const main = document.getElementById("main");
 
-const convertiStringaInSecondiTimer = function (difficoltaStringa) {
-  if (difficoltaStringa === "easy") {
-    return 30;
-  } else if (difficoltaStringa === "medium") {
-    return 60;
-  } else if (difficoltaStringa === "hard") {
-    return 120;
-  } else {
-    console.log(
-      "Errore numero inserito nel metodo convertiStringaInSecondiTimer"
-    );
-    return 0;
-  }
-};
+
 
 //modificato per ritornare un valore che non sia fuori dal metodo
 
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////
-const cerchioTimer = function (difficolta) {
-  const cerchioTimerHtml = document.createElement("div");
-  const divCerchio = document.createElement("div");
-  const divTime = document.createElement("div");
-  cerchioTimerHtml.id = "countdown";
-  divCerchio.id = "cerchio";
-  divTime.id = "time";
 
-  divCerchio.style = "position: absolute";
 
-  switch (difficolta) {
-    case "easy":
-      divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
-              <circle class="svgCircle" id="circle30" r="70" cx="75" cy="75"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
-            </svg>`;
-      break;
-    case "medium":
-      divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
-              <circle class="svgCircle"  id="circle60" r="70" cx="75" cy="75"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
-            </svg>`;
-      break;
-    case "hard":
-      divCerchio.innerHTML = `    
-            <svg id="svgGenerale">
-              <circle class="svgCircle"  id="circle120" r="70" cx="75" cy="75"></circle>
-              <circle class="svgCircle"  id="circleBackground" r="70" cx="75" cy="75"></circle>
-            </svg>`;
-      break;
-  }
 
-  const pseconds = document.createElement("p");
-  const nSecondi = document.createElement("p");
-  const primanenti = document.createElement("p");
-
-  pseconds.textContent = "seconds";
-  nSecondi.id = "nSecondi";
-  nSecondi.textContent = convertiStringaInSecondiTimer(difficolta);
-
-  nSecondi.textContent = timer(difficolta);
-  primanenti.textContent = "remeaning";
-
-  divTime.appendChild(pseconds);
-  divTime.appendChild(nSecondi);
-  divTime.appendChild(primanenti);
-
-  cerchioTimerHtml.style.width = "150px";
-  cerchioTimerHtml.style.height = "150px";
-
-  cerchioTimerHtml.appendChild(divCerchio);
-  cerchioTimerHtml.appendChild(divTime);
-
-  return cerchioTimerHtml;
-};
-
-const diffInSecondi = function (diffString) {
-  switch (diffString) {
-    case `easy`:
-      return 30;
-    case `medium`:
-      return 60;
-    case `hard`:
-      return 120;
-    default:
-      break;
-  }
-};
 
 ///////////////////////////////////////////////////// ANIMAZIONE DURANTE ATTESA/CARICAMENTO PAGINA ///////////////////////////////////////////////////////////////////
 const loadingDiv = document.createElement("div");
@@ -492,36 +282,7 @@ const populateLeaderboard = () => {
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
-async function loadQuestion() {
-  const result = await fetch(`${apiUrl}`);
-  if (result.status === 429) {
-    await delay(2500);
-    return await loadQuestion();
-  }
-  const data = await result.json();
-  return data.results;
-}
-
-const generaArrayDomande = async function () {
-  const fullArray = await loadQuestion();
-  let timeScore = 0;
-  const arrayFinale = [];
-  const newArray = [...fullArray];
-
-  while (timeScore < 1800) {
-    newArray.forEach((domanda) => {
-      if (domanda && timeScore + diffInSecondi(domanda.difficulty) <= 1800) {
-        arrayFinale.push(domanda);
-        timeScore += diffInSecondi(domanda.difficulty);
-      }
-    });
-  }
-  return arrayFinale;
-};
 
 const checkRispostaVX = function (
   rispostaData,
@@ -854,92 +615,7 @@ async function addRispostaBool(bool, domanda, correct_answer) {
   renderizzaDomande();
 }
 
-const divDinamicoQuestion = async function (obgDomanda) {
-  if (!obgDomanda) {
-    console.log("obg domanda non esistente");
-    await delay(1000);
-    return await divDinamicoQuestion(obgDomanda);
-  }
-  currentQuestion = obgDomanda;
 
-  await fermaTicToc();
-
-  difficulty = obgDomanda.difficulty;
-  const rispostaCorretta = obgDomanda.correct_answer;
-  const divRitorno = document.createElement("div");
-  const pDomanda = document.createElement("p");
-  pDomanda.innerText = obgDomanda.question;
-  pDomanda.id = "pDomanda";
-  pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%";
-  divRitorno.appendChild(pDomanda);
-
-  if (obgDomanda.type === `multiple`) {
-    let risposte = [obgDomanda.correct_answer].concat(
-      obgDomanda.incorrect_answers
-    );
-    const divRisposte1 = document.createElement("div");
-
-    const divRisposte2 = document.createElement("div");
-
-    divRisposte1.id = `divRisposteRiga1`;
-    divRisposte2.id = `divRisposteRiga2`;
-
-    let risposteAppese = 0;
-
-    for (let iRisposte = 0; iRisposte < risposte.length; iRisposte++) {
-      const pRisposta = document.createElement("p");
-      pRisposta.innerText = risposte[iRisposte];
-
-      pRisposta.classList = "multTypeButton";
-      pRisposta.id = `r` + risposte[iRisposte];
-
-      pRisposta.onclick = async function () {
-        await addRisposta(
-          risposte,
-          iRisposte,
-          pDomanda.innerText,
-          rispostaCorretta
-        );
-      };
-      if (risposteAppese > 1) {
-        divRisposte2.appendChild(pRisposta);
-      } else {
-        risposteAppese++;
-        divRisposte1.appendChild(pRisposta);
-      }
-
-      divRitorno.appendChild(divRisposte1);
-      divRitorno.appendChild(divRisposte2);
-    }
-  } else {
-    const divRispostaBoolean = document.createElement("div");
-    divRispostaBoolean.id = "pVero-pFalso";
-    const divVero = document.createElement("div");
-    const divFalso = document.createElement("div");
-    const pVero = document.createElement("p");
-    const pFalso = document.createElement("p");
-    pVero.classList = `booleanButton`;
-    pVero.id = `pVero`;
-    pVero.onclick = async function () {
-      await addRispostaBool("true", pDomanda.innerText, rispostaCorretta);
-    };
-    pFalso.classList = `booleanButton`;
-    pFalso.onclick = async function () {
-      await addRispostaBool("false", pDomanda.innerText, rispostaCorretta);
-    };
-    pFalso.id = `pFalso`;
-    pVero.innerText = "True";
-    pFalso.innerText = "False";
-    divFalso.appendChild(pFalso);
-    divVero.appendChild(pVero);
-    divRispostaBoolean.appendChild(divVero);
-    divRispostaBoolean.appendChild(divFalso);
-    divRitorno.appendChild(divRispostaBoolean);
-  }
-  divRitorno.id = "genitore";
-  divRitorno.appendChild(cerchioTimer(difficulty));
-  return divRitorno;
-};
 
 const renderizzaDomande = async function () {
   if (arrayDomande.length === 0) {
