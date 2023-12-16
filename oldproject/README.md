@@ -28,5 +28,10 @@ Luca: Ho collaborato con Vincenzo sulla parte JS della pagina benvenuti, sul cor
 Giorno 3/4 -- Francesco:
 Migliorie grafico ambiente grafico a ciambella e timer. Varie migliorie e supporto colleghi nel Javascript
 
+Giorno 4:
+Vincenzo: Corretta renderizzazione domande VERO/FALSO o a risposta multipla. Inizio integrazione metodi scritti dagli altri.
+
 Giorno 5:
 Francesco: Aggiunta pulsante "Rate Us" generato dinamicamente e migliorie varie del codice improntate alla finalizzazione e consegna del progetto
+
+Vincenzo: Modifica metodo di memorizzazione degli score del corso. Fix gestione array memoria leaderboard. Fix layout leaderboard. Fix metodo V o X sulle risposte scelte. Fix animazione coriandoli. Fix metodo renderizzazione podio. Aggiunto div per input nomeutente, che lo inserisce nell'array di score da renderizzare. 
