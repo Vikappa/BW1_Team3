@@ -38,3 +38,5 @@ Vincenzo: Modifica metodo di memorizzazione degli score del corso. Fix gestione 
 
 Branch Vincenzo:
 Giorno 5: Restyle dell'index a mio piacimento, con focus sulla responsività mobile. Personalizzazione brand. 
+
+Giorno 6: Reimporto parti utili del vecchio codice. Riscrittura di parti del codice aggiunte tardivamente nell'algoritmo del funzioanemnto

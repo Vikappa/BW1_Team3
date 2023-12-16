@@ -1,23 +1,13 @@
 // Il link magico altro non era che il link all'API di un progetto OpenSource di un Database di domande di vari argomenti
 // Sul sito https://opentdb.com possiamo iscriverci e creare la nostra richiesta al database sotto forma di url su cui fare fetch()
 
-const apiUrl = "https://opentdb.com/api.php?amount=50&category=18";
-const body = document.getElementsByName("body")[0];
-let nDomandeFatte = 0;
-const divTest = document.getElementById("testAppend");
-const divResultleaderboard = document.getElementById("resultleaderboard");
 const leaderboardItems = [];
-let username
-const arrayRisposte = [];
 let intervalloUnico;
 let currentQuestion;
 
 let resOrLead;
 
-const fermaTicToc = async function () {
-  console.log("Fermato");
-  clearInterval(intervalloUnico);
-};
+
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 
@@ -71,73 +61,7 @@ const graficoCiambella = function (sbagliate, giuste) {
   }).canvas;
 };
 ///////////////////////////////////////// FINEGRAFICO CIAMBELLA ////////////////////////////////////////
-///////////////////////////////////////// INIZIO ANIMAZIONE CORIANDOLI ////////////////////////////////////////
-function avviaAnimazioneCoriandoli() {
-  const canvas = document.getElementById("animazioneCoriandoli");
-  const contenuto = canvas.getContext("2d");
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
 
-  let coriandoli = [];
-  const durataAnimazione = 6000; // 4 secondi
-
-  function creaCoriandolo() {
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height - height,
-      radius: Math.random() * (5 - 2) + 2,
-      color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255
-        }, 1)`,
-      velocita: Math.random() * 8 + 2,
-    };
-  }
-
-  for (let i = 0; i < 300; i++) {
-    coriandoli.push(creaCoriandolo());
-  }
-
-  function aggiorna() {
-    contenuto.clearRect(0, 0, width, height);
-    coriandoli.forEach((coriandolo) => {
-      contenuto.beginPath();
-      contenuto.arc(
-        coriandolo.x,
-        coriandolo.y,
-        coriandolo.radius,
-        0,
-        Math.PI * 2
-      );
-      contenuto.fillStyle = coriandolo.color;
-      contenuto.fill();
-      contenuto.closePath();
-
-      // Aggiornamento della posizione dei coriandoli
-      coriandolo.y += coriandolo.velocita;
-    });
-
-    coriandoli = coriandoli.filter((coriandolo) => coriandolo.y < height);
-
-    if (coriandoli.length !== 0) {
-      requestAnimationFrame(aggiorna);
-    }
-  }
-
-  setTimeout(() => {
-    requestAnimationFrame(aggiorna);
-  }, 600); // Ritardo iniziale
-
-  setTimeout(() => {
-    coriandoli = []; // Svuota l'array di coriandoli dopo 4 secondi
-  }, durataAnimazione);
-
-  // Riproduzione dell'audio
-  const audioWinner = new Audio("./sounds/crowd-cheer-results.wav");
-  audioWinner.play();
-}
-
-///////////////////////////////////////// FINE ANIMAZIONE CORIANDOLI ////////////////////////////////////////
 ///////////////////////////////////////// INIZIO ANIMAZIONE LACRIME/////////////////////////////////////////////
 const avviaAnimazioneLacrime = function () {
   const canvas = document.getElementById("animazioneGocce");
@@ -242,33 +166,7 @@ const convertiStringaInSecondiTimer = function (difficoltaStringa) {
 };
 
 //modificato per ritornare un valore che non sia fuori dal metodo
-const timer = function (difficoltaStringa) {
-  let tempo;
-  if (difficoltaStringa === "easy") {
-    tempo = 30;
-  } else if (difficoltaStringa === "medium") {
-    tempo = 60;
-  } else if (difficoltaStringa === "hard") {
-    tempo = 120;
-  } else {
-    console.log("Errore numero inserito nel metodo timer");
-    tempo = 0;
-  }
-  function aggiornaTimer() {
-    if (tempo >= 1) {
-      tempo--;
-      console.log("Aggiorno tempo");
-      document.getElementById("nSecondi").textContent = tempo;
-    } else {
-      rispostaVuota();
-      fermaTicToc();
-    }
-  }
 
-  intervalloUnico = setInterval(aggiornaTimer, 1000);
-
-  return tempo;
-};
 /////////////////////////////////////////////////////////// FINE TIMER - FRANCESCO   ///////////////////////////////////////////////////
 
 //////////////////////////////// VINCENZO DICE: HO ACCROCCHIATO IL METODO CHE AGGIORNA IL TIMER E IL METODO CHE MUOVE IL CERCHIO IN UN SOLO DIV ///////////////////

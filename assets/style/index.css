@@ -59,13 +59,22 @@
     }
 }
 
-@media (max-width: 360px) {
+@media (max-height: 650px) {
     #buttonProceed {
         position: relative;
         bottom: 0;
         right: auto;
         margin: 1vh;
         float: right;
+        height: 50px;
+        width: 200px;
+    }
+}
+
+@media (max-width: 650px) {
+    #buttonProceed {
+
+        margin: 1vh;
         height: 50px;
         width: 200px;
     }
