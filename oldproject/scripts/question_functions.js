@@ -545,26 +545,7 @@ const renderizza_risultato = async function () {
 
 let arrayDomande = [];
 
-const rispostaVuota = async function () {
-  let risposta = {
-    type: currentQuestion.type,
-    question: currentQuestion.question,
-    answer: "Non ho risposto",
-    all_answer: currentQuestion.arrayRispostePresentate,
-    correctAnswer: currentQuestion.correct_answer,
-  };
 
-  arrayRisposte.push(risposta);
-
-  console.log(
-    "Lunghezza array risposte: " +
-    arrayRisposte.length +
-    " lunghezza array domande: " +
-    arrayDomande.length
-  );
-
-  renderizzaDomande();
-};
 
 async function addRisposta(
   arrayRispostePresentate,

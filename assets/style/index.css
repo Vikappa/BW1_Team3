@@ -16,7 +16,7 @@
 }
 
 #title2 {
-    margin-top: -1.5%;
+    margin-top: -2%;
     font-weight: 900;
 }
 
@@ -26,6 +26,7 @@
         font-size: 3rem;
     }
 }
+
 
 #title-instructions #buttonProceed {
     position: absolute;
@@ -59,9 +60,9 @@
     }
 }
 
-@media (max-height: 650px) {
+@media (max-width: 420px) {
     #buttonProceed {
-        position: relative;
+        position: static;
         bottom: 0;
         right: auto;
         margin: 1vh;
@@ -73,7 +74,6 @@
 
 @media (max-width: 650px) {
     #buttonProceed {
-
         margin: 1vh;
         height: 50px;
         width: 200px;
@@ -151,5 +151,4 @@
     position: relative;
     bottom: 200%;
     left: -50%;
-
 }

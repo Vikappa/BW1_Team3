@@ -15,7 +15,6 @@ let intervalloUnico
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
-
 const loadQuestion = async function () {
     const result = await fetch(`${apiUrl}`)
     if (result.status === 429) {
@@ -25,13 +24,15 @@ const loadQuestion = async function () {
     const data = await result.json()
     return data.results;
 }
+///////////////////////////////////////////////// METODO CENTRALE //////////////////////////////////////////////////////////////
 
-const generaArrayDomande = async function () {
+const start = async function () {
+    ////scarico array///////
     const fullArray = await loadQuestion()
     let timeScore = 0
     const arrayFinale = []
     const newArray = [...fullArray]
-
+    //////seleziono domande per avere 30 minuti/////////////
     while (timeScore < 1800) {
         newArray.forEach((domanda) => {
             if (domanda && timeScore + diffInSecondi(domanda.difficulty) <= 1800) {
@@ -40,14 +41,21 @@ const generaArrayDomande = async function () {
             }
         });
     }
-    return arrayFinale
-};
+    /////////// assegno arrayDomande alla variabile comune di tutta la pagina ///////////
+    arrayDomande = [...arrayFinale]
+    console.log("Array domande selezionate")
+    console.log(arrayDomande[0])
+
+    dinamicStage.appendChild(divDinamicoQuestion(arrayDomande[0]))
+
+
+}
 
 ///////////////////////////////////////////////// Metodi comuni ai metodi della pagina /////////////////////////////////////////////////
 const fermaTicToc = async function () {
     console.log("Fermato")
     clearInterval(intervalloUnico)
-}
+} //killa il timer
 
 const timer = function (difficoltaStringa) {
     let tempo
@@ -66,7 +74,9 @@ const timer = function (difficoltaStringa) {
         if (tempo >= 1) {
             tempo--
             console.log("Aggiorno tempo")
-            document.getElementById("nSecondi").textContent = tempo
+            if (document.getElementById("nSecondi")) {
+                document.getElementById("nSecondi").textContent = tempo
+            }
         } else {
             rispostaVuota()
             fermaTicToc()
@@ -76,7 +86,7 @@ const timer = function (difficoltaStringa) {
     intervalloUnico = setInterval(aggiornaTimer, 1000)
 
     return tempo;
-}
+} // setta un metodo interval di nome aggiornaTimer() che aggiorna il testo in base alla stringa easy medium hard ricevuta
 
 const diffInSecondi = function (diffString) {
     switch (diffString) {
@@ -89,7 +99,7 @@ const diffInSecondi = function (diffString) {
         default:
             break
     }
-}
+} // serve ancora?
 
 const convertiStringaInSecondiTimer = function (difficoltaStringa) {
     if (difficoltaStringa === "easy") {
@@ -104,9 +114,29 @@ const convertiStringaInSecondiTimer = function (difficoltaStringa) {
         );
         return 0
     }
-};
+} //prende stringa easy medium hard ritorna 30 60 120
 
-///////////////////////////////////////// GRAFICO CIAMBELLA ////////////////////////////////////////
+
+const rispostaVuota = async function () {
+    let risposta = {
+        type: currentQuestion.type,
+        question: currentQuestion.question,
+        answer: "Non ho risposto",
+        all_answer: currentQuestion.arrayRispostePresentate,
+        correctAnswer: currentQuestion.correct_answer,
+    };
+
+    arrayRisposte.push(risposta);
+
+    console.log(
+        "Lunghezza array risposte: " +
+        arrayRisposte.length +
+        " lunghezza array domande: " +
+        arrayDomande.length
+    )
+} // metodo void che pusha una risposta vuota in arrayDomande
+
+//////////////////////////////////////// ELEMENTI HTML DINAMICI //////////////////////////////////////////////////
 
 const graficoCiambella = function (giuste, sbagliate) {
     fermaTicToc();
@@ -149,9 +179,7 @@ const graficoCiambella = function (giuste, sbagliate) {
     }).canvas;
     divCanvas.appendChild(chart)
     return divCanvas
-};
-
-//////////////////////////////////////// ELEMENTI HTML DINAMICI //////////////////////////////////////////////////
+}; // ritorna un div
 
 const cerchioTimer = function (difficolta) {
     const cerchioTimerHtml = document.createElement("div")
@@ -162,7 +190,6 @@ const cerchioTimer = function (difficolta) {
     divTime.id = "time"
 
     divCerchio.style = "position: absolute"
-
     switch (difficolta) {
         case "easy":
             divCerchio.innerHTML = `    
@@ -209,95 +236,21 @@ const cerchioTimer = function (difficolta) {
     cerchioTimerHtml.appendChild(divTime)
 
     return cerchioTimerHtml
-}
+} //ritorna un div
 
 const divDinamicoQuestion = async function (obgDomanda) {
-    if (!obgDomanda) {
-        console.log("obg domanda non esistente")
-        await delay(1000);
-        return await divDinamicoQuestion(obgDomanda)
-    }
+    console.log(obgDomanda)
+    dinamicStage.innerHTML = ``
+    const pDomanda = document.createElement('p')
+    pDomanda.textContent = (obgDomanda.question)
 
-    await fermaTicToc();
-
-    difficulty = obgDomanda.difficulty;
-    const rispostaCorretta = obgDomanda.correct_answer
     const divRitorno = document.createElement("div")
-    const pDomanda = document.createElement("p")
-    pDomanda.innerText = obgDomanda.question
-    pDomanda.id = "pDomanda"
-    pDomanda.style = "font-size: 2em; margin: 0 25% 0 25%"
-    divRitorno.appendChild(pDomanda)
-
-    if (obgDomanda.type === `multiple`) {
-        let risposte = [obgDomanda.correct_answer].concat(
-            obgDomanda.incorrect_answers
-        )
-        const divRisposte1 = document.createElement("div")
-
-        const divRisposte2 = document.createElement("div")
-
-        divRisposte1.id = `divRisposteRiga1`
-        divRisposte2.id = `divRisposteRiga2`
-
-        let risposteAppese = 0
-
-        for (let iRisposte = 0; iRisposte < risposte.length; iRisposte++) {
-            const pRisposta = document.createElement("p")
-            pRisposta.innerText = risposte[iRisposte]
-
-            pRisposta.classList = "multTypeButton"
-            pRisposta.id = `r` + risposte[iRisposte]
-
-            pRisposta.onclick = async function () {
-                await addRisposta(
-                    risposte,
-                    iRisposte,
-                    pDomanda.innerText,
-                    rispostaCorretta
-                );
-            };
-            if (risposteAppese > 1) {
-                divRisposte2.appendChild(pRisposta)
-            } else {
-                risposteAppese++;
-                divRisposte1.appendChild(pRisposta)
-            }
-
-            divRitorno.appendChild(divRisposte1)
-            divRitorno.appendChild(divRisposte2)
-        }
-    } else {
-        const divRispostaBoolean = document.createElement("div")
-        divRispostaBoolean.id = "pVero-pFalso"
-        const divVero = document.createElement("div")
-        const divFalso = document.createElement("div")
-        const pVero = document.createElement("p")
-        const pFalso = document.createElement("p")
-        pVero.classList = `booleanButton`
-        pVero.id = `pVero`
-        pVero.onclick = async function () {
-            await addRispostaBool("true", pDomanda.innerText, rispostaCorretta)
-        }
-        pFalso.classList = `booleanButton`
-        pFalso.onclick = async function () {
-            await addRispostaBool("false", pDomanda.innerText, rispostaCorretta)
-        }
-        pFalso.id = `pFalso`
-        pVero.innerText = "True"
-        pFalso.innerText = "False"
-        divFalso.appendChild(pFalso)
-        divVero.appendChild(pVero)
-        divRispostaBoolean.appendChild(divVero)
-        divRispostaBoolean.appendChild(divFalso)
-        divRitorno.appendChild(divRispostaBoolean)
-    }
+    //await fermaTicToc();
     divRitorno.id = "genitore"
-    divRitorno.appendChild(cerchioTimer(difficulty))
+    //divRitorno.appendChild(cerchioTimer(obgDomanda.difficulty))
     return divRitorno
-}
+} // ritorna un div
 
 ///////////////////////////////////////////////// INIZIO EFFETTIVA ESECUZIONE /////////////////////////////////////////////
 
-arrayDomande = generaArrayDomande()
-console.log(arrayDomande)
+start()
