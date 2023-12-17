@@ -46,8 +46,7 @@ const start = async function () {
     console.log("Array domande selezionate")
     console.log(arrayDomande[0])
 
-    dinamicStage.appendChild(divDinamicoQuestion(arrayDomande[0]))
-
+    await dinamicStage.appendChild(divDinamicoQuestion(arrayDomande[0]))
 
 }
 
@@ -116,6 +115,14 @@ const convertiStringaInSecondiTimer = function (difficoltaStringa) {
     }
 } //prende stringa easy medium hard ritorna 30 60 120
 
+function setTextPepato(element, newText) {
+    // Imposta l'opacità a 0
+    element.style.opacity = '0';
+    setTimeout(() => {
+        element.textContent = newText;
+        element.style.opacity = '1';
+    }, 500);
+}
 
 const rispostaVuota = async function () {
     let risposta = {
@@ -239,6 +246,10 @@ const cerchioTimer = function (difficolta) {
 } //ritorna un div
 
 const divDinamicoQuestion = async function (obgDomanda) {
+    if (!obgDomanda) {
+        delay(2500)
+        return divDinamicoQuestion(obgDomanda)
+    }
     console.log(obgDomanda)
     dinamicStage.innerHTML = ``
     const pDomanda = document.createElement('p')
@@ -246,8 +257,9 @@ const divDinamicoQuestion = async function (obgDomanda) {
 
     const divRitorno = document.createElement("div")
     //await fermaTicToc();
-    divRitorno.id = "genitore"
     //divRitorno.appendChild(cerchioTimer(obgDomanda.difficulty))
+    divRitorno.appendChild(pDomanda)
+
     return divRitorno
 } // ritorna un div
 
